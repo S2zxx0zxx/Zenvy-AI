@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+zenvy-backend/node_modules/
+
+# Environment files
+.env
+zenvy-backend/.env
+*.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+
+# Temp files
+create-icons.js

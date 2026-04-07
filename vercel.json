@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "zenvyv2.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/manifest.json", "dest": "/manifest.json" },
+    { "src": "/icon-192.png", "dest": "/icon-192.png" },
+    { "src": "/icon-512.png", "dest": "/icon-512.png" },
+    { "src": "/(.*)", "dest": "/zenvyv2.html" }
+  ]
+}
