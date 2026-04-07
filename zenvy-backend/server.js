@@ -13,6 +13,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'https://zenvy-ai.vercel.app',
+  'https://zenvy-ai-seven.vercel.app',
   'https://zenvyai.in',
   'https://www.zenvyai.in',
   'https://zenvyindia.com',
