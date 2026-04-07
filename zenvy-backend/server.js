@@ -14,7 +14,9 @@ const allowedOrigins = [
   'http://localhost:3001',
   'https://zenvy-ai.vercel.app',
   'https://zenvyai.in',
-  'https://www.zenvyai.in'
+  'https://www.zenvyai.in',
+  'https://zenvyindia.com',
+  'https://www.zenvyindia.com'
 ];
 
 // Middleware

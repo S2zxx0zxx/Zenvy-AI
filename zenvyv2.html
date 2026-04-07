@@ -1118,12 +1118,12 @@ footer {
 
     <div class="hero-stats reveal">
       <div class="hero-stat">
-        <div class="hero-stat-n" data-count="2400000">0</div>
+        <div class="hero-stat-n" data-count="500" data-suffix="+">500+</div>
         <div class="hero-stat-l">Questions Answered</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-n" data-count="180" data-suffix="+">0</div>
-        <div class="hero-stat-l">Countries</div>
+        <div class="hero-stat-n" data-count="4">4</div>
+        <div class="hero-stat-l">AI Agents</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-n" data-count="49" data-prefix="4." data-suffix="★">4.0</div>
@@ -1813,7 +1813,7 @@ footer {
 
     <div class="settings-section">
       <div class="settings-section-title">Preferences</div>
-      <div class="settings-row" onclick="showToast('Dark mode always on')">
+      <div class="settings-row">
         <span class="sr-icon">🌙</span>
         <div class="sr-info">
           <div class="sr-label">Dark Mode</div>
@@ -1981,12 +1981,12 @@ footer {
 
     <div class="about-stats reveal">
       <div class="about-stat-card">
-        <div class="about-stat-n" style="color:var(--blue)">2.4M+</div>
+        <div class="about-stat-n" style="color:var(--blue)">500+</div>
         <div class="about-stat-l">Questions Answered</div>
       </div>
       <div class="about-stat-card">
-        <div class="about-stat-n" style="color:var(--green)">180+</div>
-        <div class="about-stat-l">Countries</div>
+        <div class="about-stat-n" style="color:var(--green)">4</div>
+        <div class="about-stat-l">AI Agents</div>
       </div>
       <div class="about-stat-card">
         <div class="about-stat-n" style="color:var(--yellow)">4.9★</div>
@@ -2002,7 +2002,7 @@ footer {
       <div class="mission-card">
         <div class="mission-icon">🌍</div>
         <div class="mission-title">Global Access</div>
-        <div class="mission-text">Available in 180+ countries. Works in Hindi, English, and more. No geography should limit access to expert knowledge.</div>
+        <div class="mission-text">Available in India. Works in Hindi, English, and Hinglish. Making expert knowledge accessible to everyone.</div>
       </div>
       <div class="mission-card">
         <div class="mission-icon">🔒</div>
@@ -2236,7 +2236,7 @@ let chatHistory = [];
 let isSending = false;
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? 'http://localhost:3001'
-  : 'https://YOUR_RAILWAY_APP_URL.railway.app'; // ← Replace with your Railway URL after deployment
+  : 'https://zenvy-ai-satzzxzxx.up.railway.app'; // ← Railway production URL
 
 // ── PAGE NAVIGATION ──────────────────────────────────
 const PAGES = ['home','dash','chat','pricing','auth','profile','history','about'];
@@ -2603,7 +2603,7 @@ function animateCounter(el) {
 }
 
 // ── MOB MENU ──────────────────────────────────────────
-function toggleMobMenu() { showToast('Menu — use navigation links above'); }
+function toggleMobMenu() { /* Mobile menu not available */ }
 
 // ── INIT ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
