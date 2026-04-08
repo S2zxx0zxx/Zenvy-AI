@@ -2338,20 +2338,37 @@ async function initDash() {
             '<div class="act-text" style="color:var(--blue)">View all history →</div>' +
             '<div class="act-time"></div></div>';
         } else {
-          actList.innerHTML = allMsgs.map(m => {
+          actList.innerHTML = '';
+          allMsgs.forEach(m => {
             const time = m.timestamp?.toDate?.();
             const timeStr = time ? getRelativeTime(time) : '';
             const color = agentColors[m.agent] || 'var(--blue)';
-            const text = (m.content || '').substring(0, 60) + ((m.content || '').length > 60 ? '...' : '');
-            return '<div class="act-item" onclick="openAgent(\'' + m.agent + '\')">' +
-              '<div class="act-dot" style="background:' + color + '"></div>' +
-              '<div class="act-text">' + text + '</div>' +
-              '<div class="act-time">' + timeStr + '</div></div>';
-          }).join('') +
-          '<div class="act-item" onclick="go(\'history\')">' +
-          '<div class="act-dot" style="background:var(--text3)"></div>' +
-          '<div class="act-text" style="color:var(--blue)">View all history →</div>' +
-          '<div class="act-time"></div></div>';
+            const rawText = (m.content || '');
+            const truncated = rawText.length > 60 ? rawText.substring(0, 60) + '...' : rawText;
+            const item = document.createElement('div');
+            item.className = 'act-item';
+            item.onclick = () => openAgent(m.agent);
+            const dot = document.createElement('div');
+            dot.className = 'act-dot';
+            dot.style.background = color;
+            const textEl = document.createElement('div');
+            textEl.className = 'act-text';
+            textEl.textContent = truncated;
+            const timeEl = document.createElement('div');
+            timeEl.className = 'act-time';
+            timeEl.textContent = timeStr;
+            item.appendChild(dot);
+            item.appendChild(textEl);
+            item.appendChild(timeEl);
+            actList.appendChild(item);
+          });
+          const viewAll = document.createElement('div');
+          viewAll.className = 'act-item';
+          viewAll.onclick = () => go('history');
+          viewAll.innerHTML = '<div class="act-dot" style="background:var(--text3)"></div>' +
+            '<div class="act-text" style="color:var(--blue)">View all history →</div>' +
+            '<div class="act-time"></div>';
+          actList.appendChild(viewAll);
         }
       }
     } catch (err) {
@@ -2496,12 +2513,21 @@ function addUserMsg(text) {
   const msgs = document.getElementById('chatMessages');
   const div = document.createElement('div');
   div.className = 'msg msg-user';
-  div.innerHTML = `
-    <div class="msg-av">👤</div>
-    <div class="msg-body">
-      <div class="msg-bubble">${text}</div>
-      <div class="msg-time">Now</div>
-    </div>`;
+  const av = document.createElement('div');
+  av.className = 'msg-av';
+  av.textContent = '👤';
+  const body = document.createElement('div');
+  body.className = 'msg-body';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = text;
+  const time = document.createElement('div');
+  time.className = 'msg-time';
+  time.textContent = 'Now';
+  body.appendChild(bubble);
+  body.appendChild(time);
+  div.appendChild(av);
+  div.appendChild(body);
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -2521,8 +2547,10 @@ async function sendMsg() {
   const rawText = input.value.trim();
   if (!rawText || isSending) return;
 
-  // Sanitize + length check
-  const text = rawText.replace(/<[^>]*>/g, '').substring(0, 800);
+  // Sanitize + length check — use a text node to strip any HTML
+  const tmp = document.createElement('div');
+  tmp.textContent = rawText;
+  const text = tmp.textContent.substring(0, 800);
   input.value = '';
   input.style.height = 'auto';
   isSending = true;
@@ -2755,17 +2783,34 @@ function addAiErrorMsg(errorText, canRetry, lastUserMsg) {
   const msgs = document.getElementById('chatMessages');
   const div = document.createElement('div');
   div.className = 'msg msg-ai';
-  let retryBtn = '';
+  const av = document.createElement('div');
+  av.className = 'msg-av';
+  av.textContent = '🤖';
+  const body = document.createElement('div');
+  body.className = 'msg-body';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = errorText;
+  body.appendChild(bubble);
   if (canRetry) {
-    retryBtn = `<button onclick="(function(btn){btn.disabled=true;btn.textContent='Retrying...';document.getElementById('chatInput').value=${JSON.stringify(lastUserMsg)};sendMsg();})(this)" style="margin-top:8px;padding:5px 14px;border-radius:20px;background:rgba(91,155,248,0.15);border:1px solid rgba(91,155,248,0.3);color:#5b9bf8;font-size:12px;font-weight:600;cursor:pointer;">↺ Retry</button>`;
+    const retryBtn = document.createElement('button');
+    retryBtn.textContent = '↺ Retry';
+    retryBtn.style.cssText = 'margin-top:8px;padding:5px 14px;border-radius:20px;background:rgba(91,155,248,0.15);border:1px solid rgba(91,155,248,0.3);color:#5b9bf8;font-size:12px;font-weight:600;cursor:pointer;';
+    retryBtn.onclick = function() {
+      retryBtn.disabled = true;
+      retryBtn.textContent = 'Retrying...';
+      const input = document.getElementById('chatInput');
+      if (input) input.value = lastUserMsg;
+      sendMsg();
+    };
+    body.appendChild(retryBtn);
   }
-  div.innerHTML = `
-    <div class="msg-av">🤖</div>
-    <div class="msg-body">
-      <div class="msg-bubble">${errorText.replace(/\n/g,'<br>')}</div>
-      ${retryBtn}
-      <div class="msg-time">Now</div>
-    </div>`;
+  const timeEl = document.createElement('div');
+  timeEl.className = 'msg-time';
+  timeEl.textContent = 'Now';
+  body.appendChild(timeEl);
+  div.appendChild(av);
+  div.appendChild(body);
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
