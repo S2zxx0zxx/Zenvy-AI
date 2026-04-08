@@ -17,7 +17,8 @@ const allowedOrigins = [
   'https://zenvyai.in',
   'https://www.zenvyai.in',
   'https://zenvyindia.com',
-  'https://www.zenvyindia.com'
+  'https://www.zenvyindia.com',
+  'https://s2zxx0zxx.github.io'
 ];
 
 // Middleware
