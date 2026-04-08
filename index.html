@@ -3341,7 +3341,6 @@ async function initDash() {
       }
 
       // Update progress bars with real data
-      const totalAll = totalSessions || 1;
       const agentCounts = {};
       for (const agent of agentTypes) {
         const snap = await chatsRef.doc(agent).collection('messages')
@@ -3359,7 +3358,7 @@ async function initDash() {
       const progressBars = document.querySelectorAll('.progress-fill[data-width]');
 
       Object.entries(agentCounts).forEach(([agent, count]) => {
-        const pct = Math.round((count / totalAll) * 100);
+        const pct = Math.round((count / (totalAll || 1)) * 100);
         const info = progressMap[agent];
         if (info && progressBars[info.bar]) {
           progressBars[info.bar].setAttribute('data-width', pct + '%');
@@ -3367,7 +3366,7 @@ async function initDash() {
       });
 
       // Update ring chart
-      const finPct = agentCounts.finance ? Math.round((agentCounts.finance / totalAll) * 100) : 0;
+      const finPct = agentCounts.finance ? Math.round((agentCounts.finance / (totalAll || 1)) * 100) : 0;
       const ringNum = document.getElementById('ringPercent') || document.querySelector('.stat-ring-num');
       if (ringNum) ringNum.textContent = finPct + '%';
 
