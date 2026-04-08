@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Anthropic = require('@anthropic-ai/sdk');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { sanitizeInput } = require('../utils/sanitize');
 const rateLimiter = require('../middleware/rateLimit');
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const SYSTEM_PROMPTS = {
   finance: "You are Zenvy Finance Agent — an expert Indian financial advisor. Give specific, actionable advice about mutual funds (mention real fund names like Mirae, Parag Parikh, Axis), SIP strategies, tax saving (80C, 80D, NPS), FD rates, stocks, home loans, budgeting for Indian salaries. Reference SEBI rules, RBI guidelines, current tax slabs. Format responses with clear sections. Keep under 220 words.",
@@ -19,12 +19,10 @@ router.post('/', rateLimiter, async (req, res) => {
   try {
     let { agent, message, history } = req.body;
 
-    // Validate agent
     if (!agent || !VALID_AGENTS.includes(agent)) {
       return res.status(400).json({ error: `Invalid agent. Must be one of: ${VALID_AGENTS.join(', ')}` });
     }
 
-    // Validate message
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ error: 'Message is required.' });
     }
@@ -36,35 +34,33 @@ router.post('/', rateLimiter, async (req, res) => {
       return res.status(400).json({ error: 'Message must be under 1000 characters.' });
     }
 
-    // Validate and trim history
     if (!Array.isArray(history)) {
       history = [];
     }
     const trimmedHistory = history.slice(-10);
 
-    // Build messages array
-    const messagesArray = [
-      ...trimmedHistory,
-      { role: 'user', content: message }
-    ];
-
     const systemPrompt = SYSTEM_PROMPTS[agent];
-
-    // Call Anthropic API
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 400,
-      system: systemPrompt,
-      messages: messagesArray
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      systemInstruction: systemPrompt
     });
 
+    const chatHistory = trimmedHistory.map(msg => ({
+      role: msg.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: msg.content }]
+    }));
+
+    const chat = model.startChat({ history: chatHistory });
+    const result = await chat.sendMessage(message);
+    const reply = result.response.text();
+
     return res.json({
-      reply: response.content[0].text,
-      tokens_used: response.usage.output_tokens
+      reply: reply,
+      tokens_used: 0
     });
 
   } catch (err) {
-    console.error('Anthropic API error:', err);
+    console.error('Gemini API error:', err);
     return res.status(503).json({ error: 'AI service temporarily unavailable' });
   }
 });
