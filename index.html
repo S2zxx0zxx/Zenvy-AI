@@ -2237,7 +2237,7 @@ footer {
     <div class="dash-agents-v5">
       <div class="da5-header">
         <span class="da5-title">Your AI Agents</span>
-        <span class="da5-see-all" onclick="showToast('All agents view')">See all →</span>
+        <span class="da5-see-all" onclick="void(0)">See all →</span>
       </div>
       <div class="da5-grid">
         <div class="da5-card ag-finance" onclick="openAgent('finance')">
@@ -2443,7 +2443,7 @@ footer {
         </div>
       </div>
       <div class="chat-actions">
-        <button class="btn-icon" onclick="showToast('Copied to clipboard')">📤</button>
+        <button class="btn-icon" onclick="shareChat()">📤</button>
         <button class="btn-icon" onclick="clearChat()">🗑</button>
       </div>
     </div>
@@ -2565,7 +2565,7 @@ footer {
     <div class="social-btn ripple-container" onclick="signInWithGoogle()">
       <span>G</span> Continue with Google
     </div>
-    <div class="social-btn ripple-container" onclick="showToast('Apple Sign-In coming soon!')">
+    <div class="social-btn ripple-container" onclick="void(0)">
       🍎 Continue with Apple
     </div>
     <div class="divider" style="margin:18px 0">or sign up with email</div>
@@ -2610,7 +2610,7 @@ footer {
           <span class="badge badge-green">🌍 Global</span>
         </div>
       </div>
-      <button class="btn btn-ghost btn-sm" onclick="showToast('Edit profile opened')">Edit</button>
+      <button class="btn btn-ghost btn-sm" onclick="void(0)">Edit</button>
     </div>
 
     <div class="plan-banner">
@@ -2632,7 +2632,7 @@ footer {
         </div>
         <div class="toggle on"><div class="toggle-knob"></div></div>
       </div>
-      <div class="settings-row" onclick="showToast('Language updated')">
+      <div class="settings-row" onclick="void(0)">
         <span class="sr-icon">🌐</span>
         <div class="sr-info">
           <div class="sr-label">Language</div>
@@ -2652,12 +2652,12 @@ footer {
 
     <div class="settings-section">
       <div class="settings-section-title">Security</div>
-      <div class="settings-row" onclick="showToast('Password change email sent')">
+      <div class="settings-row" onclick="changePassword()">
         <span class="sr-icon">🔑</span>
         <div class="sr-info"><div class="sr-label">Change Password</div></div>
         <span class="sr-right">›</span>
       </div>
-      <div class="settings-row" onclick="showToast('2FA enabled!')">
+      <div class="settings-row" onclick="void(0)">
         <span class="sr-icon">📱</span>
         <div class="sr-info">
           <div class="sr-label">Two-Factor Auth</div>
@@ -2665,7 +2665,7 @@ footer {
         </div>
         <button class="btn btn-primary btn-sm" style="margin-left:auto">Enable</button>
       </div>
-      <div class="settings-row" onclick="showToast('Data export started')">
+      <div class="settings-row" onclick="void(0)">
         <span class="sr-icon">📦</span>
         <div class="sr-info"><div class="sr-label">Export My Data</div></div>
         <span class="sr-right">›</span>
@@ -2674,7 +2674,7 @@ footer {
 
     <div class="settings-section">
       <div class="settings-section-title">Danger Zone</div>
-      <div class="settings-row" onclick="showToast('Are you sure? This cannot be undone.')">
+      <div class="settings-row" onclick="deleteAccount()">
         <span class="sr-icon">🗑</span>
         <div class="sr-info"><div class="sr-label" style="color:var(--red)">Delete Account</div></div>
         <button class="btn btn-danger btn-sm">Delete</button>
@@ -3895,6 +3895,31 @@ function clearChat() {
   chatHistory = [];
   addAiMsg(AGENTS[currentAgent].welcome);
   showToast('Chat cleared');
+}
+
+function shareChat() {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => showToast('Link copied!'))
+      .catch(() => showToast('Copy not supported'));
+  } else {
+    showToast('Copy not supported');
+  }
+}
+
+function changePassword() {
+  if (!currentUser) return;
+  auth.sendPasswordResetEmail(currentUser.email)
+    .then(() => showToast('Password reset email sent'))
+    .catch(() => showToast('Failed to send reset email. Try again.'));
+}
+
+function deleteAccount() {
+  if (!currentUser) return;
+  if (!confirm('Delete your account permanently? This cannot be undone.')) return;
+  auth.currentUser.delete()
+    .then(() => { showToast('Account deleted'); go('home'); })
+    .catch(() => showToast('Failed to delete account. Please sign out and sign in again, then try.'));
 }
 
 function autoResize(el) {
