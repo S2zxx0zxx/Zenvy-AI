@@ -3209,7 +3209,11 @@ async function initDash() {
 
   // Show skeleton loading state
   document.querySelectorAll('.ds5-num').forEach(el => {
-    el.innerHTML = '<div class="skeleton skeleton-num" style="display:inline-block;width:30px;height:20px"></div>';
+    const skEl = document.createElement('div');
+    skEl.className = 'skeleton skeleton-num';
+    skEl.style.cssText = 'display:inline-block;width:30px;height:20px';
+    el.textContent = '';
+    el.appendChild(skEl);
   });
 
   // Load real stats from Firestore
@@ -4003,7 +4007,7 @@ function pwaInstall() {
 <div id="pwaInstallBanner" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--bg1);border:1px solid var(--border2);border-radius:14px;padding:14px 18px;z-index:9999;width:calc(100% - 32px);max-width:400px;align-items:center;gap:12px;">
   <span style="font-size:22px">📱</span>
   <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">Install Zenvy AI</div><div style="font-size:11px;color:var(--text3)">Add to home screen for quick access</div></div>
-stall</button>
+  <button onclick="pwaInstall()" style="background:var(--blue);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Install</button>
   <button onclick="document.getElementById('pwaInstallBanner').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:4px;">✕</button>
 </div>
 
