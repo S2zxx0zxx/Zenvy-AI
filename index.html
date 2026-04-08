@@ -626,7 +626,7 @@ footer {
   background: var(--bg);
   position: relative; z-index: 2;
 }
-#page-dash.active { display: block; animation: pg-in 0.3s ease; position: relative; z-index: 2; }
+#page-dash.active { display: flex; flex-direction: column; animation: pg-in 0.3s ease; position: relative; z-index: 2; }
 
 /* MOBILE BOTTOM NAV */
 .mob-nav {
@@ -1673,6 +1673,237 @@ footer {
   border-color: rgba(212,168,67,0.15);
   box-shadow: 0 8px 28px rgba(0,0,0,0.25);
 }
+
+/* ══════════════════════════════════════════════════════
+   DASHBOARD V6 — CLAUDE.AI STYLE
+══════════════════════════════════════════════════════ */
+
+/* TOP NAV */
+.dash-topnav {
+  height: 56px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 18px;
+  background: rgba(8,8,16,0.88); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: sticky; top: 0; z-index: 100;
+}
+.dash-topnav-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 17px;
+  cursor: pointer; color: var(--text);
+}
+.dash-topnav-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 10px var(--gold);
+  animation: navDotPulse 2.4s ease-in-out infinite;
+}
+@keyframes navDotPulse {
+  0%,100% { box-shadow: 0 0 8px var(--gold); }
+  50%      { box-shadow: 0 0 18px rgba(212,168,67,0.7); }
+}
+.dash-topnav-right { display: flex; align-items: center; gap: 10px; }
+.dash-topnav-upgrade {
+  display: flex; align-items: center;
+  padding: 7px 14px; border-radius: var(--r-full);
+  background: var(--gold); color: #080810;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(212,168,67,0.28);
+  transition: all 0.15s; white-space: nowrap;
+}
+.dash-topnav-upgrade:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,168,67,0.38); }
+.dash-topnav-upgrade:active { transform: scale(0.96); }
+.dash-topnav-avatar {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--gold), #8b6914);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 800;
+  color: #080810; cursor: pointer; transition: transform 0.15s;
+}
+.dash-topnav-avatar:hover { transform: scale(1.07); }
+
+/* SCROLLABLE AREA */
+.dash-scroll {
+  flex: 1; overflow-y: auto;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+.dash-scroll::-webkit-scrollbar { width: 3px; }
+.dash-scroll::-webkit-scrollbar-track { background: transparent; }
+.dash-scroll::-webkit-scrollbar-thumb { background: rgba(212,168,67,0.15); border-radius: 4px; }
+@media (min-width: 768px) { .dash-scroll { padding-bottom: 32px; } }
+
+/* GREETING SECTION */
+.dash-greeting-section {
+  padding: 36px 20px 8px;
+  text-align: center;
+  animation: slideUp 0.45s cubic-bezier(0.4,0,0.2,1) both;
+}
+.dash-greeting {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.2);
+  border-radius: var(--r-full); padding: 5px 14px;
+  font-size: 12px; font-weight: 600; color: var(--gold);
+  margin-bottom: 16px;
+}
+.dash-main-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -0.8px;
+  color: var(--text); margin-bottom: 6px;
+}
+.dash-main-title span {
+  background: linear-gradient(120deg, var(--gold2) 0%, var(--gold) 50%, #e6b84d 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: grad-shift 4s ease-in-out infinite;
+}
+
+/* PROMPT SECTION V6 */
+.dash-prompt-section {
+  padding: 20px 16px 8px;
+  animation: slideUp 0.45s cubic-bezier(0.4,0,0.2,1) 0.06s both;
+}
+.dash-prompt-v6 {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px; padding: 14px 14px 10px;
+  max-width: 640px; margin: 0 auto;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dash-prompt-v6:focus-within {
+  border-color: var(--gold-border);
+  box-shadow: 0 0 0 3px rgba(212,168,67,0.08), 0 8px 32px rgba(0,0,0,0.25);
+}
+.dash-prompt-v6 textarea {
+  width: 100%; background: transparent; color: var(--text);
+  font-size: 15px; font-family: 'Outfit', sans-serif;
+  resize: none; max-height: 120px; line-height: 1.55; min-height: 24px;
+}
+.dash-prompt-v6 textarea::placeholder { color: var(--text3); }
+.dash-prompt-v6-actions {
+  display: flex; align-items: center; gap: 4px; margin-top: 10px;
+}
+.dpv6-btn {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: transparent; border: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); cursor: pointer; transition: all 0.15s;
+}
+.dpv6-btn:hover { color: var(--text2); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+.dpv6-send {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--gold); color: #080810;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.15s; margin-left: auto;
+  box-shadow: 0 4px 14px rgba(212,168,67,0.28);
+}
+.dpv6-send:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(212,168,67,0.38); }
+.dpv6-send:active { transform: scale(0.93); }
+
+/* AGENT PILLS */
+.dash-agent-pills-wrap {
+  display: flex; gap: 7px; overflow-x: auto;
+  padding: 12px 16px 4px; max-width: 672px; margin: 0 auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; -ms-overflow-style: none;
+  animation: slideUp 0.45s cubic-bezier(0.4,0,0.2,1) 0.12s both;
+}
+.dash-agent-pills-wrap::-webkit-scrollbar { display: none; }
+.dash-agent-pill {
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  padding: 8px 15px; border-radius: var(--r-full);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
+  color: var(--text2); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+.dash-agent-pill:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.14); color: var(--text); }
+.dash-agent-pill:active { transform: scale(0.96); }
+.dash-agent-pill.active-finance { background: rgba(212,168,67,0.12); border-color: rgba(212,168,67,0.3); color: var(--gold); }
+.dash-agent-pill.active-legal   { background: rgba(192,132,252,0.12); border-color: rgba(192,132,252,0.3); color: var(--purple); }
+.dash-agent-pill.active-health  { background: rgba(74,222,128,0.12);  border-color: rgba(74,222,128,0.3);  color: var(--green); }
+.dash-agent-pill.active-career  { background: rgba(251,146,60,0.12);  border-color: rgba(251,146,60,0.3);  color: var(--orange); }
+
+/* SUGGESTION SECTION */
+.dash-suggest-section {
+  padding: 16px 16px 0; max-width: 672px; margin: 0 auto;
+  animation: slideUp 0.45s cubic-bezier(0.4,0,0.2,1) 0.18s both;
+}
+.dash-suggest-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text3); margin-bottom: 10px;
+}
+.dash-suggest-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (min-width: 480px) { .dash-suggest-grid { grid-template-columns: repeat(4,1fr); } }
+.dash-sug-v6 {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r-lg); padding: 14px 12px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; flex-direction: column; gap: 7px;
+  -webkit-tap-highlight-color: transparent;
+}
+.dash-sug-v6:hover {
+  background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.13);
+  transform: translateY(-2px);
+}
+.dash-sug-v6:active { transform: scale(0.97); }
+.dsv6-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.dsv6-text { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.dsv6-agent { font-size: 10px; color: var(--text3); font-weight: 500; }
+
+/* RECENT CHATS */
+.dash-recent-section {
+  padding: 20px 16px 12px; max-width: 672px; margin: 0 auto;
+  animation: slideUp 0.45s cubic-bezier(0.4,0,0.2,1) 0.24s both;
+}
+.dash-recent-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.dash-recent-title {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  display: flex; align-items: center;
+}
+.dash-recent-see {
+  font-size: 12px; color: var(--gold); cursor: pointer; font-weight: 500;
+}
+.dash-recent-see:hover { text-decoration: underline; }
+.dash-recent-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--r-md); margin-bottom: 6px;
+  cursor: pointer; transition: all 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+.dash-recent-item:hover {
+  background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12);
+  transform: translateX(3px);
+}
+.dash-recent-item:active { transform: scale(0.99); }
+.dri-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.dri-content { flex: 1; min-width: 0; }
+.dri-text {
+  font-size: 13px; font-weight: 500; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dri-meta { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.dash-recent-empty {
+  text-align: center; padding: 28px 20px;
+  color: var(--text3); font-size: 13px;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* Chat page SVG avatar sizing */
+.msg-av svg { width: 16px; height: 16px; }
 </style>
 </head>
 <body>
@@ -1682,10 +1913,10 @@ footer {
 
 <!-- MOBILE MENU -->
 <div id="mobileMenu" style="display:none;position:fixed;top:60px;left:0;right:0;z-index:190;background:rgba(8,8,16,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(212,168,67,0.15);padding:12px 16px 16px;flex-direction:column;gap:2px;">
-  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;transition:background 0.15s;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">🏠 Home</div>
-  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">⚡ Features</div>
-  <div onclick="go('pricing');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">💎 Pricing</div>
-  <div onclick="go('about');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">ℹ️ About</div>
+  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.15s;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</div>
+  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Features</div>
+  <div onclick="go('pricing');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Pricing</div>
+  <div onclick="go('about');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> About</div>
   <div style="height:1px;background:rgba(255,255,255,0.06);margin:8px 0"></div>
   <button onclick="go('dash');document.getElementById('mobileMenu').style.display='none'" style="width:100%;padding:14px;background:#d4a843;color:#080810;font-weight:700;font-size:15px;border:none;border-radius:12px;cursor:pointer;font-family:inherit;">Get Started Free →</button>
 </div>
@@ -1840,7 +2071,7 @@ footer {
 
       <div class="agent-card ag-finance reveal" onclick="openAgent('finance')">
         <div class="agent-card-top">
-          <div class="agent-box agent-box-lg">💰</div>
+          <div class="agent-box agent-box-lg"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
           <div class="agent-arrow">→</div>
         </div>
         <div class="agent-card-name">Finance Agent</div>
@@ -1854,7 +2085,7 @@ footer {
 
       <div class="agent-card ag-legal reveal reveal-d1" onclick="openAgent('legal')">
         <div class="agent-card-top">
-          <div class="agent-box agent-box-lg">⚖️</div>
+          <div class="agent-box agent-box-lg"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
           <div class="agent-arrow">→</div>
         </div>
         <div class="agent-card-name">Legal Agent</div>
@@ -1868,7 +2099,7 @@ footer {
 
       <div class="agent-card ag-health reveal reveal-d2" onclick="openAgent('health')">
         <div class="agent-card-top">
-          <div class="agent-box agent-box-lg">🏥</div>
+          <div class="agent-box agent-box-lg"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
           <div class="agent-arrow">→</div>
         </div>
         <div class="agent-card-name">Health Agent</div>
@@ -1882,7 +2113,7 @@ footer {
 
       <div class="agent-card ag-career reveal reveal-d3" onclick="openAgent('career')">
         <div class="agent-card-top">
-          <div class="agent-box agent-box-lg">🚀</div>
+          <div class="agent-box agent-box-lg"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
           <div class="agent-arrow">→</div>
         </div>
         <div class="agent-card-name">Career Agent</div>
@@ -2046,10 +2277,10 @@ footer {
       <div class="footer-bottom">
         <div class="footer-copy">© 2026 Zenvy AI · All rights reserved</div>
         <div class="footer-socials">
-          <div class="soc-btn">𝕏</div>
-          <div class="soc-btn">in</div>
-          <div class="soc-btn">▶</div>
-          <div class="soc-btn">📸</div>
+          <div class="soc-btn" title="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+          <div class="soc-btn" title="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div class="soc-btn" title="YouTube"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#080810"/></svg></div>
+          <div class="soc-btn" title="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></div>
         </div>
       </div>
     </div>
@@ -2061,342 +2292,134 @@ footer {
 ══════════════════════════════════════════════════════ -->
 <div class="page" id="page-dash">
 
-  <!-- DESKTOP SIDEBAR -->
-  <div class="desk-sidebar" id="deskSidebar">
-    <div class="sidebar-head" onclick="go('home')">
-      <div class="sidebar-head-dot"></div>
+  <!-- TOP NAV -->
+  <div class="dash-topnav">
+    <div class="dash-topnav-logo" onclick="go('home')">
+      <div class="dash-topnav-dot"></div>
       Zenvy AI
     </div>
-    <div class="sb-section">
-      <div class="sb-label">Main</div>
-      <div class="sb-item active" id="sb-dash" onclick="dashNav('dash')">
-        <span class="sb-icon">⊞</span> Dashboard
+    <div class="dash-topnav-right">
+      <div class="dash-topnav-upgrade" onclick="go('pricing')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="display:inline;margin-right:4px;vertical-align:-1px"><path d="M2 20h20v2H2zM4 14l4-8 4 4 4-8 4 8H4z"/></svg>
+        Upgrade
       </div>
-      <div class="sb-item" id="sb-hist" onclick="dashNav('hist')">
-        <span class="sb-icon">🕐</span> History
-        <span class="sb-badge">6</span>
-      </div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-label">Agents</div>
-      <div class="sb-item" onclick="openAgent('finance')"><span class="sb-icon">💰</span> Finance</div>
-      <div class="sb-item" onclick="openAgent('legal')"><span class="sb-icon">⚖️</span> Legal</div>
-      <div class="sb-item" onclick="openAgent('health')"><span class="sb-icon">🏥</span> Health</div>
-      <div class="sb-item" onclick="openAgent('career')"><span class="sb-icon">🚀</span> Career</div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-label">Quick Actions</div>
-      <div class="sb-item" onclick="go('pricing')"><span class="sb-icon">⭐</span> Upgrade Plan</div>
-      <div class="sb-item" onclick="void(0)"><span class="sb-icon">📄</span> Saved Reports</div>
-      <div class="sb-item" onclick="void(0)"><span class="sb-icon">🔗</span> Integrations</div>
-    </div>
-    <div class="sb-bottom">
-      <div class="sb-user" onclick="go('profile')">
-        <div class="sb-avatar">S</div>
-        <div>
-          <div class="sb-uname">Satyam Kumar</div>
-          <div class="sb-uplan">Pro Plan ✦</div>
-        </div>
-      </div>
+      <div class="dash-topnav-avatar" id="dashAvatar" onclick="go('profile')">Z</div>
     </div>
   </div>
 
-  <!-- DASH MAIN -->
-  <div class="dash-main" id="dashMain">
+  <!-- SCROLLABLE CONTENT -->
+  <div class="dash-scroll" id="dashScroll">
 
-    <!-- ═══ HERO COMMAND CENTER ═══ -->
-    <div class="dash-hero-v5">
-      <!-- Ambient particles -->
-      <div class="dash-hero-particles">
-        <div class="dh-particle dh-p1"></div>
-        <div class="dh-particle dh-p2"></div>
-        <div class="dh-particle dh-p3"></div>
-        <div class="dh-particle dh-p4"></div>
-        <div class="dh-particle dh-p5"></div>
+    <!-- GREETING -->
+    <div class="dash-greeting-section">
+      <div class="dash-greeting" id="dashGreeting">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span id="dashGreetingText">Good morning</span>
       </div>
+      <div class="dash-main-title">
+        What can I<br><span>help you with?</span>
+      </div>
+    </div>
 
-      <!-- Top bar -->
-      <div class="dash-topbar-v5">
-        <div class="dash-topbar-left">
-          <div class="dash-user-pill" onclick="go('profile')">
-            <div class="dash-user-av">S</div>
-            <span class="dash-user-name" id="dashUserName">Satyam's Space</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="dash-topbar-right">
-          <button class="dash-icon-btn" onclick="void(0)" aria-label="Notifications">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span class="notif-dot"></span>
+    <!-- PROMPT BOX -->
+    <div class="dash-prompt-section">
+      <div class="dash-prompt-v6" id="dashPromptV6">
+        <textarea
+          id="dashPromptInput"
+          placeholder="Ask about tax saving, legal rights, health, career..."
+          rows="1"
+          oninput="autoResizeDash(this)"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();fireDashPrompt()}"
+        ></textarea>
+        <div class="dash-prompt-v6-actions">
+          <button class="dpv6-btn" title="Attach file">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
           </button>
-          <button class="dash-upgrade-btn ripple-container" onclick="go('pricing')">
-            <span>✦</span> Upgrade
+          <button class="dpv6-btn" title="Voice input" onclick="void(0)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </button>
+          <button class="dpv6-send ripple-container" id="dashSendBtnV6" onclick="fireDashPrompt()" title="Send">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Main headline -->
-      <div class="dash-hero-center">
-        <h1 class="dash-hero-title">
-          What do you need<br>
-          <span class="dash-hero-grad">help with?</span>
-        </h1>
-        <p class="dash-hero-sub">Ask anything. Get expert-level answers in seconds.</p>
-      </div>
+    <!-- AGENT PILLS -->
+    <div class="dash-agent-pills-wrap" id="dashAgentPills">
+      <button class="dash-agent-pill active-finance" data-agent="finance" onclick="selectDashAgent(this,'finance')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Finance
+      </button>
+      <button class="dash-agent-pill" data-agent="legal" onclick="selectDashAgent(this,'legal')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+        Legal
+      </button>
+      <button class="dash-agent-pill" data-agent="health" onclick="selectDashAgent(this,'health')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        Health
+      </button>
+      <button class="dash-agent-pill" data-agent="career" onclick="selectDashAgent(this,'career')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Career
+      </button>
+    </div>
 
-      <!-- Category tabs -->
-      <div class="dash-cat-tabs" id="dashCatTabs">
-        <button class="dash-cat-tab active" data-cat="finance" onclick="selectDashCat(this,'finance')">
-          <span class="dct-icon">💰</span>
-          <span class="dct-label">Personal Finance</span>
-        </button>
-        <button class="dash-cat-tab" data-cat="legal" onclick="selectDashCat(this,'legal')">
-          <span class="dct-icon">⚖️</span>
-          <span class="dct-label">Legal & Rights</span>
-        </button>
-        <button class="dash-cat-tab" data-cat="health" onclick="selectDashCat(this,'health-career')">
-          <span class="dct-icon">🧬</span>
-          <span class="dct-label">Health & Career</span>
-        </button>
-      </div>
-
-      <!-- Prompt input -->
-      <div class="dash-prompt-wrap">
-        <div class="dash-prompt-box" id="dashPromptBox">
-          <textarea class="dash-prompt-input" id="dashPromptInput" rows="1" placeholder="Ask about tax saving strategies..." oninput="autoResizeDash(this)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();fireDashPrompt()}"></textarea>
-          <div class="dash-prompt-actions">
-            <button class="dash-prompt-attach" onclick="void(0)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-            </button>
-            <button class="dash-prompt-settings" onclick="void(0)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-            <button class="dash-prompt-mic" onclick="void(0)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-            </button>
-            <button class="dash-prompt-send ripple-container" id="dashSendBtn" onclick="fireDashPrompt()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-            </button>
+    <!-- SUGGESTED PROMPTS -->
+    <div class="dash-suggest-section">
+      <div class="dash-suggest-label">Try asking</div>
+      <div class="dash-suggest-grid" id="dashSuggestGrid">
+        <div class="dash-sug-v6" onclick="quickAskV6('How to save tax under Section 80C?','finance')">
+          <div class="dsv6-icon" style="background:rgba(212,168,67,0.12)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
           </div>
+          <div class="dsv6-text">Save tax under 80C</div>
+          <div class="dsv6-agent">Finance Agent</div>
+        </div>
+        <div class="dash-sug-v6" onclick="quickAskV6('Best SIP strategy for beginners in India?','finance')">
+          <div class="dsv6-icon" style="background:rgba(212,168,67,0.12)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div class="dsv6-text">SIP strategy for beginners</div>
+          <div class="dsv6-agent">Finance Agent</div>
+        </div>
+        <div class="dash-sug-v6" onclick="quickAskV6('Review my rental agreement for red flags','legal')">
+          <div class="dsv6-icon" style="background:rgba(155,109,255,0.12)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+          </div>
+          <div class="dsv6-text">Review rental agreement</div>
+          <div class="dsv6-agent">Legal Agent</div>
+        </div>
+        <div class="dash-sug-v6" onclick="quickAskV6('Prepare me for a tech interview at a top company','career')">
+          <div class="dsv6-icon" style="background:rgba(251,146,60,0.12)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div class="dsv6-text">Prepare for tech interview</div>
+          <div class="dsv6-agent">Career Agent</div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ QUICK SUGGESTIONS ═══ -->
-    <div class="dash-suggestions-v5" id="dashSuggestions">
-      <div class="dash-sug-item" onclick="quickAsk('How to save tax under Section 80C?')">
-        <span class="dsi-icon">💡</span>
-        <span>Save tax under 80C</span>
+    <!-- RECENT CHATS -->
+    <div class="dash-recent-section">
+      <div class="dash-recent-header">
+        <span class="dash-recent-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:-2px;margin-right:5px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Recent chats
+        </span>
+        <span class="dash-recent-see" onclick="go('history')">See all →</span>
       </div>
-      <div class="dash-sug-item" onclick="quickAsk('Best SIP strategy for beginners?')">
-        <span class="dsi-icon">📈</span>
-        <span>SIP strategy for beginners</span>
-      </div>
-      <div class="dash-sug-item" onclick="quickAsk('Review my rental agreement for red flags')">
-        <span class="dsi-icon">📋</span>
-        <span>Review rental agreement</span>
-      </div>
-      <div class="dash-sug-item" onclick="quickAsk('Prepare me for a tech interview')">
-        <span class="dsi-icon">🎯</span>
-        <span>Prepare for tech interview</span>
-      </div>
-    </div>
-
-    <!-- ═══ STATS ROW ═══ -->
-    <div class="dash-stats-v5">
-      <div class="ds5-card">
-        <div class="ds5-card-icon" style="background:rgba(212,168,67,0.12);color:var(--gold)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div class="ds5-card-data">
-          <div class="ds5-num" id="qsSessions">0</div>
-          <div class="ds5-lbl">Total Sessions</div>
-        </div>
-      </div>
-      <div class="ds5-card">
-        <div class="ds5-card-icon" style="background:rgba(74,222,128,0.12);color:var(--green)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="ds5-card-data">
-          <div class="ds5-num" id="qsToday">0</div>
-          <div class="ds5-lbl">Today</div>
-        </div>
-      </div>
-      <div class="ds5-card">
-        <div class="ds5-card-icon" style="background:rgba(251,146,60,0.12);color:var(--orange)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-        </div>
-        <div class="ds5-card-data">
-          <div class="ds5-num" id="qsStreak">0</div>
-          <div class="ds5-lbl">Day Streak</div>
+      <div id="dashRecentList">
+        <div class="dash-recent-empty" id="dashRecentEmpty">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 8px;opacity:0.3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <div>No chats yet. Start your first conversation!</div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ AGENT GRID ═══ -->
-    <div class="dash-agents-v5">
-      <div class="da5-header">
-        <span class="da5-title">Your AI Agents</span>
-        <span class="da5-see-all" onclick="void(0)">See all →</span>
-      </div>
-      <div class="da5-grid">
-        <div class="da5-card ag-finance" onclick="openAgent('finance')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">💰</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Finance Agent</div>
-          <div class="da5-desc">Tax, SIP, Loans, Budget</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-        <div class="da5-card ag-legal" onclick="openAgent('legal')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">⚖️</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Legal Agent</div>
-          <div class="da5-desc">Contracts, Rights, Disputes</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-        <div class="da5-card ag-health" onclick="openAgent('health')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">🏥</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Health Agent</div>
-          <div class="da5-desc">Symptoms, Reports, Meds</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-        <div class="da5-card ag-career" onclick="openAgent('career')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">🚀</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Career Agent</div>
-          <div class="da5-desc">Interviews, Resume, Salary</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-      </div>
-    </div>
+  </div>
 
-    <!-- ═══ ANALYTICS ROW ═══ -->
-    <div class="dash-analytics-v5">
-
-      <!-- WEEKLY SESSIONS -->
-      <div class="dan5-card">
-        <div class="dan5-header">
-          <div class="dan5-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-            Weekly Sessions
-          </div>
-          <span class="dan5-badge" id="weeklyGrowth">—</span>
-        </div>
-        <div class="chart-bar-wrap" id="weeklyChart" style="height:72px;align-items:flex-end;display:flex;gap:6px;padding:0 2px;"></div>
-        <div style="height:1px;background:var(--border);margin:6px 0 8px"></div>
-        <div style="display:flex;justify-content:space-between">
-          <span style="font-size:11px;color:var(--text3)">Mon — Sun</span>
-          <span style="font-size:11px;color:var(--gold);font-weight:700" id="weeklyTotal">0 total</span>
-        </div>
-      </div>
-
-      <!-- AGENT USAGE -->
-      <div class="dan5-card">
-        <div class="dan5-header">
-          <div class="dan5-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-            Agent Usage
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
-          <div class="stat-ring-wrap">
-            <svg class="stat-ring-svg" width="76" height="76" viewBox="0 0 76 76">
-              <circle class="stat-ring-track" cx="38" cy="38" r="30"/>
-              <circle class="stat-ring-fill" id="ring-finance" cx="38" cy="38" r="30" style="stroke-dasharray:188.5;stroke-dashoffset:188.5;transition:stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)"/>
-            </svg>
-            <div class="stat-ring-label">
-              <span class="stat-ring-num" id="ringPercent">0%</span>
-              <span class="stat-ring-sub">Finance</span>
-            </div>
-          </div>
-          <div style="flex:1;display:flex;flex-direction:column;gap:9px">
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">💰 Finance</span>
-                <span style="font-size:12px;font-weight:700;color:var(--gold)" id="agCount-finance">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--gold);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="78%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">⚖️ Legal</span>
-                <span style="font-size:12px;font-weight:700;color:var(--purple)" id="agCount-legal">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--purple);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="38%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">🚀 Career</span>
-                <span style="font-size:12px;font-weight:700;color:var(--orange)" id="agCount-career">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--orange);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="52%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">🏥 Health</span>
-                <span style="font-size:12px;font-weight:700;color:var(--green)" id="agCount-health">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--green);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="30%"></div></div>
-            </div>
-          </div>
-        </div>
-        <div style="padding:10px 12px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r-md);font-size:12px;color:var(--text2)">
-          ✦ <strong style="color:var(--gold)">Unlimited</strong> queries on Pro Plan
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ RECENT ACTIVITY ═══ -->
-    <div class="dash-activity-v5">
-      <div class="da5-header">
-        <span class="da5-title">Recent Activity</span>
-        <span class="da5-see-all" onclick="go('history')">See all →</span>
-      </div>
-      <div class="dact5-list" id="dashActivityList">
-        <div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Loading activity...</div>
-      </div>
-    </div>
-
-  </div><!-- /dash-main -->
-
-  <!-- MOBILE BOTTOM NAV — REDESIGNED -->
+  <!-- MOBILE BOTTOM NAV — keep .mob-nav-v5 unchanged -->
   <div class="mob-nav-v5">
     <div class="mnv5-item active" id="mn-dash" onclick="dashNav('dash')">
       <svg class="mnv5-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
@@ -2433,8 +2456,8 @@ footer {
       ⚠️ <span id="connectionMsg">Backend offline — make sure server is running</span>
     </div>
     <div style="display:flex;align-items:center;gap:12px;width:100%;height:40px;">
-      <div class="chat-back" onclick="go('dash')">←</div>
-      <div class="agent-box" id="chatAgentBox">💰</div>
+      <div class="chat-back" onclick="go('dash')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <div class="agent-box" id="chatAgentBox"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
       <div class="chat-agent-info">
         <div class="chat-agent-name" id="chatAgentName">Finance Agent</div>
         <div class="chat-agent-status">
@@ -2457,7 +2480,7 @@ footer {
       <textarea class="chat-textarea" id="chatInput" rows="1" placeholder="Ask me anything..."
         oninput="autoResize(this)"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"></textarea>
-      <button class="chat-send ripple-container" id="chatSendBtn" onclick="sendMsg()">➤</button>
+      <button class="chat-send ripple-container" id="chatSendBtn" onclick="sendMsg()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
     </div>
   </div>
 
@@ -2563,10 +2586,12 @@ footer {
     <div class="auth-title">Create your account</div>
     <div class="auth-sub">Start your free 7-day trial — no credit card needed</div>
     <div class="social-btn ripple-container" onclick="signInWithGoogle()">
-      <span>G</span> Continue with Google
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Continue with Google
     </div>
     <div class="social-btn ripple-container" onclick="void(0)">
-      🍎 Continue with Apple
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Continue with Apple
     </div>
     <div class="divider" style="margin:18px 0">or sign up with email</div>
     <div class="form-group">
@@ -2985,6 +3010,8 @@ if (auth) {
     updateProfilePage(user);
     // Update sidebar
     updateSidebar(user);
+    // Update dashboard greeting avatar
+    setDashGreeting();
   } else {
     // Show logged-out state
     if (loggedOut) loggedOut.style.display = 'flex';
@@ -3252,7 +3279,7 @@ function go(id) {
   const nav = document.getElementById('nav');
   if(nav) nav.style.display = NAV_HIDE.includes(id) ? 'none' : 'flex';
 
-  if(id === 'dash') initDash();
+  if(id === 'dash') { initDash(); setDashGreeting(); loadDashRecentChats(); }
   if(id === 'pricing') { setTimeout(()=>{ billingIsAnnual=true; renderBillingPrices(); },100); }
   triggerReveal();
 }
@@ -3536,22 +3563,22 @@ const DASH_CAT_PLACEHOLDERS = {
 };
 const DASH_CAT_SUGGESTIONS = {
   finance: [
-    { icon: '💡', text: 'Save tax under 80C', q: 'How to save tax under Section 80C?' },
-    { icon: '📈', text: 'SIP strategy for beginners', q: 'Best SIP strategy for beginners?' },
-    { icon: '🏦', text: 'FD vs mutual funds', q: 'Should I invest in FD or mutual funds?' },
-    { icon: '💳', text: 'Credit score tips', q: 'How to improve my CIBIL score?' }
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>', text: 'Save tax under 80C', q: 'How to save tax under Section 80C?' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>', text: 'SIP strategy for beginners', q: 'Best SIP strategy for beginners?' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', text: 'FD vs mutual funds', q: 'Should I invest in FD or mutual funds?' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>', text: 'Credit score tips', q: 'How to improve my CIBIL score?' }
   ],
   legal: [
-    { icon: '📋', text: 'Review rental agreement', q: 'Review my rental agreement for red flags' },
-    { icon: '⚖️', text: 'Employee rights', q: 'What are my rights as an employee in India?' },
-    { icon: '📝', text: 'File consumer complaint', q: 'How to file a consumer complaint online?' },
-    { icon: '🔒', text: 'Data privacy laws', q: 'What are my data privacy rights in India?' }
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', text: 'Review rental agreement', q: 'Review my rental agreement for red flags' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/></svg>', text: 'Employee rights', q: 'What are my rights as an employee in India?' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>', text: 'File consumer complaint', q: 'How to file a consumer complaint online?' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>', text: 'Data privacy laws', q: 'What are my data privacy rights in India?' }
   ],
   'health-career': [
-    { icon: '🎯', text: 'Prepare for tech interview', q: 'Prepare me for a tech interview' },
-    { icon: '💊', text: 'Decode blood report', q: 'What does this blood report mean?' },
-    { icon: '📄', text: 'Resume review', q: 'Review my resume for improvements' },
-    { icon: '🧠', text: 'Mental health tips', q: 'Daily habits for better mental health' }
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>', text: 'Prepare for tech interview', q: 'Prepare me for a tech interview' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>', text: 'Decode blood report', q: 'What does this blood report mean?' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>', text: 'Resume review', q: 'Review my resume for improvements' },
+    { icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>', text: 'Mental health tips', q: 'Daily habits for better mental health' }
   ]
 };
 
@@ -3581,19 +3608,132 @@ function fireDashPrompt() {
   if(!input || !input.value.trim()) return;
   const query = input.value.trim();
   input.value = '';
-  // Determine agent from active category
-  const activeCat = document.querySelector('.dash-cat-tab.active');
-  const cat = activeCat ? activeCat.dataset.cat : 'finance';
+  input.style.height = 'auto';
+  // Determine agent from active pill (V6) or category tab (legacy)
   let agent = 'finance';
-  if(cat === 'legal') agent = 'legal';
-  else if(cat === 'health-career' || cat === 'health') agent = 'health';
-  // Open the agent chat with the query
+  const agents = ['finance','legal','health','career'];
+  for (const a of agents) {
+    if (document.querySelector('.dash-agent-pill.active-' + a)) { agent = a; break; }
+  }
+  if (agent === 'finance') {
+    // fallback: check old category tabs if present
+    const activeCat = document.querySelector('.dash-cat-tab.active');
+    if (activeCat) {
+      const cat = activeCat.dataset.cat;
+      if(cat === 'legal') agent = 'legal';
+      else if(cat === 'health-career' || cat === 'health') agent = 'health';
+    }
+  }
   openAgent(agent);
   setTimeout(() => {
     const chatInput = document.getElementById('chatInput');
     if(chatInput) { chatInput.value = query; sendMsg(); }
   }, 400);
 }
+
+// ── DASHBOARD V6 FUNCTIONS ────────────────────────────
+
+function setDashGreeting() {
+  const hour = new Date().getHours();
+  let greeting;
+  if (hour < 12) greeting = 'Good morning';
+  else if (hour < 17) greeting = 'Good afternoon';
+  else greeting = 'Good evening';
+  const greetEl = document.getElementById('dashGreetingText');
+  if (greetEl) greetEl.textContent = greeting;
+  // Update avatar with user initial
+  const avatarEl = document.getElementById('dashAvatar');
+  if (avatarEl && auth && auth.currentUser) {
+    const name = auth.currentUser.displayName || auth.currentUser.email || 'U';
+    avatarEl.textContent = name.charAt(0).toUpperCase();
+  }
+}
+
+function selectDashAgent(el, type) {
+  document.querySelectorAll('.dash-agent-pill').forEach(p => {
+    p.classList.remove('active-finance','active-legal','active-health','active-career');
+  });
+  el.classList.add('active-' + type);
+  const placeholders = {
+    finance: 'Ask about tax saving, SIP, loans, budget...',
+    legal:   'Ask about contracts, rights, disputes...',
+    health:  'Ask about symptoms, reports, wellness...',
+    career:  'Ask about interviews, resume, salary...'
+  };
+  const input = document.getElementById('dashPromptInput');
+  if (input) input.placeholder = placeholders[type] || 'Ask me anything...';
+}
+
+function quickAskV6(question, agent) {
+  const pillEl = document.querySelector('.dash-agent-pill[data-agent="' + agent + '"]');
+  if (pillEl) selectDashAgent(pillEl, agent);
+  const input = document.getElementById('dashPromptInput');
+  if (input) { input.value = question; autoResizeDash(input); }
+  fireDashPrompt();
+}
+
+function getTimeAgo(date) {
+  const now = new Date();
+  const diff = Math.floor((now - date) / 1000);
+  if (diff < 60) return 'Just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+  return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+}
+
+async function loadDashRecentChats() {
+  const listEl = document.getElementById('dashRecentList');
+  if (!listEl) return;
+  if (!currentUser || !db) {
+    const emptyEl = document.getElementById('dashRecentEmpty');
+    if (emptyEl) emptyEl.style.display = 'flex';
+    return;
+  }
+  // Show skeleton loading
+  listEl.innerHTML = [1,2,3].map(() =>
+    '<div class="skeleton" style="height:52px;border-radius:10px;margin-bottom:6px"></div>'
+  ).join('');
+  try {
+    const agentTypes = ['finance','legal','health','career'];
+    const agentColors = { finance:'var(--gold)', legal:'var(--purple)', health:'var(--green)', career:'var(--orange)' };
+    const agentNames  = { finance:'Finance Agent', legal:'Legal Agent', health:'Health Agent', career:'Career Agent' };
+    const chatsRef = db.collection('users').doc(currentUser.uid).collection('chats');
+    let allMsgs = [];
+    for (const ag of agentTypes) {
+      const snap = await chatsRef.doc(ag).collection('messages')
+        .where('role','==','user').orderBy('timestamp','desc').limit(3).get();
+      snap.forEach(doc => allMsgs.push({ ...doc.data(), agent: ag, id: doc.id }));
+    }
+    allMsgs.sort((a, b) => {
+      const ta = a.timestamp && a.timestamp.toDate ? a.timestamp.toDate().getTime() : 0;
+      const tb = b.timestamp && b.timestamp.toDate ? b.timestamp.toDate().getTime() : 0;
+      return tb - ta;
+    });
+    const recent = allMsgs.slice(0, 5);
+    if (recent.length === 0) {
+      listEl.innerHTML = '<div class="dash-recent-empty" id="dashRecentEmpty"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 8px;opacity:0.3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><div>No chats yet. Start your first conversation!</div></div>';
+      return;
+    }
+    listEl.innerHTML = recent.map(m => {
+      const ts   = m.timestamp && m.timestamp.toDate ? m.timestamp.toDate() : null;
+      const time = ts ? getTimeAgo(ts) : '';
+      const col  = agentColors[m.agent] || 'var(--gold)';
+      const name = agentNames[m.agent]  || 'Agent';
+      const text = (m.content || '').substring(0, 55) + ((m.content || '').length > 55 ? '\u2026' : '');
+      return '<div class="dash-recent-item" onclick="openAgent(\'' + m.agent + '\')">' +
+        '<div class="dri-dot" style="background:' + col + ';box-shadow:0 0 6px ' + col + '"></div>' +
+        '<div class="dri-content"><div class="dri-text">' + text + '</div>' +
+        '<div class="dri-meta">' + name + ' \xb7 ' + time + '</div></div>' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;opacity:0.4"><polyline points="9 18 15 12 9 6"/></svg>' +
+        '</div>';
+    }).join('');
+  } catch(err) {
+    console.warn('Recent chats load error:', err);
+    listEl.innerHTML = '<div class="dash-recent-empty"><div>Could not load recent chats. Try again later.</div></div>';
+  }
+}
+
 
 function autoResizeDash(el) {
   el.style.height = 'auto';
@@ -3724,13 +3864,23 @@ const AGENTS = {
 
 let currentAgent = 'finance';
 
+const AGENT_SVG = {
+  finance: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  legal:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>',
+  health:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>',
+  career:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
+};
+
 async function openAgent(type) {
   currentAgent = type;
   chatHistory = [];
   const ag = AGENTS[type];
 
-  document.getElementById('chatAgentBox').textContent = ag.icon;
-  document.getElementById('chatAgentBox').className = 'agent-box ag-' + type;
+  const agBox = document.getElementById('chatAgentBox');
+  if (agBox) {
+    agBox.innerHTML = AGENT_SVG[type] || ag.icon;
+    agBox.className = 'agent-box ag-' + type;
+  }
   document.getElementById('chatAgentName').textContent = ag.name;
   document.getElementById('chatInput').placeholder = 'Ask the ' + ag.name + '...';
 
@@ -3774,7 +3924,7 @@ function addAiMsg(html) {
   const div = document.createElement('div');
   div.className = 'msg msg-ai';
   div.innerHTML = `
-    <div class="msg-av">🤖</div>
+    <div class="msg-av">${AGENT_SVG[currentAgent] || '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'}</div>
     <div class="msg-body">
       <div class="msg-bubble">${html.replace(/\n/g,'<br>')}</div>
       <div class="msg-time">Now</div>
@@ -3788,7 +3938,7 @@ function addUserMsg(text) {
   const div = document.createElement('div');
   div.className = 'msg msg-user';
   div.innerHTML = `
-    <div class="msg-av">👤</div>
+    <div class="msg-av"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
     <div class="msg-body">
       <div class="msg-bubble">${text}</div>
       <div class="msg-time">Now</div>
@@ -3801,7 +3951,7 @@ function showTyping() {
   const msgs = document.getElementById('chatMessages');
   const div = document.createElement('div');
   div.className = 'msg msg-ai'; div.id = 'typingMsg';
-  div.innerHTML = `<div class="msg-av">🤖</div><div class="msg-bubble"><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  div.innerHTML = `<div class="msg-av">${AGENT_SVG[currentAgent] || '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'}</div><div class="msg-bubble"><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
   return div;
@@ -4091,7 +4241,7 @@ function addAiErrorMsg(errorText, canRetry, lastUserMsg) {
     retryBtn = `<button onclick="(function(btn){btn.disabled=true;btn.textContent='Retrying...';document.getElementById('chatInput').value=${JSON.stringify(lastUserMsg)};sendMsg();})(this)" style="margin-top:8px;padding:5px 14px;border-radius:20px;background:rgba(91,155,248,0.15);border:1px solid rgba(91,155,248,0.3);color:#5b9bf8;font-size:12px;font-weight:600;cursor:pointer;">↺ Retry</button>`;
   }
   div.innerHTML = `
-    <div class="msg-av">🤖</div>
+    <div class="msg-av">${AGENT_SVG[currentAgent] || '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'}</div>
     <div class="msg-body">
       <div class="msg-bubble">${errorText.replace(/\n/g,'<br>')}</div>
       ${retryBtn}
