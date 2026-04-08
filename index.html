@@ -3608,7 +3608,7 @@ function fireDashPrompt() {
   if(!input || !input.value.trim()) return;
   const query = input.value.trim();
   input.value = '';
-  input.style.height = 'auto';
+  autoResizeDash(input);
   // Determine agent from active pill (V6) or category tab (legacy)
   let agent = 'finance';
   const agents = ['finance','legal','health','career'];
@@ -3720,7 +3720,9 @@ async function loadDashRecentChats() {
       const time = ts ? getTimeAgo(ts) : '';
       const col  = agentColors[m.agent] || 'var(--gold)';
       const name = agentNames[m.agent]  || 'Agent';
-      const text = (m.content || '').substring(0, 55) + ((m.content || '').length > 55 ? '\u2026' : '');
+      const rawText = (m.content || '').substring(0, 55) + ((m.content || '').length > 55 ? '\u2026' : '');
+      // Escape HTML to prevent XSS from Firestore user content
+      const text = rawText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       return '<div class="dash-recent-item" onclick="openAgent(\'' + m.agent + '\')">' +
         '<div class="dri-dot" style="background:' + col + ';box-shadow:0 0 6px ' + col + '"></div>' +
         '<div class="dri-content"><div class="dri-text">' + text + '</div>' +
