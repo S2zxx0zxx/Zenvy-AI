@@ -11,11 +11,7 @@ const allowedOrigins = [
   'http://localhost:5500',
   'http://127.0.0.1:5500',
   'http://localhost:3000',
-  'http://localhost:3001',
-  'https://zenvy-ai.vercel.app',
   'https://zenvy-ai-seven.vercel.app',
-  'https://zenvyai.in',
-  'https://www.zenvyai.in',
   'https://zenvyindia.com',
   'https://www.zenvyindia.com',
   'https://s2zxx0zxx.github.io'
@@ -24,11 +20,10 @@ const allowedOrigins = [
 // Middleware
 app.use(cors({
   origin: function(origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, Postman)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(null, true); // Allow all for now during development
     }
   },
   credentials: true

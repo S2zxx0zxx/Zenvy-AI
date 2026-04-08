@@ -1312,19 +1312,23 @@ footer {
 
 /* ═══ CATEGORY TABS ═══ */
 .dash-cat-tabs {
-  display: flex; gap: 8px; flex-wrap: nowrap;
-  overflow-x: auto; padding: 0 4px 4px;
+  display: flex; gap: 6px; flex-wrap: nowrap;
+  overflow-x: auto; padding: 0 16px 6px;
   margin-bottom: 20px; position: relative; z-index: 5;
   -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .dash-cat-tabs::-webkit-scrollbar { display: none; }
 .dash-cat-tab {
-  display: flex; align-items: center; gap: 7px;
-  padding: 9px 16px; border-radius: var(--r-full);
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: var(--r-full);
   background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-  color: var(--text2); font-size: 13px; font-weight: 600;
+  color: var(--text2); font-size: 12px; font-weight: 600;
   white-space: nowrap; cursor: pointer; transition: all 0.2s;
   flex-shrink: 0;
+  scroll-snap-align: start;
 }
 .dash-cat-tab:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.13); }
 .dash-cat-tab:active { transform: scale(0.96); }
@@ -2306,39 +2310,8 @@ footer {
         <span class="da5-title">Recent Activity</span>
         <span class="da5-see-all" onclick="go('history')">See all →</span>
       </div>
-      <div class="dact5-list">
-        <div class="dact5-item" onclick="openAgent('finance')">
-          <div class="dact5-dot" style="background:var(--gold);box-shadow:0 0 8px var(--gold)"></div>
-          <div class="dact5-content">
-            <div class="dact5-q">Should I invest in index funds or FD right now?</div>
-            <div class="dact5-meta">Finance Agent · 2h ago</div>
-          </div>
-          <div class="dact5-arrow">›</div>
-        </div>
-        <div class="dact5-item" onclick="openAgent('legal')">
-          <div class="dact5-dot" style="background:var(--purple);box-shadow:0 0 8px var(--purple)"></div>
-          <div class="dact5-content">
-            <div class="dact5-q">Rental agreement — unfair lock-in clause found</div>
-            <div class="dact5-meta">Legal Agent · Yesterday</div>
-          </div>
-          <div class="dact5-arrow">›</div>
-        </div>
-        <div class="dact5-item" onclick="openAgent('career')">
-          <div class="dact5-dot" style="background:var(--orange);box-shadow:0 0 8px var(--orange)"></div>
-          <div class="dact5-content">
-            <div class="dact5-q">How to answer weakness question in Google interview?</div>
-            <div class="dact5-meta">Career Agent · 2d ago</div>
-          </div>
-          <div class="dact5-arrow">›</div>
-        </div>
-        <div class="dact5-item" onclick="openAgent('health')">
-          <div class="dact5-dot" style="background:var(--green);box-shadow:0 0 8px var(--green)"></div>
-          <div class="dact5-content">
-            <div class="dact5-q">Elevated WBC levels — detailed blood report decoded</div>
-            <div class="dact5-meta">Health Agent · 3d ago</div>
-          </div>
-          <div class="dact5-arrow">›</div>
-        </div>
+      <div class="dact5-list" id="dashActivityList">
+        <div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Loading activity...</div>
       </div>
     </div>
 
@@ -2798,16 +2771,22 @@ const firebaseConfig = {
   messagingSenderId: "222450681586",
   appId: "1:222450681586:web:5ac468faea5a18f2abf26b"
 };
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db   = firebase.firestore();
-const googleProvider = new firebase.auth.GoogleAuthProvider();
+let auth, db, googleProvider;
+try {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  db   = firebase.firestore();
+  googleProvider = new firebase.auth.GoogleAuthProvider();
+} catch(e) {
+  console.warn('Firebase init failed:', e.message);
+}
 
 // ── CURRENT USER ─────────────────────────────────────
 let currentUser = null;
 
 // ── AUTH STATE LISTENER ──────────────────────────────
-auth.onAuthStateChanged(user => {
+if (auth) {
+  auth.onAuthStateChanged(user => {
   currentUser = user;
   const loggedOut = document.getElementById('navLoggedOut');
   const loggedIn  = document.getElementById('navLoggedIn');
@@ -2842,7 +2821,8 @@ auth.onAuthStateChanged(user => {
     if (loggedOut) loggedOut.style.display = 'flex';
     if (loggedIn)  loggedIn.style.display  = 'none';
   }
-});
+  });
+}
 
 function updateProfilePage(user) {
   const avEl   = document.querySelector('.profile-av-lg');
@@ -3022,8 +3002,18 @@ function scrollTo(id) {
   if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+function getRelativeTime(date) {
+  const now = new Date();
+  const diff = Math.floor((now - date) / 1000);
+  if (diff < 60) return 'Just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+  return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+}
+
 // ── DASHBOARD ─────────────────────────────────────────
-function initDash() {
+async function initDash() {
   const d = new Date();
   const el = document.getElementById('dashDate');
   if(el) el.textContent = d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -3032,7 +3022,7 @@ function initDash() {
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
   const greetEl = document.querySelector('.dash-hero-title');
   // Set user name in topbar pill
-  const user = firebase.auth().currentUser;
+  const user = auth && auth.currentUser;
   if(user) {
     const nameEl = document.getElementById('dashUserName');
     if(nameEl) nameEl.textContent = (user.displayName ? user.displayName.split(' ')[0] : 'Your') + '\'s Space';
@@ -3042,6 +3032,181 @@ function initDash() {
     renderWeeklyChart();
     animateRings();
   }, 300);
+
+  // Load real stats from Firestore
+  if (user && db) {
+    try {
+      // Get total sessions count
+      const chatsRef = db.collection('users').doc(user.uid).collection('chats');
+      const agentTypes = ['finance', 'legal', 'health', 'career'];
+      let totalSessions = 0;
+      let todaySessions = 0;
+      const today = new Date().toISOString().split('T')[0];
+
+      for (const agent of agentTypes) {
+        const snap = await chatsRef.doc(agent).collection('messages')
+          .where('role', '==', 'user').get();
+        totalSessions += snap.size;
+
+        // Count today's messages
+        snap.forEach(doc => {
+          const ts = doc.data().timestamp;
+          if (ts && ts.toDate && ts.toDate().toISOString().split('T')[0] === today) {
+            todaySessions++;
+          }
+        });
+      }
+
+      // Update UI
+      const sessEl = document.getElementById('qsSessions');
+      const todayEl = document.getElementById('qsToday');
+      if (sessEl) sessEl.textContent = totalSessions || '0';
+      if (todayEl) todayEl.textContent = todaySessions || '0';
+
+      // Streak from usage collection
+      const usageRef = db.collection('users').doc(user.uid).collection('usage');
+      const usageSnap = await usageRef.orderBy('date', 'desc').limit(30).get();
+      let streak = 0;
+      const dates = [];
+      usageSnap.forEach(doc => dates.push(doc.id));
+
+      // Calculate consecutive days
+      const now = new Date();
+      for (let i = 0; i < 30; i++) {
+        const d = new Date(now);
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().split('T')[0];
+        if (dates.includes(key)) streak++;
+        else break;
+      }
+      const streakEl = document.getElementById('qsStreak');
+      if (streakEl) streakEl.textContent = streak || '0';
+
+      // Update agent query counts in agent cards
+      for (const agent of agentTypes) {
+        const snap = await chatsRef.doc(agent).collection('messages')
+          .where('role', '==', 'user').get();
+        const count = snap.size;
+        // Update da5-card query counts
+        const cards = document.querySelectorAll('.da5-card');
+        cards.forEach(card => {
+          if (card.classList.contains('ag-' + agent)) {
+            const qEl = card.querySelector('.da5-queries');
+            if (qEl) qEl.textContent = count + ' queries';
+          }
+        });
+      }
+
+      // Load recent activity from Firestore
+      const actList = document.getElementById('dashActivityList');
+      if (actList) {
+        const agentColors = { finance: 'var(--gold)', legal: 'var(--purple)', health: 'var(--green)', career: 'var(--orange)' };
+        const agentNames = { finance: 'Finance Agent', legal: 'Legal Agent', health: 'Health Agent', career: 'Career Agent' };
+        let allMsgs = [];
+
+        for (const agent of agentTypes) {
+          const snap = await chatsRef.doc(agent).collection('messages')
+            .where('role', '==', 'user')
+            .orderBy('timestamp', 'desc')
+            .limit(3)
+            .get();
+          snap.forEach(doc => {
+            const d = doc.data();
+            allMsgs.push({ ...d, agent, id: doc.id });
+          });
+        }
+
+        // Sort by timestamp descending
+        allMsgs.sort((a, b) => {
+          const ta = a.timestamp?.toDate?.() || new Date(0);
+          const tb = b.timestamp?.toDate?.() || new Date(0);
+          return tb - ta;
+        });
+
+        // Take top 5
+        allMsgs = allMsgs.slice(0, 5);
+
+        if (allMsgs.length === 0) {
+          actList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">No activity yet. Start a conversation!</div>';
+        } else {
+          actList.innerHTML = allMsgs.map(m => {
+            const time = m.timestamp?.toDate?.();
+            const timeStr = time ? getRelativeTime(time) : '';
+            const color = agentColors[m.agent] || 'var(--gold)';
+            const name = agentNames[m.agent] || 'Agent';
+            const text = (m.content || '').substring(0, 60) + ((m.content || '').length > 60 ? '...' : '');
+            return `<div class="dact5-item" onclick="openAgent('${m.agent}')">
+              <div class="dact5-dot" style="background:${color};box-shadow:0 0 8px ${color}"></div>
+              <div class="dact5-content">
+                <div class="dact5-q">${text}</div>
+                <div class="dact5-meta">${name} · ${timeStr}</div>
+              </div>
+              <div class="dact5-arrow">›</div>
+            </div>`;
+          }).join('');
+        }
+      }
+
+      // Update progress bars with real data
+      const totalAll = totalSessions || 1;
+      const agentCounts = {};
+      for (const agent of agentTypes) {
+        const snap = await chatsRef.doc(agent).collection('messages')
+          .where('role', '==', 'user').get();
+        agentCounts[agent] = snap.size;
+      }
+
+      // Update progress bars
+      const progressMap = {
+        finance: { bar: 0, color: 'var(--gold)' },
+        legal: { bar: 1, color: 'var(--purple)' },
+        career: { bar: 2, color: 'var(--orange)' },
+        health: { bar: 3, color: 'var(--green)' }
+      };
+      const progressBars = document.querySelectorAll('.progress-fill[data-width]');
+
+      Object.entries(agentCounts).forEach(([agent, count]) => {
+        const pct = Math.round((count / totalAll) * 100);
+        const info = progressMap[agent];
+        if (info && progressBars[info.bar]) {
+          progressBars[info.bar].setAttribute('data-width', pct + '%');
+        }
+      });
+
+      // Update ring chart
+      const finPct = agentCounts.finance ? Math.round((agentCounts.finance / totalAll) * 100) : 0;
+      const ringNum = document.querySelector('.stat-ring-num');
+      if (ringNum) ringNum.textContent = finPct + '%';
+
+      // Re-animate
+      animateProgressBars();
+      animateRings();
+
+      // Update weekly chart with real data
+      const weeklyData = [0,0,0,0,0,0,0]; // Mon-Sun
+      for (const agent of agentTypes) {
+        const snap = await chatsRef.doc(agent).collection('messages')
+          .where('role', '==', 'user').get();
+        snap.forEach(doc => {
+          const ts = doc.data().timestamp;
+          if (ts && ts.toDate) {
+            const d = ts.toDate();
+            const dayOfWeek = d.getDay(); // 0=Sun
+            const idx = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Convert to Mon=0
+            const now = new Date();
+            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            if (d >= weekAgo) weeklyData[idx]++;
+          }
+        });
+      }
+      // Re-render chart with real data if any non-zero
+      if (weeklyData.some(v => v > 0)) {
+        renderWeeklyChartData(weeklyData);
+      }
+    } catch (err) {
+      console.warn('Stats load error:', err);
+    }
+  }
 }
 
 // ── DASH CATEGORY SELECTION ──────────────────────────
@@ -3138,6 +3303,30 @@ function renderWeeklyChart() {
         const bar = col.querySelector('.chart-bar');
         if(bar) bar.style.height = pct + '%';
       }, 50 + i*70);
+    });
+  });
+}
+
+function renderWeeklyChartData(vals) {
+  const container = document.getElementById('weeklyChart');
+  if (!container) return;
+  const days = ['M','T','W','T','F','S','S'];
+  const max = Math.max(...vals, 1);
+  container.innerHTML = '';
+  days.forEach((day, i) => {
+    const pct = Math.round((vals[i] / max) * 100);
+    const col = document.createElement('div');
+    col.className = 'chart-bar-col';
+    col.innerHTML = `
+      <div class="chart-bar" style="height:0;transition:height 0.8s cubic-bezier(0.34,1.56,0.64,1);transition-delay:${i * 0.07}s" data-h="${pct}%"></div>
+      <div class="chart-bar-label">${day}</div>
+    `;
+    container.appendChild(col);
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const bar = col.querySelector('.chart-bar');
+        if (bar) bar.style.height = pct + '%';
+      }, 50 + i * 70);
     });
   });
 }
