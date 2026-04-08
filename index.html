@@ -2321,13 +2321,13 @@ footer {
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           Upgrade
         </button>
-        <div class="dash-v6-avatar" id="dashV6Avatar" onclick="go('profile')">S</div>
+        <div class="dash-v6-avatar" id="dashV6Avatar" onclick="go('profile')">U</div>
       </div>
     </div>
 
     <!-- Greeting -->
     <div class="dash-v6-greeting">
-      <div class="dash-v6-greeting-text" id="dashV6Greeting">Good morning, Satyam</div>
+      <div class="dash-v6-greeting-text" id="dashV6Greeting">Good morning, there</div>
       <div class="dash-v6-greeting-sub">What would you like to explore today?</div>
     </div>
 
@@ -3658,12 +3658,21 @@ function renderDashV6Prompts(agent) {
   if(!grid) return;
   const prompts = V6_PROMPTS[agent] || V6_PROMPTS.finance;
   const agClass = 'ag-' + agent;
-  grid.innerHTML = prompts.map(p => `
-    <div class="dash-v6-prompt-card ${agClass}" onclick="quickAskV6(${JSON.stringify(p.q)},${JSON.stringify(agent)})">
+  grid.innerHTML = prompts.map((p, i) => `
+    <div class="dash-v6-prompt-card ${agClass}" data-prompt-idx="${i}" data-prompt-agent="${agClass.replace('ag-', '')}">
       <div class="dash-v6-prompt-icon">${AGENT_SVGS[agent] || ''}</div>
-      <div class="dash-v6-prompt-text">${p.text}</div>
+      <div class="dash-v6-prompt-text">${p.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
     </div>
   `).join('');
+  // Attach click handlers via event delegation to avoid inline-handler XSS
+  grid.querySelectorAll('.dash-v6-prompt-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const idx = parseInt(card.dataset.promptIdx, 10);
+      const ag = card.dataset.promptAgent;
+      const prompt = (V6_PROMPTS[ag] || V6_PROMPTS.finance)[idx];
+      if(prompt) quickAskV6(prompt.q, ag);
+    });
+  });
 }
 
 function quickAskV6(q, agent) {
@@ -3724,14 +3733,17 @@ async function loadDashRecentChats() {
       return;
     }
 
-    listEl.innerHTML = allMsgs.map(m => {
+    listEl.innerHTML = allMsgs.map((m, i) => {
       const time = m.timestamp?.toDate?.();
       const timeStr = getTimeAgo(time);
-      const agClass = 'ag-' + m.agent;
-      const agName = agentNames[m.agent] || 'Agent';
-      const text = (m.content || '').substring(0, 55) + ((m.content || '').length > 55 ? '…' : '');
-      const svg = AGENT_SVGS[m.agent] || '';
-      return `<div class="dash-v6-chat-item ${agClass}" onclick="openAgent('${m.agent}')">
+      // Only allow known agent types to prevent XSS
+      const safeAgent = agentTypes.includes(m.agent) ? m.agent : 'finance';
+      const agClass = 'ag-' + safeAgent;
+      const agName = agentNames[safeAgent] || 'Agent';
+      const rawText = (m.content || '').substring(0, 55) + ((m.content || '').length > 55 ? '…' : '');
+      const text = rawText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const svg = AGENT_SVGS[safeAgent] || '';
+      return `<div class="dash-v6-chat-item ${agClass}" data-chat-agent="${safeAgent}">
         <div class="dash-v6-chat-av">${svg}</div>
         <div class="dash-v6-chat-info">
           <div class="dash-v6-chat-name">${agName}</div>
@@ -3741,6 +3753,10 @@ async function loadDashRecentChats() {
         <div class="dash-v6-chat-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>`;
     }).join('');
+    // Attach click handlers via event delegation
+    listEl.querySelectorAll('.dash-v6-chat-item').forEach(item => {
+      item.addEventListener('click', () => openAgent(item.dataset.chatAgent));
+    });
   } catch(err) {
     console.warn('loadDashRecentChats error:', err);
     listEl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Could not load recent chats</div>';
@@ -3924,6 +3940,8 @@ function addAiMsg(html) {
   div.className = 'msg msg-ai';
   div.innerHTML = `
     <div class="msg-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M12 3v4"/><circle cx="12" cy="3" r="1"/><path d="M7 16h.01"/><path d="M12 16h.01"/><path d="M17 16h.01"/></svg></div>
+    <div class="msg-body">
+      <div class="msg-bubble">${html.replace(/\n/g,'<br>')}</div>
       <div class="msg-time">Now</div>
     </div>`;
   msgs.appendChild(div);
