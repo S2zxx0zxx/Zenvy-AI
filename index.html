@@ -1668,7 +1668,7 @@ footer {
   <div onclick="go('pricing');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">💎 Pricing</div>
   <div onclick="go('about');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">ℹ️ About</div>
   <div style="height:1px;background:rgba(255,255,255,0.06);margin:8px 0"></div>
-  <button onclick="signInWithGoogle();document.getElementById('mobileMenu').style.display='none'" style="width:100%;padding:14px;background:#d4a843;color:#080810;font-weight:700;font-size:15px;border:none;border-radius:12px;cursor:pointer;font-family:inherit;">Get Started Free →</button>
+  <button onclick="go('dash');document.getElementById('mobileMenu').style.display='none'" style="width:100%;padding:14px;background:#d4a843;color:#080810;font-weight:700;font-size:15px;border:none;border-radius:12px;cursor:pointer;font-family:inherit;">Get Started Free →</button>
 </div>
 <!-- TOAST -->
 
@@ -1691,8 +1691,8 @@ footer {
   <div class="nav-actions" id="navActions">
     <!-- Auth state: shown when logged out -->
     <div id="navLoggedOut" style="display:flex;align-items:center;gap:8px">
-      <button class="btn btn-ghost btn-sm" onclick="signInWithGoogle()">Log in</button>
-      <button class="btn btn-primary btn-sm ripple-container" onclick="signInWithGoogle()" id="navCta">Get Started</button>
+      <button class="btn btn-ghost btn-sm" onclick="go('dash')">Log in</button>
+      <button class="btn btn-primary btn-sm ripple-container" onclick="go('dash')" id="navCta">Get Started</button>
     </div>
     <!-- Auth state: shown when logged in -->
     <div id="navLoggedIn" style="display:none;align-items:center;gap:10px">
@@ -2006,7 +2006,7 @@ footer {
   <div class="cta-banner reveal">
     <div class="cta-title">Stop paying for<br>expert advice.</div>
     <div class="cta-sub">Join 2.4 million people using Zenvy AI to make smarter life decisions.</div>
-    <button class="btn btn-primary btn-lg ripple-container" onclick="go('auth')">Create Free Account →</button>
+    <button class="btn btn-primary btn-lg ripple-container" onclick="go('dash')">Create Free Account →</button>
   </div>
 
   <!-- FOOTER -->
@@ -3143,14 +3143,7 @@ function go(id) {
   const nav = document.getElementById('nav');
   if(nav) nav.style.display = NAV_HIDE.includes(id) ? 'none' : 'flex';
 
-  if(id === 'dash') {
-    if (!currentUser) {
-      showToast('Please sign in first');
-      go('auth');
-      return;
-    }
-    initDash();
-  }
+  if(id === 'dash') initDash();
   if(id === 'pricing') { setTimeout(()=>{ billingIsAnnual=true; renderBillingPrices(); },100); }
   triggerReveal();
 }
@@ -3599,11 +3592,6 @@ let currentAgent = 'finance';
 
 async function openAgent(type) {
   currentAgent = type;
-  if (!currentUser) {
-    showToast('Please sign in to use AI agents');
-    go('auth');
-    return;
-  }
   chatHistory = [];
   const ag = AGENTS[type];
 
@@ -3703,7 +3691,7 @@ async function sendMsg() {
   const typing = showTyping();
 
   // ── RATE LIMIT CHECK (Firestore) ──────────────────
-  const allowed = await checkRateLimit();
+  const allowed = currentUser ? await checkRateLimit() : true;
   if (!allowed) {
     typing.remove();
     addAiMsg('⚠️ Daily limit reached. Upgrade to Pro for unlimited access.');
@@ -3751,8 +3739,8 @@ async function sendMsg() {
     chatHistory.push({ role: 'assistant', content: reply });
 
     // Save to Firestore
-    saveMsgToFirestore(currentAgent, 'user', text);
-    saveMsgToFirestore(currentAgent, 'assistant', reply);
+    if (currentUser) saveMsgToFirestore(currentAgent, 'user', text);
+    if (currentUser) saveMsgToFirestore(currentAgent, 'assistant', reply);
 
   } catch (err) {
     typing.remove();
@@ -3893,6 +3881,10 @@ document.addEventListener('click', function(e) {
 
 // ── INIT ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW registration failed:', err));
+  }
+
   go('home');
 
   // Counter observer
