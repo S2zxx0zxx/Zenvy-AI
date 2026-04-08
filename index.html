@@ -3917,7 +3917,7 @@ function changePassword() {
 function deleteAccount() {
   if (!currentUser) return;
   if (!confirm('Delete your account permanently? This cannot be undone.')) return;
-  auth.currentUser.delete()
+  currentUser.delete()
     .then(() => { showToast('Account deleted'); go('home'); })
     .catch(() => showToast('Failed to delete account. Please sign out and sign in again, then try.'));
 }
