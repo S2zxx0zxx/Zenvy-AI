@@ -2,7 +2,7 @@
   "name": "Zenvy AI",
   "short_name": "Zenvy",
   "description": "Your Indian AI Life OS — Finance, Legal, Health, Career",
-  "start_url": "./zenvyv2.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#050508",
   "theme_color": "#050508",
