@@ -4350,7 +4350,7 @@ function fireDashPrompt() {
   input.value = '';
   autoResizeDash(input);
   // Use currently selected agent
-  const agent = zdCurrentAgent || currentDashAgent || 'finance';
+  const agent = zdCurrentAgent || 'finance';
   // Open the agent chat with the query
   openAgent(agent);
   setTimeout(() => {
@@ -4958,7 +4958,7 @@ function dv6UpdateRing(used, max) {
   const circle = document.getElementById('dv6RingCircle');
   const countEl = document.getElementById('dv6RingCount');
   if (!circle || !countEl) return;
-  const circumference = 113;
+  const circumference = 113; // 2 * π * r where r=18 (SVG circle radius)
   const pct = Math.min(used / max, 1);
   const offset = circumference - (pct * circumference);
   circle.style.strokeDashoffset = offset;
