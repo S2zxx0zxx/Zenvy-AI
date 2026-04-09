@@ -2078,6 +2078,264 @@ footer {
 .pf-agent-name { font-size:14px;font-weight:600;color:var(--text); }
 .pf-agent-desc { font-size:12px;color:var(--text3);margin-top:1px; }
 .pf-footer { text-align:center;padding:20px;font-size:12px;color:var(--text3);line-height:1.8; }
+
+/* ═══════════════════════════════
+   ZENVY DASHBOARD — INPUT UPGRADE
+═══════════════════════════════ */
+
+/* Input box top row: mini agent pill + textarea */
+.dv6-input-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Mini Agent Selector Pill */
+.dv6-mini-agent {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px 6px 8px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid rgba(212,168,67,0.35);
+  color: var(--gold);
+  position: relative;
+  transition: all 0.2s;
+  background: linear-gradient(135deg, rgba(212,168,67,0.12), rgba(212,168,67,0.04));
+  box-shadow: 0 0 12px rgba(212,168,67,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.dv6-mini-agent:hover {
+  background: linear-gradient(135deg, rgba(212,168,67,0.2), rgba(212,168,67,0.08));
+  border-color: rgba(212,168,67,0.6);
+  box-shadow: 0 0 20px rgba(212,168,67,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+.dv6-mini-agent.ag-legal {
+  border-color: rgba(167,139,250,0.4);
+  color: #a78bfa;
+  background: linear-gradient(135deg, rgba(167,139,250,0.12), rgba(167,139,250,0.04));
+  box-shadow: 0 0 12px rgba(167,139,250,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.dv6-mini-agent.ag-health {
+  border-color: rgba(52,211,153,0.4);
+  color: #34d399;
+  background: linear-gradient(135deg, rgba(52,211,153,0.12), rgba(52,211,153,0.04));
+  box-shadow: 0 0 12px rgba(52,211,153,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.dv6-mini-agent.ag-career {
+  border-color: rgba(251,146,60,0.4);
+  color: #fb923c;
+  background: linear-gradient(135deg, rgba(251,146,60,0.12), rgba(251,146,60,0.04));
+  box-shadow: 0 0 12px rgba(251,146,60,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.dv6-mini-emoji { font-size: 14px; }
+.dv6-mini-name { font-size: 12px; }
+
+.dv6-mini-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+/* Textarea inside dv6-input-top */
+.dv6-input-top .dv6-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  resize: none;
+  max-height: 100px;
+  line-height: 1.5;
+  outline: none;
+}
+.dv6-input-top .dv6-textarea::placeholder { color: var(--text3); }
+
+/* Input bottom row: model tag + actions */
+.dv6-input-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dv6-model-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 3px 8px;
+  letter-spacing: 0.3px;
+}
+
+/* Mini dropdown menu */
+.dv6-mini-dropdown {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 0;
+  width: 220px;
+  background: #13131f;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 6px;
+  z-index: 600;
+  box-shadow: 0 -16px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,168,67,0.08);
+  animation: miniDrop 0.18s ease;
+}
+@keyframes miniDrop {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.dv6-mini-dd-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  transition: background 0.15s;
+}
+.dv6-mini-dd-item:hover { background: rgba(255,255,255,0.06); }
+.dv6-mini-dd-sub {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 400;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.dv6-mini-dd-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 4px 6px;
+}
+.dv6-locked { opacity: 0.5; }
+.dv6-mini-dd-pro {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(212,168,67,0.12);
+  border: 1px solid rgba(212,168,67,0.25);
+  border-radius: 6px;
+  padding: 1px 6px;
+  margin-left: auto;
+}
+
+/* ═══════════════════════════════
+   ZENVY DASHBOARD — HERO UPGRADE
+═══════════════════════════════ */
+.dv6-hero {
+  padding: 20px 16px 4px;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dv6-hero-top {
+  text-align: left;
+}
+.dv6-hero-greeting {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+}
+.dv6-hero-sub {
+  font-size: 14px;
+  color: var(--text3);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Agent Glow Card */
+.dv6-agent-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px 18px;
+  transition: all 0.3s;
+}
+.dv6-agent-card:hover {
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
+.dv6-agent-card-glow {
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,168,67,0.18) 0%, transparent 70%);
+  pointer-events: none;
+  transition: background 0.4s;
+}
+.dv6-agent-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+.dv6-agent-emoji-lg {
+  font-size: 36px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(212,168,67,0.4));
+  transition: filter 0.3s;
+}
+.dv6-agent-info { flex: 1; min-width: 0; }
+.dv6-agent-name-lg {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.dv6-agent-desc-lg {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Usage Ring */
+.dv6-usage-ring {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+.dv6-ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text2);
+  gap: 0;
+}
+#dv6RingCount {
+  color: var(--gold);
+  font-size: 11px;
+}
 </style>
 </head>
 <body>
@@ -2532,9 +2790,34 @@ footer {
 
   <!-- ── MAIN CONTENT ── -->
   <div class="zd-main" id="zdMain">
-    <div class="zd-greeting-section">
-      <div class="zd-greeting-text" id="zdGreetingText">Good morning 👋</div>
-      <div class="zd-greeting-sub">What would you like to explore today?</div>
+    <div class="dv6-hero">
+      <!-- Greeting -->
+      <div class="dv6-hero-top">
+        <div class="dv6-hero-greeting" id="dashV6Greeting">Good morning, there</div>
+        <div class="dv6-hero-sub" id="dv6HeroSub">Your Finance Expert is Ready</div>
+      </div>
+
+      <!-- Agent Glow Card -->
+      <div class="dv6-agent-card" id="dv6AgentCard">
+        <div class="dv6-agent-card-glow" id="dv6AgentGlow"></div>
+        <div class="dv6-agent-card-inner">
+          <div class="dv6-agent-emoji-lg" id="dv6AgentEmoji">💰</div>
+          <div class="dv6-agent-info">
+            <div class="dv6-agent-name-lg" id="dv6AgentNameLg">Finance Agent</div>
+            <div class="dv6-agent-desc-lg" id="dv6AgentDescLg">Investments · Tax · SIP · Loans · Budget</div>
+          </div>
+          <div class="dv6-usage-ring" id="dv6UsageRing">
+            <svg width="44" height="44" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"></circle>
+              <circle cx="22" cy="22" r="18" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113" id="dv6RingCircle" transform="rotate(-90 22 22)"></circle>
+            </svg>
+            <div class="dv6-ring-label">
+              <span id="dv6RingCount">0</span>
+              <span>/5</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="zd-suggestions-section">
@@ -2554,34 +2837,56 @@ footer {
 
   <!-- ── BOTTOM INPUT BAR ── -->
   <div class="zd-input-bar" id="zdInputBar">
-    <button class="zd-plus-btn" id="zdPlusBtn" onclick="togglePlusMenu()" aria-label="More options">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    </button>
-    <div class="zd-plus-menu" id="zdPlusMenu">
-      <div class="zd-plus-item" onclick="zdMenuAction('history')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        History
-      </div>
-      <div class="zd-plus-item" onclick="zdMenuAction('pricing')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Upgrade
-      </div>
-      <div class="zd-plus-item" onclick="zdMenuAction('profile')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Profile
-      </div>
-    </div>
-    <div class="zd-textarea-wrap">
-      <span id="zdInputHint" style="display:none">Press Enter to send, Shift+Enter for a new line</span>
-      <textarea class="zd-textarea" id="zdInput" rows="1"
+    <!-- Top row: mini agent pill + textarea -->
+    <div class="dv6-input-top">
+      <button class="dv6-mini-agent ag-finance" id="dv6MiniAgentBtn" onclick="toggleDv6Dropdown()" aria-label="Select agent">
+        <span class="dv6-mini-emoji" id="dv6MiniEmoji">💰</span>
+        <span class="dv6-mini-name" id="dv6MiniName">Finance</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="dv6-mini-divider"></div>
+      <textarea class="dv6-textarea" id="dashPromptInput" rows="1"
         placeholder="Ask about tax, SIP, loans, budget..."
-        aria-describedby="zdInputHint"
-        oninput="zdAutoResize(this)"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();zdSend()}"></textarea>
+        oninput="autoResizeDash(this)"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();fireDashPrompt()}"></textarea>
     </div>
-    <button class="zd-send-btn ripple-container" id="zdSendBtn" onclick="zdSend()" aria-label="Send">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-    </button>
+
+    <div class="dv6-input-bottom">
+      <span class="dv6-model-tag">Gemini 2.5 Flash</span>
+      <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+        <button class="dash-v6-btn-icon" onclick="showToast('File attachment coming soon!')" aria-label="Attach file">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+        </button>
+        <button class="dash-v6-send-btn ripple-container" id="dashSendBtn" onclick="fireDashPrompt()" aria-label="Send">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="dv6-mini-dropdown" id="dv6MiniDropdown" style="display:none">
+      <div class="dv6-mini-dd-item ag-finance" onclick="dv6SelectAgent('finance','💰','Finance')">
+        <span>💰</span><span>Finance Agent</span><span class="dv6-mini-dd-sub">Tax · SIP · Loans</span>
+      </div>
+      <div class="dv6-mini-dd-item ag-legal" onclick="dv6SelectAgent('legal','⚖️','Legal')">
+        <span>⚖️</span><span>Legal Agent</span><span class="dv6-mini-dd-sub">Rights · Contracts</span>
+      </div>
+      <div class="dv6-mini-dd-item ag-health" onclick="dv6SelectAgent('health','🏥','Health')">
+        <span>🏥</span><span>Health Agent</span><span class="dv6-mini-dd-sub">Symptoms · Reports</span>
+      </div>
+      <div class="dv6-mini-dd-item ag-career" onclick="dv6SelectAgent('career','💼','Career')">
+        <span>💼</span><span>Career Agent</span><span class="dv6-mini-dd-sub">Jobs · Resume · Salary</span>
+      </div>
+      <div class="dv6-mini-dd-divider"></div>
+      <div class="dv6-mini-dd-item dv6-locked" onclick="showToast('Resume AI coming soon in Pro plan! 🔒')">
+        <span>📄</span><span>Resume AI</span><span class="dv6-mini-dd-pro">Pro</span>
+      </div>
+      <div class="dv6-mini-dd-item dv6-locked" onclick="showToast('Presentation AI coming soon in Pro plan! 🔒')">
+        <span>🎯</span><span>Presentation AI</span><span class="dv6-mini-dd-pro">Pro</span>
+      </div>
+      <div class="dv6-mini-dd-item dv6-locked" onclick="showToast('Coding AI coming soon in Pro plan! 🔒')">
+        <span>💻</span><span>Coding AI</span><span class="dv6-mini-dd-pro">Pro</span>
+      </div>
+    </div>
   </div>
 
   <!-- ── BOTTOM NAVIGATION (5 items) ── -->
@@ -4044,19 +4349,8 @@ function fireDashPrompt() {
   const query = input.value.trim();
   input.value = '';
   autoResizeDash(input);
-  // Determine agent from active v6 pill (fall back to v5 cat tabs)
-  const activePill = document.querySelector('.dash-v6-pill.active');
-  let agent = 'finance';
-  if(activePill) {
-    if(activePill.classList.contains('ag-legal')) agent = 'legal';
-    else if(activePill.classList.contains('ag-health')) agent = 'health';
-    else if(activePill.classList.contains('ag-career')) agent = 'career';
-  } else {
-    const activeCat = document.querySelector('.dash-cat-tab.active');
-    const cat = activeCat ? activeCat.dataset.cat : 'finance';
-    if(cat === 'legal') agent = 'legal';
-    else if(cat === 'health-career' || cat === 'health') agent = 'health';
-  }
+  // Use currently selected agent
+  const agent = zdCurrentAgent || 'finance';
   // Open the agent chat with the query
   openAgent(agent);
   setTimeout(() => {
@@ -4321,6 +4615,7 @@ function zdInit() {
   zdRenderAgentDropdown();
   zdRenderSuggestions(zdCurrentAgent);
   zdLoadUsage();
+  dv6Init();
 }
 
 function zdSetGreeting() {
@@ -4330,6 +4625,9 @@ function zdSetGreeting() {
   const firstName = user ? ((user.displayName || user.email || '').split(' ')[0] || 'there') : 'there';
   const el = document.getElementById('zdGreetingText');
   if (el) el.textContent = greeting + ', ' + firstName + ' 👋';
+  // Update new hero greeting
+  const heroEl = document.getElementById('dashV6Greeting');
+  if (heroEl) heroEl.textContent = greeting + ', ' + firstName;
 }
 
 function zdUpdateAvatar() {
@@ -4368,6 +4666,7 @@ function zdSelectAgent(agentId) {
   zdRenderSuggestions(agentId);
   zdRenderAgentDropdown();
   closeAllMenus();
+  dv6UpdateAgentCard(agentId);
 }
 
 function zdRenderSuggestions(agentId) {
@@ -4445,6 +4744,8 @@ async function zdLoadUsage() {
     barEl.style.display = 'flex';
     const sbPlan = document.getElementById('zdSidebarPlan');
     if (sbPlan) sbPlan.textContent = isPro ? 'Pro Plan ✦' : 'Free Plan';
+    // Update usage ring in hero card
+    dv6UpdateRing(count, 5);
   } catch (err) {
     console.warn('zdLoadUsage error:', err);
   }
@@ -4472,9 +4773,9 @@ function zdSend() {
 }
 
 function zdQuickAsk(q) {
-  const input = document.getElementById('zdInput');
-  if (input) { input.value = q; zdAutoResize(input); }
-  zdSend();
+  const input = document.getElementById('dashPromptInput');
+  if (input) { input.value = q; autoResizeDash(input); }
+  fireDashPrompt();
 }
 
 function toggleAgentSelector() {
@@ -4539,7 +4840,7 @@ function zdNavSwitch(view) {
   if (view === 'history') { go('history'); return; }
   if (view === 'account') { go('profile'); return; }
   if (view === 'send') {
-    const input = document.getElementById('zdInput');
+    const input = document.getElementById('dashPromptInput');
     if (input) input.focus();
     return;
   }
@@ -4563,7 +4864,106 @@ document.addEventListener('click', function(e) {
       closeAllMenus();
     }
   }
+  // Close dv6 mini dropdown on outside click
+  const dv6DD = document.getElementById('dv6MiniDropdown');
+  const dv6Btn = document.getElementById('dv6MiniAgentBtn');
+  if (dv6DD && dv6DD.style.display !== 'none') {
+    if (!dv6DD.contains(e.target) && dv6Btn && !dv6Btn.contains(e.target)) {
+      dv6DD.style.display = 'none';
+    }
+  }
 }, true);
+
+// ── DV6 HERO + INPUT FUNCTIONS ────────────────────────
+
+const DV6_AGENT_GLOWS = {
+  finance: 'radial-gradient(circle, rgba(212,168,67,0.18) 0%, transparent 70%)',
+  legal:   'radial-gradient(circle, rgba(167,139,250,0.18) 0%, transparent 70%)',
+  health:  'radial-gradient(circle, rgba(52,211,153,0.18) 0%, transparent 70%)',
+  career:  'radial-gradient(circle, rgba(251,146,60,0.18) 0%, transparent 70%)'
+};
+
+const DV6_AGENT_DESCS = {
+  finance: 'Investments · Tax · SIP · Loans · Budget',
+  legal:   'Rights · Contracts · Disputes · Documents',
+  health:  'Symptoms · Reports · Medications · Wellness',
+  career:  'Interviews · Resume · Salary · Career Growth'
+};
+
+const DV6_HERO_SUBS = {
+  finance: 'Your Finance Expert is Ready',
+  legal:   'Your Legal Expert is Ready',
+  health:  'Your Health Expert is Ready',
+  career:  'Your Career Expert is Ready'
+};
+
+function dv6Init() {
+  dv6UpdateAgentCard(zdCurrentAgent);
+}
+
+function dv6UpdateAgentCard(agentId) {
+  if (!AGENT_CONFIG[agentId]) return;
+  const cfg = AGENT_CONFIG[agentId];
+
+  // Update hero sub
+  const subEl = document.getElementById('dv6HeroSub');
+  if (subEl) subEl.textContent = DV6_HERO_SUBS[agentId] || cfg.tagline + ' is Ready';
+
+  // Update agent card
+  const emojiEl = document.getElementById('dv6AgentEmoji');
+  if (emojiEl) emojiEl.textContent = cfg.emoji;
+
+  const nameEl = document.getElementById('dv6AgentNameLg');
+  if (nameEl) nameEl.textContent = cfg.tagline;
+
+  const descEl = document.getElementById('dv6AgentDescLg');
+  if (descEl) descEl.textContent = DV6_AGENT_DESCS[agentId] || cfg.description;
+
+  const glowEl = document.getElementById('dv6AgentGlow');
+  if (glowEl) glowEl.style.background = DV6_AGENT_GLOWS[agentId] || DV6_AGENT_GLOWS.finance;
+
+  // Update mini pill in input bar
+  const pillBtn = document.getElementById('dv6MiniAgentBtn');
+  const pillEmoji = document.getElementById('dv6MiniEmoji');
+  const pillName = document.getElementById('dv6MiniName');
+  if (pillBtn) {
+    pillBtn.className = 'dv6-mini-agent ' + cfg.colorClass;
+  }
+  if (pillEmoji) pillEmoji.textContent = cfg.emoji;
+  if (pillName) pillName.textContent = cfg.tagline.replace(' Agent', '');
+
+  // Update textarea placeholder
+  const input = document.getElementById('dashPromptInput');
+  if (input) input.placeholder = cfg.placeholder;
+}
+
+function toggleDv6Dropdown() {
+  const dd = document.getElementById('dv6MiniDropdown');
+  if (!dd) return;
+  const isOpen = dd.style.display !== 'none';
+  dd.style.display = isOpen ? 'none' : 'block';
+}
+
+function dv6SelectAgent(type, emoji, name) {
+  zdCurrentAgent = type;
+  currentDashAgent = type;
+  dv6UpdateAgentCard(type);
+  zdRenderSuggestions(type);
+  zdRenderAgentDropdown();
+  const dd = document.getElementById('dv6MiniDropdown');
+  if (dd) dd.style.display = 'none';
+}
+
+function dv6UpdateRing(used, max) {
+  const circle = document.getElementById('dv6RingCircle');
+  const countEl = document.getElementById('dv6RingCount');
+  if (!circle || !countEl) return;
+  const circumference = 113; // 2 * π * r where r=18 (SVG circle radius)
+  const pct = Math.min(used / max, 1);
+  const offset = circumference - (pct * circumference);
+  circle.style.strokeDashoffset = offset;
+  countEl.textContent = used;
+}
 
 // ── END ZD FUNCTIONS ──────────────────────────────────
 
