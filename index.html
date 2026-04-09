@@ -24,7 +24,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Zenvy AI">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="favicon.svg">
 
 <!-- SEO -->
 <meta name="description" content="Zenvy AI — Your Personal AI Life OS. Get expert-level guidance on Finance, Legal, Health, and Career. Powered by AI agents. Free to start. No hidden fees.">
@@ -2599,12 +2599,12 @@ footer {
   <div class="profile-page-inner">
 
     <div class="profile-header-card">
-      <div class="profile-av-lg">S</div>
+      <div class="profile-av-lg" id="profileAvLg">U</div>
       <div style="flex:1">
-        <div class="profile-name-lg">Satyam Kumar</div>
+        <div class="profile-name-lg" id="profileNameLg">User</div>
         <div class="profile-email" id="profileEmail">user@email.com</div>
         <div class="profile-badges">
-          <span class="badge badge-blue">⭐ Pro</span>
+          <span class="badge badge-green" id="profilePlanBadge">🆓 Free</span>
           <span class="badge badge-green">🌍 Global</span>
         </div>
       </div>
@@ -2614,8 +2614,8 @@ footer {
     <div class="plan-banner">
       <div class="plan-icon">⭐</div>
       <div>
-        <div class="plan-name">Pro Plan</div>
-        <div class="plan-desc">Next billing May 7, 2026 · ₹499</div>
+        <div class="plan-name" id="profilePlanName">Free Plan</div>
+        <div class="plan-desc" id="profilePlanDesc">5 queries/day</div>
       </div>
       <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="go('pricing')">Manage</button>
     </div>
@@ -3011,12 +3011,47 @@ if (auth) {
 }
 
 function updateProfilePage(user) {
-  const avEl   = document.querySelector('.profile-av-lg');
-  const nameEl = document.querySelector('.profile-name-lg');
-  const emailEl= document.getElementById('profileEmail') || document.querySelector('.profile-email');
-  if (avEl)    avEl.textContent  = (user.displayName || 'U').charAt(0).toUpperCase();
-  if (nameEl)  nameEl.textContent = user.displayName || 'User';
+  // Avatar
+  const initial = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+  const avEl = document.getElementById('profileAvLg') || document.querySelector('.profile-av-lg');
+  if (avEl) avEl.textContent = initial;
+
+  // Name
+  const nameEl = document.getElementById('profileNameLg') || document.querySelector('.profile-name-lg');
+  if (nameEl) nameEl.textContent = user.displayName || 'User';
+
+  // Email
+  const emailEl = document.getElementById('profileEmail') || document.querySelector('.profile-email');
   if (emailEl) emailEl.textContent = user.email || '';
+
+  // Plan badge + banner (check Firestore for plan)
+  const planBadge = document.getElementById('profilePlanBadge');
+  const planName = document.getElementById('profilePlanName');
+  const planDesc = document.getElementById('profilePlanDesc');
+
+  if (db && user.uid) {
+    const today = new Date().toISOString().slice(0, 10);
+    db.collection('users').doc(user.uid)
+      .collection('usage').doc(today)
+      .get()
+      .then(snap => {
+        const plan = snap.exists ? (snap.data().plan || 'free') : 'free';
+        const count = snap.exists ? (snap.data().count || 0) : 0;
+        if (plan === 'pro') {
+          if (planBadge) { planBadge.textContent = '⭐ Pro'; planBadge.className = 'badge badge-blue'; }
+          if (planName) planName.textContent = 'Pro Plan';
+          if (planDesc) planDesc.textContent = 'Unlimited queries · All 4 agents';
+        } else {
+          if (planBadge) { planBadge.textContent = '🆓 Free'; planBadge.className = 'badge badge-green'; }
+          if (planName) planName.textContent = 'Free Plan';
+          if (planDesc) planDesc.textContent = `${count}/5 queries used today · Upgrade for unlimited`;
+        }
+      })
+      .catch(() => {
+        if (planName) planName.textContent = 'Free Plan';
+        if (planDesc) planDesc.textContent = '5 queries/day';
+      });
+  }
 }
 
 function updateSidebar(user) {
