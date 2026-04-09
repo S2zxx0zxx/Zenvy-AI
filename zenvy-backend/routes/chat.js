@@ -38,7 +38,14 @@ router.post('/', authMiddleware, rateLimiter, async (req, res) => {
     if (!Array.isArray(history)) {
       history = [];
     }
-    const trimmedHistory = history.slice(-10);
+    const trimmedHistory = history.slice(-10).filter(msg =>
+      msg &&
+      typeof msg.content === 'string' &&
+      (msg.role === 'user' || msg.role === 'assistant')
+    ).map(msg => ({
+      role: msg.role,
+      content: sanitizeInput(msg.content).substring(0, 500)
+    }));
 
     const systemPrompt = SYSTEM_PROMPTS[agent];
     const model = genAI.getGenerativeModel({
