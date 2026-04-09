@@ -2838,7 +2838,7 @@ footer {
     <!-- Preferences -->
     <div class="pf-section">
       <div class="pf-section-title">Preferences</div>
-      <div class="pf-row" style="cursor:default">
+      <div class="pf-row" onclick="pfToggleDarkMode()">
         <div class="pf-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
         <div class="pf-row-info">
           <div class="pf-row-label">Dark Mode</div>
@@ -3266,6 +3266,10 @@ if (auth) {
     updateProfilePage(user);
     // Update sidebar
     updateSidebar(user);
+    // Update new dashboard elements if they exist
+    if (typeof zdSetGreeting === 'function') zdSetGreeting();
+    if (typeof zdUpdateAvatar === 'function') zdUpdateAvatar();
+    if (typeof zdLoadUsage === 'function') zdLoadUsage();
   } else {
     // Show logged-out state
     if (loggedOut) loggedOut.style.display = 'flex';
@@ -3443,6 +3447,11 @@ function pfToggleNotif() {
 
 function pfShowLanguage() {
   showToast('Language: Hindi + English (Hinglish)');
+}
+
+function pfToggleDarkMode() {
+  // Dark mode is always on for Zenvy AI — notify user
+  showToast('Dark mode is the default Zenvy AI experience', 'info');
 }
 
 async function pfExportData() {
@@ -5016,7 +5025,22 @@ document.addEventListener('DOMContentLoaded', () => {
     navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW registration failed:', err));
   }
 
-  go('home');
+  // Wait for Firebase auth state before deciding which page to show
+  if (auth) {
+    auth.onAuthStateChanged(function(user) {
+      // Only run once on initial load
+      if (typeof _initialRouted === 'undefined') {
+        window._initialRouted = true;
+        if (user) {
+          go('dash');
+        } else {
+          go('home');
+        }
+      }
+    });
+  } else {
+    go('home');
+  }
 
   // Counter observer
   const cObs = new IntersectionObserver(entries => {
