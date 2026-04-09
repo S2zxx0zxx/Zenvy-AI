@@ -2572,8 +2572,10 @@ footer {
       </div>
     </div>
     <div class="zd-textarea-wrap">
+      <span id="zdInputHint" style="display:none">Press Enter to send, Shift+Enter for a new line</span>
       <textarea class="zd-textarea" id="zdInput" rows="1"
         placeholder="Ask about tax, SIP, loans, budget..."
+        aria-describedby="zdInputHint"
         oninput="zdAutoResize(this)"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();zdSend()}"></textarea>
     </div>
@@ -3374,6 +3376,9 @@ function pfToggleEdit() {
     pfSaveName();
   } else {
     nameEl.contentEditable = 'true';
+    nameEl.setAttribute('role', 'textbox');
+    nameEl.setAttribute('aria-label', 'Edit display name');
+    nameEl.setAttribute('aria-multiline', 'false');
     nameEl.focus();
     const range = document.createRange();
     const sel = window.getSelection();
@@ -3393,6 +3398,9 @@ async function pfSaveName() {
   if (!nameEl) return;
   const newName = nameEl.textContent.trim();
   nameEl.contentEditable = 'false';
+  nameEl.removeAttribute('role');
+  nameEl.removeAttribute('aria-label');
+  nameEl.removeAttribute('aria-multiline');
   if (saveBtn) saveBtn.style.display = 'none';
   if (editToggle) editToggle.textContent = 'Edit';
   if (!newName || !currentUser) return;
@@ -3403,7 +3411,10 @@ async function pfSaveName() {
       db.collection('users').doc(currentUser.uid).set(
         { displayName: newName },
         { merge: true }
-      ).catch(function(err) { console.warn('pfSaveName Firestore error:', err); });
+      ).catch(function(err) {
+        console.warn('pfSaveName Firestore error:', err);
+        showToast('Name saved locally — sync failed');
+      });
     }
     const sbName = document.getElementById('zdSidebarName');
     if (sbName) sbName.textContent = newName.split(' ')[0];
