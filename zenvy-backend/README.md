@@ -1,71 +1,50 @@
-# Zenvy AI — Backend Server
+# Zenvy AI — Backend
 
-Express.js backend powering the Zenvy AI agents (Finance, Legal, Health, Career).
+Express.js backend for Zenvy AI. Deployed on Railway.
 
-## Tech Stack
+## Stack
 - Node.js 18+
-- Express.js
-- Anthropic Claude API
-- CORS whitelist for production security
+- Express 4
+- Gemini 1.5 Flash (Google Generative AI)
+- helmet (security headers)
+- IP-based rate limiting (5 req/day free tier)
+- X-Zenvy-Secret header auth
 
-## Local Development
+## Environment Variables (Railway)
+| Variable | Description |
+|---|---|
+| GEMINI_API_KEY | Your Google AI Studio API key |
+| BACKEND_API_SECRET | Random 32-char secret (must match frontend ZENVY_SECRET) |
+| PORT | Auto-set by Railway |
+| NODE_ENV | Set to `production` on Railway |
 
+## Local Setup
 ```bash
+cd zenvy-backend
 npm install
 cp .env.example .env
-# Fill in your API keys in .env
+# Fill in GEMINI_API_KEY and BACKEND_API_SECRET in .env
 npm run dev
 ```
 
-Server runs on `http://localhost:3001`
-
-## Environment Variables Required
-
-| Variable | Description |
-|---|---|
-| `ANTHROPIC_API_KEY` | Your Anthropic Claude API key |
-| `RAZORPAY_KEY_ID` | Razorpay Key ID (for payments) |
-| `RAZORPAY_KEY_SECRET` | Razorpay Key Secret (for payments) |
-| `PORT` | Port number (set automatically by Railway) |
-| `NODE_ENV` | Set to `production` in production |
-
-## Deployment on Railway
-
-1. Go to [railway.app](https://railway.app) → Login with GitHub
-2. **New Project** → **Deploy from GitHub repo**
-3. Select the `zenvy-backend` folder (or the whole repo and set root directory to `zenvy-backend`)
-4. Add environment variables in Railway dashboard (Settings → Variables)
-5. Railway auto-detects `npm start` from `package.json`
-6. Get your Railway URL (e.g. `https://zenvy-backend-production.up.railway.app`)
-7. Paste that URL into `API_BASE` in `zenvyv2.html`
-
 ## API Endpoints
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| GET | /api/health | None | Health check |
+| POST | /api/chat | X-Zenvy-Secret header | Send message to AI agent |
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/health` | Health check |
-| POST | `/api/chat` | Send message to AI agent |
-
-### POST /api/chat
-
-**Request body:**
+## POST /api/chat — Request Body
 ```json
 {
   "agent": "finance",
-  "message": "How to save tax under 80C?",
+  "message": "How should I invest ₹10,000/month?",
   "history": []
 }
 ```
+agent must be one of: finance, legal, health, career
 
-**Response:**
-```json
-{
-  "reply": "Under Section 80C, you can save up to ₹1.5 lakh..."
-}
-```
-
-**Agent types:** `finance` | `legal` | `health` | `career`
-
-## CORS Allowed Origins
-
-Edit `server.js` to add your production domain to `allowedOrigins`.
+## Security Notes
+- CORS: strict whitelist, no wildcard in production
+- Rate limit: IP-based, IST midnight reset, fail-closed
+- Auth: X-Zenvy-Secret validated on every /api/chat request
+- Helmet: all security headers active, x-powered-by disabled
