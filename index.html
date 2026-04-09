@@ -2031,6 +2031,235 @@ footer {
 .zd-nav-center-btn:active { transform:scale(0.94); }
 
 /* ══════════════════════════════════════════════════════
+   DASHBOARD — COPILOT STYLE (ZDX)
+══════════════════════════════════════════════════════ */
+@keyframes zdxFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scrollable body */
+#page-dash { display: flex; flex-direction: column; min-height: 100svh; background: var(--bg); }
+.zdx-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px 0;
+  min-height: calc(100svh - 62px);
+  /* leave room for fixed nav */
+  padding-bottom: calc(62px + env(safe-area-inset-bottom) + 16px);
+}
+
+/* Hero: mascot + greeting */
+.zdx-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  animation: zdxFadeIn 0.5s ease both;
+}
+.zdx-mascot {
+  width: 54px;
+  height: 54px;
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.zdx-greeting {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  text-align: center;
+}
+.zdx-subgreet {
+  font-size: 14px;
+  color: var(--text3);
+  text-align: center;
+}
+
+/* Floating chat input box */
+.zdx-chat-box {
+  width: 100%;
+  max-width: 640px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 14px 14px 10px 16px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+  position: relative;
+  animation: zdxFadeIn 0.5s 0.1s ease both;
+}
+
+/* Textarea */
+.zdx-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #eeeef5;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: none;
+  max-height: 120px;
+  display: block;
+  margin-bottom: 10px;
+}
+.zdx-textarea::placeholder { color: var(--text3); }
+
+/* Toolbar row */
+.zdx-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.zdx-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+/* Pills */
+.zdx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+  color: #eeeef5;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.zdx-pill:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+
+/* Icon buttons */
+.zdx-icon-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  color: rgba(238,238,245,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.zdx-icon-btn:hover { background: rgba(255,255,255,0.08); color: rgba(238,238,245,0.9); }
+
+/* Send button */
+.zdx-send-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #080810;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.zdx-send-btn.active {
+  background: #eeeef5;
+  cursor: pointer;
+}
+.zdx-send-btn.active:hover { transform: scale(1.05); background: #fff; }
+.zdx-send-btn:not(.active) { cursor: not-allowed; }
+.zdx-send-btn svg { stroke: rgba(238,238,245,0.4); }
+.zdx-send-btn.active svg { stroke: #080810; }
+
+/* Agent dropdown */
+.zdx-agent-dd {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 220px;
+  background: #13131f;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 6px;
+  z-index: 600;
+  box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
+  animation: miniDrop 0.18s ease;
+}
+.zdx-dd-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  transition: background 0.15s;
+}
+.zdx-dd-item:hover { background: rgba(255,255,255,0.06); }
+.zdx-dd-item.active-agent { background: var(--gold-dim); color: var(--gold); }
+.zdx-dd-sub {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 400;
+  margin-left: auto;
+}
+
+/* Suggestion chips row */
+.zdx-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 640px;
+  width: 100%;
+  margin-top: 14px;
+  animation: zdxFadeIn 0.5s 0.2s ease both;
+}
+.zdx-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+  color: rgba(238,238,245,0.55);
+  cursor: pointer;
+  transition: all 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+.zdx-chip:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+  color: rgba(238,238,245,0.85);
+}
+.zdx-chip:active { transform: scale(0.96); }
+
+/* Desktop: keep same layout but cap width nicely */
+@media (min-width: 768px) {
+  .zdx-body { justify-content: center; padding-bottom: 24px; }
+  #page-dash .zd-bottom-nav { display: none !important; }
+  .zdx-body { padding-top: 0; }
+}
+
+/* ══════════════════════════════════════════════════════
    PROFILE PAGE — NEW DESIGN
 ══════════════════════════════════════════════════════ */
 .pf-hero-card { background:var(--bg1);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px;margin-bottom:14px; }
@@ -2724,170 +2953,94 @@ footer {
 ══════════════════════════════════════════════════════ -->
 <div class="page" id="page-dash">
 
-  <!-- ── DESKTOP SIDEBAR ── -->
-  <div class="desk-sidebar" id="deskSidebar">
-    <div class="sidebar-head" onclick="go('home')">
-      <div class="sidebar-head-dot"></div>
-      Zenvy AI
-    </div>
-    <div class="sb-section">
-      <div class="sb-label">Main</div>
-      <div class="sb-item active" id="sb-dash" onclick="zdNavSwitch('home')">
-        <span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span> Dashboard
+  <!-- ── SCROLLABLE BODY ── -->
+  <div class="zdx-body">
+
+    <!-- MASCOT + GREETING -->
+    <div class="zdx-hero">
+      <div class="zdx-mascot">
+        <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)">
+          <path d="M12 8V4H8"/>
+          <rect width="16" height="12" x="4" y="8" rx="2"/>
+          <path d="M2 14h2"/>
+          <path d="M20 14h2"/>
+          <path d="M15 13v2"/>
+          <path d="M9 13v2"/>
+        </svg>
       </div>
-      <div class="sb-item" id="sb-hist" onclick="go('history')">
-        <span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> History
-      </div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-label">Agents</div>
-      <div class="sb-item ag-finance" onclick="zdSelectAgent('finance')"><span class="sb-icon">💰</span> Finance</div>
-      <div class="sb-item ag-legal" onclick="zdSelectAgent('legal')"><span class="sb-icon">⚖️</span> Legal</div>
-      <div class="sb-item ag-health" onclick="zdSelectAgent('health')"><span class="sb-icon">🏥</span> Health</div>
-      <div class="sb-item ag-career" onclick="zdSelectAgent('career')"><span class="sb-icon">💼</span> Career</div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-label">Quick Actions</div>
-      <div class="sb-item" onclick="go('pricing')"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> Upgrade Plan</div>
-    </div>
-    <div class="sb-bottom">
-      <div class="sb-user" onclick="go('profile')">
-        <div class="sb-avatar" id="zdSidebarAv">U</div>
-        <div>
-          <div class="sb-uname" id="zdSidebarName">Account</div>
-          <div class="sb-uplan" id="zdSidebarPlan">Free Plan</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── TOPBAR ── -->
-  <div class="zd-topbar">
-    <div class="zd-logo" onclick="go('home')">
-      <div class="zd-logo-dot"></div>
-      Zenvy AI
-    </div>
-    <div class="zd-topbar-center">
-      <button class="zd-agent-selector" id="zdAgentSelectorBtn" onclick="toggleAgentSelector()" aria-label="Select agent">
-        <span id="zdSelectedAgentEmoji">💰</span>
-        <span id="zdSelectedAgentName">Finance</span>
-        <svg class="zd-selector-caret" id="zdSelectorCaret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-    </div>
-    <div class="zd-topbar-right">
-      <button class="zd-upgrade-btn ripple-container" onclick="go('pricing')">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Upgrade
-      </button>
-      <div class="zd-avatar" id="zdAvatar" onclick="go('profile')">U</div>
-    </div>
-  </div>
-
-  <!-- ── AGENT SELECTOR DROPDOWN ── -->
-  <div class="zd-agent-dropdown" id="zdAgentDropdown">
-    <!-- Filled by zdRenderAgentDropdown() -->
-  </div>
-
-  <!-- ── MAIN CONTENT ── -->
-  <div class="zd-main" id="zdMain">
-    <div class="dv6-hero">
-      <!-- Greeting -->
-      <div class="dv6-hero-top">
-        <div class="dv6-hero-greeting" id="dashV6Greeting">Good morning, there</div>
-        <div class="dv6-hero-sub" id="dv6HeroSub">Your Finance Expert is Ready</div>
-      </div>
-
-      <!-- Agent Glow Card -->
-      <div class="dv6-agent-card" id="dv6AgentCard">
-        <div class="dv6-agent-card-glow" id="dv6AgentGlow"></div>
-        <div class="dv6-agent-card-inner">
-          <div class="dv6-agent-emoji-lg" id="dv6AgentEmoji">💰</div>
-          <div class="dv6-agent-info">
-            <div class="dv6-agent-name-lg" id="dv6AgentNameLg">Finance Agent</div>
-            <div class="dv6-agent-desc-lg" id="dv6AgentDescLg">Investments · Tax · SIP · Loans · Budget</div>
-          </div>
-          <div class="dv6-usage-ring" id="dv6UsageRing">
-            <svg width="44" height="44" viewBox="0 0 44 44">
-              <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"></circle>
-              <circle cx="22" cy="22" r="18" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113" id="dv6RingCircle" transform="rotate(-90 22 22)"></circle>
-            </svg>
-            <div class="dv6-ring-label">
-              <span id="dv6RingCount">0</span>
-              <span>/5</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="zdx-greeting" id="dashV6Greeting">Good morning</div>
+      <div class="zdx-subgreet" id="zdxSubGreet">What can I help you with today?</div>
     </div>
 
-    <div class="zd-suggestions-section">
-      <div class="zd-suggestions-label">Suggested for you</div>
-      <div class="zd-suggestions-grid" id="zdSuggestionsGrid">
-        <!-- Filled by zdRenderSuggestions() -->
-      </div>
-    </div>
-
-    <div class="zd-usage-bar" id="zdUsageBar" style="display:none">
-      <span style="font-size:16px">⚡</span>
-      <span class="zd-usage-label" id="zdUsageLabel">Queries today</span>
-      <div class="zd-usage-bar-track"><div class="zd-usage-bar-fill" id="zdUsageFill" style="width:0%"></div></div>
-      <span class="zd-usage-count" id="zdUsageCount">0/5</span>
-    </div>
-  </div>
-
-  <!-- ── BOTTOM INPUT BAR ── -->
-  <div class="zd-input-bar" id="zdInputBar">
-    <!-- Top row: mini agent pill + textarea -->
-    <div class="dv6-input-top">
-      <button class="dv6-mini-agent ag-finance" id="dv6MiniAgentBtn" onclick="toggleDv6Dropdown()" aria-label="Select agent">
-        <span class="dv6-mini-emoji" id="dv6MiniEmoji">💰</span>
-        <span class="dv6-mini-name" id="dv6MiniName">Finance</span>
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="dv6-mini-divider"></div>
-      <textarea class="dv6-textarea" id="dashPromptInput" rows="1"
-        placeholder="Ask about tax, SIP, loans, budget..."
-        oninput="autoResizeDash(this)"
+    <!-- FLOATING CHAT INPUT BOX -->
+    <div class="zdx-chat-box">
+      <textarea class="zdx-textarea" id="dashPromptInput" rows="1"
+        placeholder="Ask Zenvy — Tax, SIP, Legal, Health, Career..."
+        oninput="autoResizeDash(this);zdxUpdateSendBtn()"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();fireDashPrompt()}"></textarea>
+
+      <div class="zdx-toolbar">
+        <div class="zdx-toolbar-left">
+
+          <!-- Agent selector pill -->
+          <button class="zdx-pill" id="zdxAgentPill" onclick="zdxToggleAgentDd()" aria-label="Select agent">
+            <span id="zdxAgentEmoji">💰</span>
+            <span id="zdxAgentLabel">Finance</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+
+          <!-- Language toggle pill -->
+          <button class="zdx-pill" id="zdxLangPill" onclick="zdxToggleLang()" aria-label="Toggle language">
+            <span id="zdxLangLabel">🇮🇳 Hindi</span>
+          </button>
+
+          <!-- Attach file button -->
+          <input type="file" id="zdxFileInput" accept="image/*,.pdf" style="display:none" onchange="zdxHandleFile(this)">
+          <button class="zdx-icon-btn" onclick="document.getElementById('zdxFileInput').click()" title="Attach file" aria-label="Attach file">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          </button>
+
+          <!-- Voice input button -->
+          <button class="zdx-icon-btn" id="zdxVoiceBtn" onclick="zdxStartVoice()" title="Voice input" aria-label="Voice input">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+
+          <!-- Clear input button -->
+          <button class="zdx-icon-btn" onclick="zdxClearInput()" title="Clear" aria-label="Clear input">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+
+        </div>
+
+        <!-- Send button -->
+        <button class="zdx-send-btn" id="dashSendBtn" onclick="fireDashPrompt()" aria-label="Send">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Agent dropdown (opens above) -->
+      <div class="zdx-agent-dd" id="zdxAgentDd" style="display:none">
+        <div class="zdx-dd-item" id="zdxDdFinance" onclick="zdxSelectAgent('finance')">
+          <span>💰</span><span>Finance</span><span class="zdx-dd-sub">Tax · SIP · Loans</span>
+        </div>
+        <div class="zdx-dd-item" id="zdxDdLegal" onclick="zdxSelectAgent('legal')">
+          <span>⚖️</span><span>Legal</span><span class="zdx-dd-sub">Rights · Contracts</span>
+        </div>
+        <div class="zdx-dd-item" id="zdxDdHealth" onclick="zdxSelectAgent('health')">
+          <span>🏥</span><span>Health</span><span class="zdx-dd-sub">Symptoms · Reports</span>
+        </div>
+        <div class="zdx-dd-item" id="zdxDdCareer" onclick="zdxSelectAgent('career')">
+          <span>🚀</span><span>Career</span><span class="zdx-dd-sub">Resume · Interviews</span>
+        </div>
+      </div>
     </div>
 
-    <div class="dv6-input-bottom">
-      <span class="dv6-model-tag">Gemini 2.5 Flash</span>
-      <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
-        <button class="dash-v6-btn-icon" onclick="showToast('File attachment coming soon!')" aria-label="Attach file">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-        </button>
-        <button class="dash-v6-send-btn ripple-container" id="dashSendBtn" onclick="fireDashPrompt()" aria-label="Send">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-        </button>
-      </div>
+    <!-- SUGGESTION CHIPS -->
+    <div class="zdx-chips-row" id="zdSuggestionsGrid">
+      <!-- Filled by zdxRenderChips() -->
     </div>
 
-    <div class="dv6-mini-dropdown" id="dv6MiniDropdown" style="display:none">
-      <div class="dv6-mini-dd-item ag-finance" onclick="dv6SelectAgent('finance','💰','Finance')">
-        <span>💰</span><span>Finance Agent</span><span class="dv6-mini-dd-sub">Tax · SIP · Loans</span>
-      </div>
-      <div class="dv6-mini-dd-item ag-legal" onclick="dv6SelectAgent('legal','⚖️','Legal')">
-        <span>⚖️</span><span>Legal Agent</span><span class="dv6-mini-dd-sub">Rights · Contracts</span>
-      </div>
-      <div class="dv6-mini-dd-item ag-health" onclick="dv6SelectAgent('health','🏥','Health')">
-        <span>🏥</span><span>Health Agent</span><span class="dv6-mini-dd-sub">Symptoms · Reports</span>
-      </div>
-      <div class="dv6-mini-dd-item ag-career" onclick="dv6SelectAgent('career','💼','Career')">
-        <span>💼</span><span>Career Agent</span><span class="dv6-mini-dd-sub">Jobs · Resume · Salary</span>
-      </div>
-      <div class="dv6-mini-dd-divider"></div>
-      <div class="dv6-mini-dd-item dv6-locked" onclick="showToast('Resume AI coming soon in Pro plan! 🔒')">
-        <span>📄</span><span>Resume AI</span><span class="dv6-mini-dd-pro">Pro</span>
-      </div>
-      <div class="dv6-mini-dd-item dv6-locked" onclick="showToast('Presentation AI coming soon in Pro plan! 🔒')">
-        <span>🎯</span><span>Presentation AI</span><span class="dv6-mini-dd-pro">Pro</span>
-      </div>
-      <div class="dv6-mini-dd-item dv6-locked" onclick="showToast('Coding AI coming soon in Pro plan! 🔒')">
-        <span>💻</span><span>Coding AI</span><span class="dv6-mini-dd-pro">Pro</span>
-      </div>
-    </div>
-  </div>
+  </div><!-- end .zdx-body -->
 
   <!-- ── BOTTOM NAVIGATION (5 items) ── -->
   <div class="zd-bottom-nav" id="zdBottomNav">
@@ -4612,10 +4765,9 @@ let zdCurrentAgent = 'finance';
 function zdInit() {
   zdSetGreeting();
   zdUpdateAvatar();
-  zdRenderAgentDropdown();
   zdRenderSuggestions(zdCurrentAgent);
   zdLoadUsage();
-  dv6Init();
+  zdxInit();
 }
 
 function zdSetGreeting() {
@@ -4657,16 +4809,9 @@ function zdSelectAgent(agentId) {
   if (!AGENT_CONFIG[agentId]) return;
   zdCurrentAgent = agentId;
   const cfg = AGENT_CONFIG[agentId];
-  const emojiEl = document.getElementById('zdSelectedAgentEmoji');
-  const nameEl = document.getElementById('zdSelectedAgentName');
-  if (emojiEl) emojiEl.textContent = cfg.emoji;
-  if (nameEl) nameEl.textContent = cfg.tagline.replace(' Agent', '');
-  const input = document.getElementById('zdInput');
-  if (input) input.placeholder = cfg.placeholder;
   zdRenderSuggestions(agentId);
-  zdRenderAgentDropdown();
-  closeAllMenus();
-  dv6UpdateAgentCard(agentId);
+  // Update new ZDX pill
+  zdxSelectAgent(agentId);
 }
 
 function zdRenderSuggestions(agentId) {
@@ -4844,7 +4989,7 @@ function zdNavSwitch(view) {
     if (input) input.focus();
     return;
   }
-  if (view === 'agents') { toggleAgentSelector(); return; }
+  if (view === 'agents') { zdxToggleAgentDd(); return; }
   // 'home' — already on dashboard, nothing else to do
 }
 
@@ -4945,13 +5090,7 @@ function toggleDv6Dropdown() {
 }
 
 function dv6SelectAgent(type, emoji, name) {
-  zdCurrentAgent = type;
-  currentDashAgent = type;
-  dv6UpdateAgentCard(type);
-  zdRenderSuggestions(type);
-  zdRenderAgentDropdown();
-  const dd = document.getElementById('dv6MiniDropdown');
-  if (dd) dd.style.display = 'none';
+  zdxSelectAgent(type);
 }
 
 function dv6UpdateRing(used, max) {
@@ -4966,6 +5105,196 @@ function dv6UpdateRing(used, max) {
 }
 
 // ── END ZD FUNCTIONS ──────────────────────────────────
+
+// ════════════════════════════════════════════════════
+// ZDX — COPILOT STYLE DASHBOARD FUNCTIONS
+// ════════════════════════════════════════════════════
+
+let activeLang = 'en'; // 'en' | 'hi'
+
+const ZDX_CHIPS = {
+  finance: ['💰 SIP Calculator', '📊 Tax Saving Tips', '🏠 Home Loan EMI', '📈 Mutual Fund Guide'],
+  legal:   ['⚖️ Know Your Rights', '📄 Rent Agreement Help', '🚔 FIR Filing Guide', '👨‍👩‍👧 Family Law Basics'],
+  health:  ['🏥 Symptom Checker', '💊 Medicine Info', '🧘 Mental Wellness', '🍎 Diet & Nutrition'],
+  career:  ['📝 Resume Review', '💼 Interview Prep', '🎯 Career Roadmap', '💡 Skill Gap Analysis']
+};
+
+const ZDX_CHIPS_HI = {
+  finance: ['💰 SIP Calculator', '📊 Tax Saving Tips', '🏠 Home Loan EMI', '📈 Mutual Fund Guide'],
+  legal:   ['⚖️ Apne Adhikar Jaano', '📄 Rent Agreement Help', '🚔 FIR Darz Guide', '👨‍👩‍👧 Family Law Basics'],
+  health:  ['🏥 Lakshan Jaanch', '💊 Dawai ki Jaankari', '🧘 Mental Wellness', '🍎 Diet aur Poshan'],
+  career:  ['📝 Resume Review', '💼 Interview Taiyari', '🎯 Career Roadmap', '💡 Skill Gap Analysis']
+};
+
+const ZDX_PLACEHOLDERS = {
+  finance: 'Ask about SIP, tax, loans, mutual funds...',
+  legal:   'Ask about your rights, contracts, FIR, property...',
+  health:  'Ask about symptoms, medicines, diet, wellness...',
+  career:  'Ask about resume, interviews, skills, roadmap...'
+};
+
+const ZDX_PLACEHOLDERS_HI = {
+  finance: 'Zenvy se pucho — Tax, SIP, Loan, Budget...',
+  legal:   'Zenvy se pucho — Rights, Contract, FIR...',
+  health:  'Zenvy se pucho — Lakshan, Dawai, Diet...',
+  career:  'Zenvy se pucho — Resume, Interview, Skill...'
+};
+
+function zdxRenderChips(agentKey) {
+  const grid = document.getElementById('zdSuggestionsGrid');
+  if (!grid) return;
+  const chips = activeLang === 'hi'
+    ? (ZDX_CHIPS_HI[agentKey] || ZDX_CHIPS_HI.finance)
+    : (ZDX_CHIPS[agentKey] || ZDX_CHIPS.finance);
+  grid.innerHTML = chips.map(function(text) {
+    return '<button class="zdx-chip" onclick="zdxFillChip(' + JSON.stringify(text) + ')">' + escapeHtml(text) + '</button>';
+  }).join('');
+}
+
+function zdxFillChip(text) {
+  const input = document.getElementById('dashPromptInput');
+  if (input) {
+    input.value = text;
+    autoResizeDash(input);
+    input.focus();
+  }
+  zdxUpdateSendBtn();
+}
+
+function zdxUpdateSendBtn() {
+  const input = document.getElementById('dashPromptInput');
+  const btn = document.getElementById('dashSendBtn');
+  if (!btn) return;
+  const hasText = input && input.value.trim().length > 0;
+  if (hasText) {
+    btn.classList.add('active');
+    btn.disabled = false;
+  } else {
+    btn.classList.remove('active');
+    btn.disabled = true;
+  }
+}
+
+function zdxSelectAgent(agentKey) {
+  if (!AGENT_CONFIG[agentKey]) return;
+  zdCurrentAgent = agentKey;
+  currentDashAgent = agentKey;
+  const cfg = AGENT_CONFIG[agentKey];
+
+  // Update pill
+  const pillEmoji = document.getElementById('zdxAgentEmoji');
+  const pillLabel = document.getElementById('zdxAgentLabel');
+  if (pillEmoji) pillEmoji.textContent = cfg.emoji;
+  if (pillLabel) pillLabel.textContent = cfg.tagline.replace(' Agent', '');
+
+  // Mark active in dropdown
+  ['finance','legal','health','career'].forEach(function(k) {
+    const item = document.getElementById('zdxDd' + k.charAt(0).toUpperCase() + k.slice(1));
+    if (item) item.classList.toggle('active-agent', k === agentKey);
+  });
+
+  // Update placeholder
+  const input = document.getElementById('dashPromptInput');
+  if (input) input.placeholder = activeLang === 'hi'
+    ? ZDX_PLACEHOLDERS_HI[agentKey]
+    : ZDX_PLACEHOLDERS[agentKey];
+
+  // Re-render chips
+  zdxRenderChips(agentKey);
+
+  // Close dropdown
+  const dd = document.getElementById('zdxAgentDd');
+  if (dd) dd.style.display = 'none';
+}
+
+function zdxToggleAgentDd() {
+  const dd = document.getElementById('zdxAgentDd');
+  if (!dd) return;
+  const isOpen = dd.style.display !== 'none';
+  dd.style.display = isOpen ? 'none' : 'block';
+}
+
+function zdxToggleLang() {
+  activeLang = activeLang === 'en' ? 'hi' : 'en';
+  const label = document.getElementById('zdxLangLabel');
+  if (label) label.textContent = activeLang === 'hi' ? '🇮🇳 Hindi' : '🌐 EN';
+  const input = document.getElementById('dashPromptInput');
+  if (input) input.placeholder = activeLang === 'hi'
+    ? ZDX_PLACEHOLDERS_HI[zdCurrentAgent]
+    : ZDX_PLACEHOLDERS[zdCurrentAgent];
+  zdxRenderChips(zdCurrentAgent);
+}
+
+function zdxStartVoice() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) { showToast('Voice input not supported in this browser'); return; }
+  const recognition = new SpeechRecognition();
+  recognition.lang = activeLang === 'hi' ? 'hi-IN' : 'en-IN';
+  recognition.interimResults = false;
+  const voiceBtn = document.getElementById('zdxVoiceBtn');
+  if (voiceBtn) voiceBtn.style.color = 'var(--gold)';
+  recognition.onresult = function(e) {
+    const transcript = e.results[0][0].transcript;
+    const input = document.getElementById('dashPromptInput');
+    if (input) {
+      input.value = transcript;
+      autoResizeDash(input);
+      input.focus();
+    }
+    zdxUpdateSendBtn();
+  };
+  recognition.onerror = function() { showToast('Voice input failed. Try again.'); };
+  recognition.onend = function() {
+    if (voiceBtn) voiceBtn.style.color = '';
+  };
+  recognition.start();
+}
+
+function zdxClearInput() {
+  const input = document.getElementById('dashPromptInput');
+  if (input) {
+    input.value = '';
+    autoResizeDash(input);
+    input.focus();
+  }
+  zdxUpdateSendBtn();
+}
+
+function zdxHandleFile(inputEl) {
+  if (inputEl && inputEl.files && inputEl.files.length > 0) {
+    const file = inputEl.files[0];
+    showToast(`File "${file.name}" attached — ask your question above`);
+    inputEl.value = '';
+  }
+}
+
+// Override zdRenderSuggestions to use chip style in new dashboard
+function zdRenderSuggestions(agentId) {
+  zdxRenderChips(agentId);
+}
+
+// ── ZDX INIT (called from zdInit) ─────────────────────
+function zdxInit() {
+  zdxSelectAgent(zdCurrentAgent);
+  zdxUpdateSendBtn();
+  // Mark home nav item active
+  document.querySelectorAll('.zd-nav-item').forEach(function(i) { i.classList.remove('active'); });
+  const homeNav = document.getElementById('zdNav-home');
+  if (homeNav) homeNav.classList.add('active');
+}
+
+// Close zdxAgentDd on outside click
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('zdxAgentDd');
+  const pill = document.getElementById('zdxAgentPill');
+  if (dd && dd.style.display !== 'none') {
+    if (!dd.contains(e.target) && pill && !pill.contains(e.target)) {
+      dd.style.display = 'none';
+    }
+  }
+}, true);
+
+// ── END ZDX FUNCTIONS ────────────────────────────────
 
 function renderWeeklyChart() {
   const container = document.getElementById('weeklyChart');
