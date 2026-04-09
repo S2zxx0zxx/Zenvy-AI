@@ -2961,6 +2961,12 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+// ── AI TEXT RENDERER ──────────────────────────────────
+function renderAiText(text) {
+  if (text == null) return '';
+  return escapeHtml(String(text)).replace(/\n/g, '<br>');
+}
+
 // ── CURRENT USER ─────────────────────────────────────
 let currentUser = null;
 
@@ -3176,31 +3182,24 @@ async function loadChatHistory(agentType) {
 // FIRESTORE — RATE LIMIT CHECK
 // ══════════════════════════════════════════════════════
 async function checkRateLimit() {
-  if (!currentUser) return true; // allow if not logged in (backend handles it)
-  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-  const ref = db.collection('users').doc(currentUser.uid)
-                .collection('usage').doc(today);
+  // Rate limiting is enforced server-side (backend rateLimit.js).
+  // This function is kept for UI-level pre-check using cached local count.
+  // It does NOT write to Firestore — backend is source of truth.
+  if (!currentUser) return true; // unauthenticated users — backend enforces limit
+
+  const today = new Date().toISOString().slice(0, 10);
+  const storageKey = `zenvy_rl_${currentUser.uid}_${today}`;
+
   try {
-    const snap = await ref.get();
-    const data = snap.exists ? snap.data() : { count: 0, plan: 'free' };
-    const plan  = data.plan  || 'free';
-    const count = data.count || 0;
+    const stored = sessionStorage.getItem(storageKey);
+    const count = stored ? parseInt(stored, 10) : 0;
 
-    if (plan !== 'pro' && count >= 5) {
-      return false; // blocked
-    }
+    if (count >= 5) return false; // soft UI block — backend will also block
 
-    // Increment counter
-    await ref.set({
-      count: count + 1,
-      plan: plan,
-      date: today
-    }, { merge: true });
-
-    return true; // allowed
+    sessionStorage.setItem(storageKey, String(count + 1));
+    return true;
   } catch (err) {
-    console.warn('Rate limit check error:', err);
-    return true; // fail open
+    return true; // sessionStorage blocked (private mode) — let backend decide
   }
 }
 
@@ -3244,6 +3243,7 @@ async function fetchWithRetry(url, options, retries = 2) {
 // ── GLOBAL STATE ─────────────────────────────────────
 let chatHistory = [];
 let isSending = false;
+const ZENVY_SECRET = 'zenvy-frontend-2024';
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? 'http://localhost:3001'
   : 'https://zenvy-ai-satzzxzxx.up.railway.app'; // ← Railway production URL
@@ -3959,7 +3959,7 @@ function addAiMsg(html) {
   div.innerHTML = `
     <div class="msg-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M12 3v4"/><circle cx="12" cy="3" r="1"/><path d="M7 16h.01"/><path d="M12 16h.01"/><path d="M17 16h.01"/></svg></div>
     <div class="msg-body">
-      <div class="msg-bubble">${html.replace(/\n/g,'<br>')}</div>
+      <div class="msg-bubble">${renderAiText(html)}</div>
       <div class="msg-time">Now</div>
     </div>`;
   msgs.appendChild(div);
@@ -4024,7 +4024,7 @@ async function sendMsg() {
   try {
     const res = await fetchWithRetry(`${API_BASE}/api/chat`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Zenvy-Secret': ZENVY_SECRET },
       body: JSON.stringify({ agent: currentAgent, message: text, history: trimmedHistory })
     });
 
