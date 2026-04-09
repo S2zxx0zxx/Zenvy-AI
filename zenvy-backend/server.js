@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 8080;
 
 // ── SECURITY HEADERS ──────────────────────────────────
 app.use(helmet({
-  contentSecurityPolicy: false, // Frontend is separate origin
   crossOriginEmbedderPolicy: false
 }));
 app.disable('x-powered-by');
