@@ -1673,6 +1673,212 @@ footer {
   border-color: rgba(212,168,67,0.15);
   box-shadow: 0 8px 28px rgba(0,0,0,0.25);
 }
+
+/* ══════════════════════════════════════════════════════
+   DASHBOARD V6 — CLAUDE.AI-STYLE REDESIGN
+══════════════════════════════════════════════════════ */
+
+/* V6 Main Layout */
+.dash-v6-main {
+  padding: 0 0 72px;
+}
+
+/* V6 Top Nav (mobile) */
+.dash-v6-topnav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,16,0.9); backdrop-filter: blur(16px);
+  position: sticky; top: 0; z-index: 50;
+}
+.dash-v6-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 16px;
+  cursor: pointer; color: var(--text);
+}
+.dash-v6-logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 10px var(--gold); flex-shrink: 0;
+}
+.dash-v6-topnav-right { display: flex; align-items: center; gap: 8px; }
+.dash-v6-upgrade-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 7px 13px; border-radius: var(--r-full);
+  background: var(--gold); color: #080810;
+  font-size: 12px; font-weight: 700; font-family: 'Outfit', sans-serif;
+  cursor: pointer; transition: all 0.15s;
+  box-shadow: 0 2px 12px rgba(212,168,67,0.25); border: none;
+}
+.dash-v6-upgrade-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(212,168,67,0.4); }
+.dash-v6-upgrade-btn:active { transform: scale(0.96); }
+.dash-v6-avatar {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--gold), #8b6914);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #080810;
+  cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s;
+}
+.dash-v6-avatar:hover { border-color: var(--gold); }
+
+/* V6 Greeting */
+.dash-v6-greeting {
+  text-align: center; padding: 36px 20px 20px;
+}
+.dash-v6-greeting-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 800; letter-spacing: -0.5px; line-height: 1.2;
+  background: linear-gradient(120deg, var(--gold2) 0%, var(--gold) 40%, #e6b84d 70%, var(--gold2) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: grad-shift 4s ease-in-out infinite;
+  margin-bottom: 6px;
+}
+.dash-v6-greeting-sub { font-size: 14px; color: var(--text3); }
+
+/* V6 Prompt Input */
+.dash-v6-input-wrap {
+  padding: 0 16px 14px; max-width: 640px; margin: 0 auto;
+}
+.dash-v6-input-box {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px; padding: 14px 14px 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dash-v6-input-box:focus-within {
+  border-color: var(--gold-border);
+  box-shadow: 0 0 0 3px rgba(212,168,67,0.08), 0 8px 32px rgba(0,0,0,0.3);
+}
+.dash-v6-textarea {
+  width: 100%; background: transparent; color: var(--text);
+  font-size: 15px; resize: none; line-height: 1.5;
+  min-height: 24px; max-height: 120px;
+  font-family: 'Outfit', sans-serif;
+}
+.dash-v6-textarea::placeholder { color: var(--text3); }
+.dash-v6-input-actions {
+  display: flex; align-items: center; gap: 4px; margin-top: 8px;
+}
+.dash-v6-btn-icon {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: transparent; border: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); cursor: pointer; transition: all 0.15s;
+}
+.dash-v6-btn-icon:hover { color: var(--text2); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+.dash-v6-btn-icon:active { transform: scale(0.93); }
+.dash-v6-send-btn {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--gold); color: #080810;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.15s; margin-left: auto;
+  border: none; box-shadow: 0 4px 14px rgba(212,168,67,0.25);
+}
+.dash-v6-send-btn:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(212,168,67,0.35); }
+.dash-v6-send-btn:active { transform: scale(0.93); }
+
+/* V6 Agent Pills */
+.dash-v6-pills {
+  display: flex; gap: 8px; overflow-x: auto;
+  padding: 0 16px 16px; max-width: 640px; margin: 0 auto;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.dash-v6-pills::-webkit-scrollbar { display: none; }
+.dash-v6-pill {
+  display: flex; align-items: center; gap: 7px;
+  padding: 9px 16px; border-radius: var(--r-full);
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text2); font-size: 13px; font-weight: 600; font-family: 'Outfit', sans-serif;
+  white-space: nowrap; cursor: pointer; flex-shrink: 0;
+  transition: all 0.2s; -webkit-tap-highlight-color: transparent;
+}
+.dash-v6-pill:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.13); }
+.dash-v6-pill:active { transform: scale(0.96); }
+.dash-v6-pill.active {
+  background: var(--ag-bg); border-color: var(--ag-b); color: var(--ag-c);
+  box-shadow: 0 0 14px var(--ag-bg);
+}
+
+/* V6 Suggested Prompts 2×2 Grid */
+.dash-v6-prompts {
+  padding: 0 16px 20px; max-width: 640px; margin: 0 auto;
+}
+.dash-v6-prompts-label {
+  font-size: 11px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;
+}
+.dash-v6-prompts-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.dash-v6-prompt-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r-lg); padding: 14px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; flex-direction: column; gap: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.dash-v6-prompt-card:hover {
+  background: rgba(255,255,255,0.06); border-color: var(--ag-b, rgba(255,255,255,0.15));
+  transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+.dash-v6-prompt-card:active { transform: scale(0.97); }
+.dash-v6-prompt-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--ag-bg, rgba(212,168,67,0.1)); border: 1px solid var(--ag-b, rgba(212,168,67,0.2));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ag-c, var(--gold));
+}
+.dash-v6-prompt-text {
+  font-size: 12px; color: var(--text2); line-height: 1.4; font-weight: 500;
+}
+
+/* V6 Recent Chats */
+.dash-v6-recent { padding: 0 16px 24px; max-width: 640px; margin: 0 auto; }
+.dash-v6-recent-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+}
+.dash-v6-recent-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.dash-v6-recent-see-all { font-size: 12px; color: var(--gold); cursor: pointer; font-weight: 500; }
+.dash-v6-recent-see-all:hover { text-decoration: underline; }
+.dash-v6-chat-list { display: flex; flex-direction: column; gap: 6px; }
+.dash-v6-chat-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--r-md); cursor: pointer; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.dash-v6-chat-item:hover {
+  background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12);
+  transform: translateX(3px);
+}
+.dash-v6-chat-item:active { transform: scale(0.99); }
+.dash-v6-chat-av {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--ag-bg); border: 1px solid var(--ag-b); color: var(--ag-c);
+}
+.dash-v6-chat-info { flex: 1; min-width: 0; }
+.dash-v6-chat-name { font-size: 11px; font-weight: 700; color: var(--ag-c); margin-bottom: 2px; }
+.dash-v6-chat-q {
+  font-size: 13px; color: var(--text2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dash-v6-chat-time { font-size: 11px; color: var(--text3); flex-shrink: 0; white-space: nowrap; }
+.dash-v6-chat-arrow { color: var(--text3); flex-shrink: 0; transition: color 0.15s; }
+.dash-v6-chat-item:hover .dash-v6-chat-arrow { color: var(--gold); }
+
+/* Desktop responsive for v6 */
+@media (min-width: 768px) {
+  .dash-v6-main { margin-left: 240px; padding-bottom: 20px; }
+  .dash-v6-greeting { padding: 48px 20px 24px; }
+  .dash-v6-topnav { display: none; }
+}
+@media (max-width: 767px) {
+  .dash-v6-main { padding-bottom: 80px; }
+  .dash-v6-topnav { display: flex; }
+}
 </style>
 </head>
 <body>
@@ -1682,10 +1888,10 @@ footer {
 
 <!-- MOBILE MENU -->
 <div id="mobileMenu" style="display:none;position:fixed;top:60px;left:0;right:0;z-index:190;background:rgba(8,8,16,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(212,168,67,0.15);padding:12px 16px 16px;flex-direction:column;gap:2px;">
-  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;transition:background 0.15s;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">🏠 Home</div>
-  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">⚡ Features</div>
-  <div onclick="go('pricing');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">💎 Pricing</div>
-  <div onclick="go('about');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'">ℹ️ About</div>
+  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;transition:background 0.15s;display:flex;align-items:center;gap:10px;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</div>
+  <div onclick="go('home');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Features</div>
+  <div onclick="go('pricing');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Pricing</div>
+  <div onclick="go('about');document.getElementById('mobileMenu').style.display='none'" style="padding:13px 16px;color:rgba(238,238,245,0.85);font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;" onmouseenter="this.style.background='rgba(212,168,67,0.08)'" onmouseleave="this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> About</div>
   <div style="height:1px;background:rgba(255,255,255,0.06);margin:8px 0"></div>
   <button onclick="go('dash');document.getElementById('mobileMenu').style.display='none'" style="width:100%;padding:14px;background:#d4a843;color:#080810;font-weight:700;font-size:15px;border:none;border-radius:12px;cursor:pointer;font-family:inherit;">Get Started Free →</button>
 </div>
@@ -2046,10 +2252,10 @@ footer {
       <div class="footer-bottom">
         <div class="footer-copy">© 2026 Zenvy AI · All rights reserved</div>
         <div class="footer-socials">
-          <div class="soc-btn">𝕏</div>
-          <div class="soc-btn">in</div>
-          <div class="soc-btn">▶</div>
-          <div class="soc-btn">📸</div>
+          <div class="soc-btn" title="Twitter/X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.763l7.74-8.849L2.39 2.25h6.638l4.26 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+          <div class="soc-btn" title="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div class="soc-btn" title="YouTube"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19.1C5.12 19.56 12 19.56 12 19.56s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon fill="white" points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></div>
+          <div class="soc-btn" title="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
         </div>
       </div>
     </div>
@@ -2070,25 +2276,25 @@ footer {
     <div class="sb-section">
       <div class="sb-label">Main</div>
       <div class="sb-item active" id="sb-dash" onclick="dashNav('dash')">
-        <span class="sb-icon">⊞</span> Dashboard
+        <span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span> Dashboard
       </div>
       <div class="sb-item" id="sb-hist" onclick="dashNav('hist')">
-        <span class="sb-icon">🕐</span> History
+        <span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> History
         <span class="sb-badge">6</span>
       </div>
     </div>
     <div class="sb-section">
       <div class="sb-label">Agents</div>
-      <div class="sb-item" onclick="openAgent('finance')"><span class="sb-icon">💰</span> Finance</div>
-      <div class="sb-item" onclick="openAgent('legal')"><span class="sb-icon">⚖️</span> Legal</div>
-      <div class="sb-item" onclick="openAgent('health')"><span class="sb-icon">🏥</span> Health</div>
-      <div class="sb-item" onclick="openAgent('career')"><span class="sb-icon">🚀</span> Career</div>
+      <div class="sb-item ag-finance" onclick="openAgent('finance')"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Finance</div>
+      <div class="sb-item ag-legal" onclick="openAgent('legal')"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span> Legal</div>
+      <div class="sb-item ag-health" onclick="openAgent('health')"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span> Health</div>
+      <div class="sb-item ag-career" onclick="openAgent('career')"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span> Career</div>
     </div>
     <div class="sb-section">
       <div class="sb-label">Quick Actions</div>
-      <div class="sb-item" onclick="go('pricing')"><span class="sb-icon">⭐</span> Upgrade Plan</div>
-      <div class="sb-item" onclick="void(0)"><span class="sb-icon">📄</span> Saved Reports</div>
-      <div class="sb-item" onclick="void(0)"><span class="sb-icon">🔗</span> Integrations</div>
+      <div class="sb-item" onclick="go('pricing')"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> Upgrade Plan</div>
+      <div class="sb-item" onclick="void(0)"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> Saved Reports</div>
+      <div class="sb-item" onclick="void(0)"><span class="sb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span> Integrations</div>
     </div>
     <div class="sb-bottom">
       <div class="sb-user" onclick="go('profile')">
@@ -2101,300 +2307,91 @@ footer {
     </div>
   </div>
 
-  <!-- DASH MAIN -->
-  <div class="dash-main" id="dashMain">
+  <!-- DASH V6 MAIN -->
+  <div class="dash-v6-main" id="dashMain">
 
-    <!-- ═══ HERO COMMAND CENTER ═══ -->
-    <div class="dash-hero-v5">
-      <!-- Ambient particles -->
-      <div class="dash-hero-particles">
-        <div class="dh-particle dh-p1"></div>
-        <div class="dh-particle dh-p2"></div>
-        <div class="dh-particle dh-p3"></div>
-        <div class="dh-particle dh-p4"></div>
-        <div class="dh-particle dh-p5"></div>
+    <!-- Top Nav (mobile) -->
+    <div class="dash-v6-topnav">
+      <div class="dash-v6-logo" onclick="go('home')">
+        <div class="dash-v6-logo-dot"></div>
+        Zenvy AI
       </div>
+      <div class="dash-v6-topnav-right">
+        <button class="dash-v6-upgrade-btn ripple-container" onclick="go('pricing')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Upgrade
+        </button>
+        <div class="dash-v6-avatar" id="dashV6Avatar" onclick="go('profile')">U</div>
+      </div>
+    </div>
 
-      <!-- Top bar -->
-      <div class="dash-topbar-v5">
-        <div class="dash-topbar-left">
-          <div class="dash-user-pill" onclick="go('profile')">
-            <div class="dash-user-av">S</div>
-            <span class="dash-user-name" id="dashUserName">Satyam's Space</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="dash-topbar-right">
-          <button class="dash-icon-btn" onclick="void(0)" aria-label="Notifications">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span class="notif-dot"></span>
+    <!-- Greeting -->
+    <div class="dash-v6-greeting">
+      <div class="dash-v6-greeting-text" id="dashV6Greeting">Good morning, there</div>
+      <div class="dash-v6-greeting-sub">What would you like to explore today?</div>
+    </div>
+
+    <!-- Prompt Input -->
+    <div class="dash-v6-input-wrap">
+      <div class="dash-v6-input-box" id="dashV6InputBox">
+        <textarea class="dash-v6-textarea" id="dashPromptInput" rows="1"
+          placeholder="Ask about tax saving strategies..."
+          oninput="autoResizeDash(this)"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();fireDashPrompt()}"></textarea>
+        <div class="dash-v6-input-actions">
+          <button class="dash-v6-btn-icon" onclick="void(0)" aria-label="Attach file">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
           </button>
-          <button class="dash-upgrade-btn ripple-container" onclick="go('pricing')">
-            <span>✦</span> Upgrade
+          <button class="dash-v6-btn-icon" onclick="void(0)" aria-label="Voice input">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </button>
+          <button class="dash-v6-send-btn ripple-container" id="dashSendBtn" onclick="fireDashPrompt()" aria-label="Send">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Main headline -->
-      <div class="dash-hero-center">
-        <h1 class="dash-hero-title">
-          What do you need<br>
-          <span class="dash-hero-grad">help with?</span>
-        </h1>
-        <p class="dash-hero-sub">Ask anything. Get expert-level answers in seconds.</p>
-      </div>
+    <!-- Agent Selector Pills -->
+    <div class="dash-v6-pills" id="dashV6Pills">
+      <button class="dash-v6-pill ag-finance active" id="dashPill-finance" onclick="selectDashAgent(this,'finance')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Finance
+      </button>
+      <button class="dash-v6-pill ag-legal" id="dashPill-legal" onclick="selectDashAgent(this,'legal')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+        Legal
+      </button>
+      <button class="dash-v6-pill ag-health" id="dashPill-health" onclick="selectDashAgent(this,'health')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        Health
+      </button>
+      <button class="dash-v6-pill ag-career" id="dashPill-career" onclick="selectDashAgent(this,'career')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Career
+      </button>
+    </div>
 
-      <!-- Category tabs -->
-      <div class="dash-cat-tabs" id="dashCatTabs">
-        <button class="dash-cat-tab active" data-cat="finance" onclick="selectDashCat(this,'finance')">
-          <span class="dct-icon">💰</span>
-          <span class="dct-label">Personal Finance</span>
-        </button>
-        <button class="dash-cat-tab" data-cat="legal" onclick="selectDashCat(this,'legal')">
-          <span class="dct-icon">⚖️</span>
-          <span class="dct-label">Legal & Rights</span>
-        </button>
-        <button class="dash-cat-tab" data-cat="health" onclick="selectDashCat(this,'health-career')">
-          <span class="dct-icon">🧬</span>
-          <span class="dct-label">Health & Career</span>
-        </button>
-      </div>
-
-      <!-- Prompt input -->
-      <div class="dash-prompt-wrap">
-        <div class="dash-prompt-box" id="dashPromptBox">
-          <textarea class="dash-prompt-input" id="dashPromptInput" rows="1" placeholder="Ask about tax saving strategies..." oninput="autoResizeDash(this)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();fireDashPrompt()}"></textarea>
-          <div class="dash-prompt-actions">
-            <button class="dash-prompt-attach" onclick="void(0)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-            </button>
-            <button class="dash-prompt-settings" onclick="void(0)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-            <button class="dash-prompt-mic" onclick="void(0)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-            </button>
-            <button class="dash-prompt-send ripple-container" id="dashSendBtn" onclick="fireDashPrompt()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-            </button>
-          </div>
-        </div>
+    <!-- Suggested Prompts 2x2 Grid -->
+    <div class="dash-v6-prompts">
+      <div class="dash-v6-prompts-label">Suggested for you</div>
+      <div class="dash-v6-prompts-grid" id="dashV6PromptsGrid">
+        <!-- Filled by JS -->
       </div>
     </div>
 
-    <!-- ═══ QUICK SUGGESTIONS ═══ -->
-    <div class="dash-suggestions-v5" id="dashSuggestions">
-      <div class="dash-sug-item" onclick="quickAsk('How to save tax under Section 80C?')">
-        <span class="dsi-icon">💡</span>
-        <span>Save tax under 80C</span>
+    <!-- Recent Chats -->
+    <div class="dash-v6-recent">
+      <div class="dash-v6-recent-header">
+        <div class="dash-v6-recent-title">Recent Chats</div>
+        <div class="dash-v6-recent-see-all" onclick="go('history')">See all →</div>
       </div>
-      <div class="dash-sug-item" onclick="quickAsk('Best SIP strategy for beginners?')">
-        <span class="dsi-icon">📈</span>
-        <span>SIP strategy for beginners</span>
-      </div>
-      <div class="dash-sug-item" onclick="quickAsk('Review my rental agreement for red flags')">
-        <span class="dsi-icon">📋</span>
-        <span>Review rental agreement</span>
-      </div>
-      <div class="dash-sug-item" onclick="quickAsk('Prepare me for a tech interview')">
-        <span class="dsi-icon">🎯</span>
-        <span>Prepare for tech interview</span>
+      <div class="dash-v6-chat-list" id="dashV6RecentList">
+        <div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Loading...</div>
       </div>
     </div>
 
-    <!-- ═══ STATS ROW ═══ -->
-    <div class="dash-stats-v5">
-      <div class="ds5-card">
-        <div class="ds5-card-icon" style="background:rgba(212,168,67,0.12);color:var(--gold)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div class="ds5-card-data">
-          <div class="ds5-num" id="qsSessions">0</div>
-          <div class="ds5-lbl">Total Sessions</div>
-        </div>
-      </div>
-      <div class="ds5-card">
-        <div class="ds5-card-icon" style="background:rgba(74,222,128,0.12);color:var(--green)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="ds5-card-data">
-          <div class="ds5-num" id="qsToday">0</div>
-          <div class="ds5-lbl">Today</div>
-        </div>
-      </div>
-      <div class="ds5-card">
-        <div class="ds5-card-icon" style="background:rgba(251,146,60,0.12);color:var(--orange)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-        </div>
-        <div class="ds5-card-data">
-          <div class="ds5-num" id="qsStreak">0</div>
-          <div class="ds5-lbl">Day Streak</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ AGENT GRID ═══ -->
-    <div class="dash-agents-v5">
-      <div class="da5-header">
-        <span class="da5-title">Your AI Agents</span>
-        <span class="da5-see-all" onclick="void(0)">See all →</span>
-      </div>
-      <div class="da5-grid">
-        <div class="da5-card ag-finance" onclick="openAgent('finance')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">💰</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Finance Agent</div>
-          <div class="da5-desc">Tax, SIP, Loans, Budget</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-        <div class="da5-card ag-legal" onclick="openAgent('legal')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">⚖️</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Legal Agent</div>
-          <div class="da5-desc">Contracts, Rights, Disputes</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-        <div class="da5-card ag-health" onclick="openAgent('health')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">🏥</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Health Agent</div>
-          <div class="da5-desc">Symptoms, Reports, Meds</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-        <div class="da5-card ag-career" onclick="openAgent('career')">
-          <div class="da5-card-glow"></div>
-          <div class="da5-top">
-            <div class="da5-icon">🚀</div>
-            <div class="da5-status-wrap">
-              <div class="da5-status-dot"></div>
-              <span class="da5-status-text">Online</span>
-            </div>
-          </div>
-          <div class="da5-name">Career Agent</div>
-          <div class="da5-desc">Interviews, Resume, Salary</div>
-          <div class="da5-footer">
-            <span class="da5-queries">0 queries</span>
-            <span class="da5-arrow">→</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ ANALYTICS ROW ═══ -->
-    <div class="dash-analytics-v5">
-
-      <!-- WEEKLY SESSIONS -->
-      <div class="dan5-card">
-        <div class="dan5-header">
-          <div class="dan5-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-            Weekly Sessions
-          </div>
-          <span class="dan5-badge" id="weeklyGrowth">—</span>
-        </div>
-        <div class="chart-bar-wrap" id="weeklyChart" style="height:72px;align-items:flex-end;display:flex;gap:6px;padding:0 2px;"></div>
-        <div style="height:1px;background:var(--border);margin:6px 0 8px"></div>
-        <div style="display:flex;justify-content:space-between">
-          <span style="font-size:11px;color:var(--text3)">Mon — Sun</span>
-          <span style="font-size:11px;color:var(--gold);font-weight:700" id="weeklyTotal">0 total</span>
-        </div>
-      </div>
-
-      <!-- AGENT USAGE -->
-      <div class="dan5-card">
-        <div class="dan5-header">
-          <div class="dan5-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-            Agent Usage
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
-          <div class="stat-ring-wrap">
-            <svg class="stat-ring-svg" width="76" height="76" viewBox="0 0 76 76">
-              <circle class="stat-ring-track" cx="38" cy="38" r="30"/>
-              <circle class="stat-ring-fill" id="ring-finance" cx="38" cy="38" r="30" style="stroke-dasharray:188.5;stroke-dashoffset:188.5;transition:stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)"/>
-            </svg>
-            <div class="stat-ring-label">
-              <span class="stat-ring-num" id="ringPercent">0%</span>
-              <span class="stat-ring-sub">Finance</span>
-            </div>
-          </div>
-          <div style="flex:1;display:flex;flex-direction:column;gap:9px">
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">💰 Finance</span>
-                <span style="font-size:12px;font-weight:700;color:var(--gold)" id="agCount-finance">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--gold);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="78%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">⚖️ Legal</span>
-                <span style="font-size:12px;font-weight:700;color:var(--purple)" id="agCount-legal">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--purple);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="38%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">🚀 Career</span>
-                <span style="font-size:12px;font-weight:700;color:var(--orange)" id="agCount-career">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--orange);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="52%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--text2)">🏥 Health</span>
-                <span style="font-size:12px;font-weight:700;color:var(--green)" id="agCount-health">0</span>
-              </div>
-              <div class="progress"><div class="progress-fill" style="background:var(--green);width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)" data-width="30%"></div></div>
-            </div>
-          </div>
-        </div>
-        <div style="padding:10px 12px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r-md);font-size:12px;color:var(--text2)">
-          ✦ <strong style="color:var(--gold)">Unlimited</strong> queries on Pro Plan
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ RECENT ACTIVITY ═══ -->
-    <div class="dash-activity-v5">
-      <div class="da5-header">
-        <span class="da5-title">Recent Activity</span>
-        <span class="da5-see-all" onclick="go('history')">See all →</span>
-      </div>
-      <div class="dact5-list" id="dashActivityList">
-        <div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Loading activity...</div>
-      </div>
-    </div>
-
-  </div><!-- /dash-main -->
+  </div><!-- /dash-v6-main -->
 
   <!-- MOBILE BOTTOM NAV — REDESIGNED -->
   <div class="mob-nav-v5">
@@ -2433,8 +2430,8 @@ footer {
       ⚠️ <span id="connectionMsg">Backend offline — make sure server is running</span>
     </div>
     <div style="display:flex;align-items:center;gap:12px;width:100%;height:40px;">
-      <div class="chat-back" onclick="go('dash')">←</div>
-      <div class="agent-box" id="chatAgentBox">💰</div>
+      <div class="chat-back" onclick="go('dash')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></div>
+      <div class="agent-box" id="chatAgentBox"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
       <div class="chat-agent-info">
         <div class="chat-agent-name" id="chatAgentName">Finance Agent</div>
         <div class="chat-agent-status">
@@ -2443,8 +2440,8 @@ footer {
         </div>
       </div>
       <div class="chat-actions">
-        <button class="btn-icon" onclick="shareChat()">📤</button>
-        <button class="btn-icon" onclick="clearChat()">🗑</button>
+        <button class="btn-icon" onclick="shareChat()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
+        <button class="btn-icon" onclick="clearChat()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
       </div>
     </div>
   </div>
@@ -2457,7 +2454,7 @@ footer {
       <textarea class="chat-textarea" id="chatInput" rows="1" placeholder="Ask me anything..."
         oninput="autoResize(this)"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"></textarea>
-      <button class="chat-send ripple-container" id="chatSendBtn" onclick="sendMsg()">➤</button>
+      <button class="chat-send ripple-container" id="chatSendBtn" onclick="sendMsg()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
     </div>
   </div>
 
@@ -2566,7 +2563,8 @@ footer {
       <span>G</span> Continue with Google
     </div>
     <div class="social-btn ripple-container" onclick="void(0)">
-      🍎 Continue with Apple
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z"/></svg>
+      Continue with Apple
     </div>
     <div class="divider" style="margin:18px 0">or sign up with email</div>
     <div class="form-group">
@@ -2595,7 +2593,7 @@ footer {
 ══════════════════════════════════════════════════════ -->
 <div class="page" id="page-profile">
   <nav id="nav-profile" style="position:sticky;top:0;z-index:200;height:56px;display:flex;align-items:center;padding:0 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)">
-    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('dash')">←</div>
+    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('dash')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></div>
     <div style="font-size:16px;font-weight:700;margin-left:12px">Settings</div>
   </nav>
   <div class="profile-page-inner">
@@ -2625,7 +2623,7 @@ footer {
     <div class="settings-section">
       <div class="settings-section-title">Preferences</div>
       <div class="settings-row">
-        <span class="sr-icon">🌙</span>
+        <span class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
         <div class="sr-info">
           <div class="sr-label">Dark Mode</div>
           <div class="sr-sub">Always on</div>
@@ -2633,7 +2631,7 @@ footer {
         <div class="toggle on"><div class="toggle-knob"></div></div>
       </div>
       <div class="settings-row" onclick="void(0)">
-        <span class="sr-icon">🌐</span>
+        <span class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
         <div class="sr-info">
           <div class="sr-label">Language</div>
           <div class="sr-sub">Hindi + English (Hinglish)</div>
@@ -2641,7 +2639,7 @@ footer {
         <span class="sr-right">›</span>
       </div>
       <div class="settings-row">
-        <span class="sr-icon">🔔</span>
+        <span class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
         <div class="sr-info">
           <div class="sr-label">Notifications</div>
           <div class="sr-sub">Daily tips enabled</div>
@@ -2653,12 +2651,12 @@ footer {
     <div class="settings-section">
       <div class="settings-section-title">Security</div>
       <div class="settings-row" onclick="changePassword()">
-        <span class="sr-icon">🔑</span>
+        <span class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
         <div class="sr-info"><div class="sr-label">Change Password</div></div>
         <span class="sr-right">›</span>
       </div>
       <div class="settings-row" onclick="void(0)">
-        <span class="sr-icon">📱</span>
+        <span class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg></span>
         <div class="sr-info">
           <div class="sr-label">Two-Factor Auth</div>
           <div class="sr-sub">Not enabled</div>
@@ -2666,7 +2664,7 @@ footer {
         <button class="btn btn-primary btn-sm" style="margin-left:auto">Enable</button>
       </div>
       <div class="settings-row" onclick="void(0)">
-        <span class="sr-icon">📦</span>
+        <span class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span>
         <div class="sr-info"><div class="sr-label">Export My Data</div></div>
         <span class="sr-right">›</span>
       </div>
@@ -2675,7 +2673,7 @@ footer {
     <div class="settings-section">
       <div class="settings-section-title">Danger Zone</div>
       <div class="settings-row" onclick="deleteAccount()">
-        <span class="sr-icon">🗑</span>
+        <span class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span>
         <div class="sr-info"><div class="sr-label" style="color:var(--red)">Delete Account</div></div>
         <button class="btn btn-danger btn-sm">Delete</button>
       </div>
@@ -2693,88 +2691,88 @@ footer {
 ══════════════════════════════════════════════════════ -->
 <div class="page" id="page-history">
   <nav style="position:sticky;top:0;z-index:200;height:56px;display:flex;align-items:center;padding:0 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)">
-    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('dash')">←</div>
+    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('dash')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></div>
     <div style="font-size:16px;font-weight:700;margin-left:12px">History</div>
   </nav>
   <div class="history-inner">
     <div class="history-top">
       <div class="search-box">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
         <input placeholder="Search conversations..." oninput="filterHistory(this.value)">
       </div>
     </div>
     <div class="filter-row" id="histFilter">
       <div class="chip active" onclick="filterByAgent('all',this)">All</div>
-      <div class="chip" onclick="filterByAgent('finance',this)">💰 Finance</div>
-      <div class="chip" onclick="filterByAgent('legal',this)">⚖️ Legal</div>
-      <div class="chip" onclick="filterByAgent('health',this)">🏥 Health</div>
-      <div class="chip" onclick="filterByAgent('career',this)">🚀 Career</div>
+      <div class="chip" onclick="filterByAgent('finance',this)">Finance</div>
+      <div class="chip" onclick="filterByAgent('legal',this)">Legal</div>
+      <div class="chip" onclick="filterByAgent('health',this)">Health</div>
+      <div class="chip" onclick="filterByAgent('career',this)">Career</div>
     </div>
     <div id="histList">
       <div class="hist-item" data-agent="finance" onclick="openAgent('finance')">
         <div class="hist-dot" style="background:var(--blue)"></div>
         <div class="hist-content">
           <div class="hist-q">Should I invest in index funds or FD right now?</div>
-          <div class="hist-meta">💰 Finance · Today 2:14 PM · 4 messages</div>
+          <div class="hist-meta">Finance · Today 2:14 PM · 4 messages</div>
         </div>
         <div class="hist-actions">
-          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')">📤</div>
-          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')">🗑</div>
+          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></div>
         </div>
       </div>
       <div class="hist-item" data-agent="legal" onclick="openAgent('legal')">
         <div class="hist-dot" style="background:var(--purple)"></div>
         <div class="hist-content">
           <div class="hist-q">Rental agreement review — red flags found</div>
-          <div class="hist-meta">⚖️ Legal · Yesterday 11:30 AM · 7 messages</div>
+          <div class="hist-meta">Legal · Yesterday 11:30 AM · 7 messages</div>
         </div>
         <div class="hist-actions">
-          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')">📤</div>
-          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')">🗑</div>
+          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></div>
         </div>
       </div>
       <div class="hist-item" data-agent="career" onclick="openAgent('career')">
         <div class="hist-dot" style="background:var(--orange)"></div>
         <div class="hist-content">
           <div class="hist-q">Google SWE interview mock session</div>
-          <div class="hist-meta">🚀 Career · 2 days ago · 12 messages</div>
+          <div class="hist-meta">Career · 2 days ago · 12 messages</div>
         </div>
         <div class="hist-actions">
-          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')">📤</div>
-          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')">🗑</div>
+          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></div>
         </div>
       </div>
       <div class="hist-item" data-agent="health" onclick="openAgent('health')">
         <div class="hist-dot" style="background:var(--green)"></div>
         <div class="hist-content">
           <div class="hist-q">What do elevated WBC levels mean?</div>
-          <div class="hist-meta">🏥 Health · 3 days ago · 5 messages</div>
+          <div class="hist-meta">Health · 3 days ago · 5 messages</div>
         </div>
         <div class="hist-actions">
-          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')">📤</div>
-          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')">🗑</div>
+          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></div>
         </div>
       </div>
       <div class="hist-item" data-agent="finance" onclick="openAgent('finance')">
         <div class="hist-dot" style="background:var(--blue)"></div>
         <div class="hist-content">
           <div class="hist-q">Emergency fund on ₹60K salary — how much?</div>
-          <div class="hist-meta">💰 Finance · Last week · 3 messages</div>
+          <div class="hist-meta">Finance · Last week · 3 messages</div>
         </div>
         <div class="hist-actions">
-          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')">📤</div>
-          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')">🗑</div>
+          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></div>
         </div>
       </div>
       <div class="hist-item" data-agent="career" onclick="openAgent('career')">
         <div class="hist-dot" style="background:var(--orange)"></div>
         <div class="hist-content">
           <div class="hist-q">How to negotiate salary from ₹15L to ₹20L?</div>
-          <div class="hist-meta">🚀 Career · Last week · 8 messages</div>
+          <div class="hist-meta">Career · Last week · 8 messages</div>
         </div>
         <div class="hist-actions">
-          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')">📤</div>
-          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')">🗑</div>
+          <div class="hist-btn" onclick="event.stopPropagation();showToast('Exported as PDF')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+          <div class="hist-btn" onclick="event.stopPropagation();this.closest('.hist-item').remove();showToast('Deleted')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></div>
         </div>
       </div>
     </div>
@@ -2840,7 +2838,7 @@ footer {
 ══════════════════════════════════════════════════════ -->
 <div class="page" id="page-privacy">
   <nav style="position:sticky;top:0;z-index:200;height:56px;display:flex;align-items:center;padding:0 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)">
-    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')">←</div>
+    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></div>
     <div style="font-size:16px;font-weight:700;margin-left:12px">Privacy Policy</div>
   </nav>
   <div style="max-width:760px;margin:0 auto;padding:32px 20px 80px">
@@ -2883,7 +2881,7 @@ footer {
 ══════════════════════════════════════════════════════ -->
 <div class="page" id="page-terms">
   <nav style="position:sticky;top:0;z-index:200;height:56px;display:flex;align-items:center;padding:0 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)">
-    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')">←</div>
+    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></div>
     <div style="font-size:16px;font-weight:700;margin-left:12px">Terms of Service</div>
   </nav>
   <div style="max-width:760px;margin:0 auto;padding:32px 20px 80px">
@@ -3290,43 +3288,19 @@ function animateStatNumber(el, target) {
 }
 
 async function initDash() {
-  const d = new Date();
-  const el = document.getElementById('dashDate');
-  if(el) el.textContent = d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  // Set greeting based on time
-  const hour = d.getHours();
-  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-  const greetEl = document.querySelector('.dash-hero-title');
-  // Set user name in topbar pill
+  // ── V6 Init ──────────────────────────────────────────
+  setDashGreeting();
+  renderDashV6Prompts('finance');
+  loadDashRecentChats();
+
+  // Legacy v5 references (kept for safety - elements may not exist in v6)
   const user = auth && auth.currentUser;
   if(user) {
     const nameEl = document.getElementById('dashUserName');
     if(nameEl) nameEl.textContent = (user.displayName ? user.displayName.split(' ')[0] : 'Your') + '\'s Space';
+    const av6 = document.getElementById('dashV6Avatar');
+    if(av6) av6.textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
   }
-  setTimeout(() => {
-    animateProgressBars();
-    renderWeeklyChart();
-    animateRings();
-  }, 300);
-
-  // Show skeleton loading state
-  document.querySelectorAll('.ds5-num').forEach(el => {
-    el.setAttribute('data-original', el.textContent);
-    const skEl = document.createElement('div');
-    skEl.className = 'skeleton skeleton-num';
-    skEl.style.cssText = 'display:inline-block;width:30px;height:20px';
-    el.textContent = '';
-    el.appendChild(skEl);
-  });
-
-  // Safety timeout — if Firestore takes too long, show 0
-  setTimeout(() => {
-    document.querySelectorAll('.ds5-num').forEach(el => {
-      if (el.querySelector('.skeleton')) {
-        el.textContent = '0';
-      }
-    });
-  }, 5000);
 
   // Load real stats from Firestore
   if (user && db) {
@@ -3581,12 +3555,20 @@ function fireDashPrompt() {
   if(!input || !input.value.trim()) return;
   const query = input.value.trim();
   input.value = '';
-  // Determine agent from active category
-  const activeCat = document.querySelector('.dash-cat-tab.active');
-  const cat = activeCat ? activeCat.dataset.cat : 'finance';
+  autoResizeDash(input);
+  // Determine agent from active v6 pill (fall back to v5 cat tabs)
+  const activePill = document.querySelector('.dash-v6-pill.active');
   let agent = 'finance';
-  if(cat === 'legal') agent = 'legal';
-  else if(cat === 'health-career' || cat === 'health') agent = 'health';
+  if(activePill) {
+    if(activePill.classList.contains('ag-legal')) agent = 'legal';
+    else if(activePill.classList.contains('ag-health')) agent = 'health';
+    else if(activePill.classList.contains('ag-career')) agent = 'career';
+  } else {
+    const activeCat = document.querySelector('.dash-cat-tab.active');
+    const cat = activeCat ? activeCat.dataset.cat : 'finance';
+    if(cat === 'legal') agent = 'legal';
+    else if(cat === 'health-career' || cat === 'health') agent = 'health';
+  }
   // Open the agent chat with the query
   openAgent(agent);
   setTimeout(() => {
@@ -3599,6 +3581,189 @@ function autoResizeDash(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
+
+// ── DASHBOARD V6 FUNCTIONS ────────────────────────────
+
+// SVG icons per agent (inline, for v6 UI)
+const AGENT_SVGS = {
+  finance: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  legal:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>',
+  health:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>',
+  career:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
+};
+
+// Suggested prompts per agent (4 prompts → 2×2 grid)
+const V6_PROMPTS = {
+  finance: [
+    { text: 'How to save tax under Section 80C?', q: 'How to save tax under Section 80C?' },
+    { text: 'Best SIP strategy for beginners?', q: 'Best SIP strategy for beginners?' },
+    { text: 'Should I invest in FD or mutual funds?', q: 'Should I invest in FD or mutual funds?' },
+    { text: 'How to improve my CIBIL score?', q: 'How to improve my CIBIL score?' }
+  ],
+  legal: [
+    { text: 'Review my rental agreement', q: 'Review my rental agreement for red flags' },
+    { text: 'What are my employee rights?', q: 'What are my rights as an employee in India?' },
+    { text: 'How to file a consumer complaint?', q: 'How to file a consumer complaint online?' },
+    { text: 'Explain this contract clause', q: 'Explain this contract clause in simple terms' }
+  ],
+  health: [
+    { text: 'I have fever and body ache', q: 'I have fever and body ache. What should I do?' },
+    { text: 'What does this blood report mean?', q: 'What does this blood report mean?' },
+    { text: 'Prepare me for tomorrow\'s checkup', q: 'Prepare me for tomorrow\'s doctor checkup' },
+    { text: 'Daily habits for better mental health', q: 'Daily habits for better mental health' }
+  ],
+  career: [
+    { text: 'Prepare me for a tech interview', q: 'Prepare me for a tech interview' },
+    { text: 'Review my resume', q: 'Review my resume for improvements' },
+    { text: 'Negotiate salary from ₹15L to ₹20L', q: 'Help me negotiate salary from ₹15L to ₹20L' },
+    { text: 'Should I switch jobs now?', q: 'Should I switch jobs now?' }
+  ]
+};
+
+const V6_PLACEHOLDERS = {
+  finance: 'Ask about tax, SIP, loans, budget...',
+  legal:   'Ask about contracts, rights, disputes...',
+  health:  'Ask about symptoms, reports, medications...',
+  career:  'Ask about interviews, resume, salary...'
+};
+
+let currentDashAgent = 'finance';
+
+function setDashGreeting() {
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const user = auth && auth.currentUser;
+  const firstName = user ? (user.displayName || user.email || '').split(' ')[0] || 'there' : 'there';
+  const el = document.getElementById('dashV6Greeting');
+  if(el) el.textContent = `${greeting}, ${firstName}`;
+  // Also update avatar
+  const av = document.getElementById('dashV6Avatar');
+  if(av && user) av.textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+}
+
+function selectDashAgent(pill, agent) {
+  currentDashAgent = agent;
+  // Update pill states
+  document.querySelectorAll('.dash-v6-pill').forEach(p => p.classList.remove('active'));
+  if(pill) pill.classList.add('active');
+  // Update prompt placeholder
+  const input = document.getElementById('dashPromptInput');
+  if(input) input.placeholder = V6_PLACEHOLDERS[agent] || 'Ask anything...';
+  // Re-render suggested prompts
+  renderDashV6Prompts(agent);
+}
+
+function renderDashV6Prompts(agent) {
+  const grid = document.getElementById('dashV6PromptsGrid');
+  if(!grid) return;
+  const prompts = V6_PROMPTS[agent] || V6_PROMPTS.finance;
+  const agClass = 'ag-' + agent;
+  grid.innerHTML = prompts.map((p, i) => `
+    <div class="dash-v6-prompt-card ${agClass}" data-prompt-idx="${i}" data-prompt-agent="${agClass.replace('ag-', '')}">
+      <div class="dash-v6-prompt-icon">${AGENT_SVGS[agent] || ''}</div>
+      <div class="dash-v6-prompt-text">${p.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    </div>
+  `).join('');
+  // Attach click handlers via event delegation to avoid inline-handler XSS
+  grid.querySelectorAll('.dash-v6-prompt-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const idx = parseInt(card.dataset.promptIdx, 10);
+      const ag = card.dataset.promptAgent;
+      const prompt = (V6_PROMPTS[ag] || V6_PROMPTS.finance)[idx];
+      if(prompt) quickAskV6(prompt.q, ag);
+    });
+  });
+}
+
+function quickAskV6(q, agent) {
+  if(agent && agent !== currentDashAgent) {
+    const pill = document.getElementById('dashPill-' + agent);
+    selectDashAgent(pill, agent);
+  }
+  const input = document.getElementById('dashPromptInput');
+  if(input) { input.value = q; autoResizeDash(input); }
+  fireDashPrompt();
+}
+
+function getTimeAgo(date) {
+  if(!date) return '';
+  const now = new Date();
+  const diff = Math.floor((now - date) / 1000);
+  if(diff < 60) return 'Just now';
+  if(diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if(diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if(diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+  return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+}
+
+async function loadDashRecentChats() {
+  const listEl = document.getElementById('dashV6RecentList');
+  if(!listEl) return;
+
+  const user = auth && auth.currentUser;
+  if(!user || !db) {
+    listEl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Sign in to see your recent chats</div>';
+    return;
+  }
+
+  try {
+    const chatsRef = db.collection('users').doc(user.uid).collection('chats');
+    const agentTypes = ['finance', 'legal', 'health', 'career'];
+    const agentNames = { finance: 'Finance Agent', legal: 'Legal Agent', health: 'Health Agent', career: 'Career Agent' };
+    let allMsgs = [];
+
+    for(const agent of agentTypes) {
+      const snap = await chatsRef.doc(agent).collection('messages')
+        .where('role', '==', 'user')
+        .orderBy('timestamp', 'desc')
+        .limit(2)
+        .get();
+      snap.forEach(doc => allMsgs.push({ ...doc.data(), agent }));
+    }
+
+    allMsgs.sort((a, b) => {
+      const ta = a.timestamp?.toDate?.() || new Date(0);
+      const tb = b.timestamp?.toDate?.() || new Date(0);
+      return tb - ta;
+    });
+    allMsgs = allMsgs.slice(0, 5);
+
+    if(allMsgs.length === 0) {
+      listEl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">No chats yet — start a conversation!</div>';
+      return;
+    }
+
+    listEl.innerHTML = allMsgs.map((m, i) => {
+      const time = m.timestamp?.toDate?.();
+      const timeStr = getTimeAgo(time);
+      // Only allow known agent types to prevent XSS
+      const safeAgent = agentTypes.includes(m.agent) ? m.agent : 'finance';
+      const agClass = 'ag-' + safeAgent;
+      const agName = agentNames[safeAgent] || 'Agent';
+      const rawText = (m.content || '').substring(0, 55) + ((m.content || '').length > 55 ? '…' : '');
+      const text = rawText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const svg = AGENT_SVGS[safeAgent] || '';
+      return `<div class="dash-v6-chat-item ${agClass}" data-chat-agent="${safeAgent}">
+        <div class="dash-v6-chat-av">${svg}</div>
+        <div class="dash-v6-chat-info">
+          <div class="dash-v6-chat-name">${agName}</div>
+          <div class="dash-v6-chat-q">${text}</div>
+        </div>
+        <div class="dash-v6-chat-time">${timeStr}</div>
+        <div class="dash-v6-chat-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>`;
+    }).join('');
+    // Attach click handlers via event delegation
+    listEl.querySelectorAll('.dash-v6-chat-item').forEach(item => {
+      item.addEventListener('click', () => openAgent(item.dataset.chatAgent));
+    });
+  } catch(err) {
+    console.warn('loadDashRecentChats error:', err);
+    listEl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Could not load recent chats</div>';
+  }
+}
+
+// ── END V6 FUNCTIONS ──────────────────────────────────
 
 function renderWeeklyChart() {
   const container = document.getElementById('weeklyChart');
@@ -3774,7 +3939,7 @@ function addAiMsg(html) {
   const div = document.createElement('div');
   div.className = 'msg msg-ai';
   div.innerHTML = `
-    <div class="msg-av">🤖</div>
+    <div class="msg-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M12 3v4"/><circle cx="12" cy="3" r="1"/><path d="M7 16h.01"/><path d="M12 16h.01"/><path d="M17 16h.01"/></svg></div>
     <div class="msg-body">
       <div class="msg-bubble">${html.replace(/\n/g,'<br>')}</div>
       <div class="msg-time">Now</div>
@@ -3788,7 +3953,7 @@ function addUserMsg(text) {
   const div = document.createElement('div');
   div.className = 'msg msg-user';
   div.innerHTML = `
-    <div class="msg-av">👤</div>
+    <div class="msg-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
     <div class="msg-body">
       <div class="msg-bubble">${text}</div>
       <div class="msg-time">Now</div>
@@ -3801,7 +3966,7 @@ function showTyping() {
   const msgs = document.getElementById('chatMessages');
   const div = document.createElement('div');
   div.className = 'msg msg-ai'; div.id = 'typingMsg';
-  div.innerHTML = `<div class="msg-av">🤖</div><div class="msg-bubble"><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  div.innerHTML = `<div class="msg-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M12 3v4"/><circle cx="12" cy="3" r="1"/><path d="M7 16h.01"/><path d="M12 16h.01"/><path d="M17 16h.01"/></svg></div><div class="msg-bubble"><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
   return div;
@@ -4079,6 +4244,25 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('keyboard-open');
     });
   }
+
+  // ── CHAT AGENT BOX SVG UPGRADE ───────────────────────
+  // Since openAgent() uses textContent (sets emoji text), we use a MutationObserver
+  // to replace emoji text with proper SVG icons after each call.
+  const AGENT_BOX_SVGS = {
+    '💰': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+    '⚖️': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>',
+    '🏥': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>',
+    '🚀': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
+  };
+  const agentBoxEl = document.getElementById('chatAgentBox');
+  if (agentBoxEl) {
+    const agBoxObserver = new MutationObserver(() => {
+      const txt = agentBoxEl.textContent.trim();
+      const svgIcon = AGENT_BOX_SVGS[txt];
+      if (svgIcon) agentBoxEl.innerHTML = svgIcon;
+    });
+    agBoxObserver.observe(agentBoxEl, { characterData: true, childList: true, subtree: true });
+  }
 });
 
 // ── AI ERROR MSG WITH RETRY ───────────────────────────
@@ -4091,7 +4275,7 @@ function addAiErrorMsg(errorText, canRetry, lastUserMsg) {
     retryBtn = `<button onclick="(function(btn){btn.disabled=true;btn.textContent='Retrying...';document.getElementById('chatInput').value=${JSON.stringify(lastUserMsg)};sendMsg();})(this)" style="margin-top:8px;padding:5px 14px;border-radius:20px;background:rgba(91,155,248,0.15);border:1px solid rgba(91,155,248,0.3);color:#5b9bf8;font-size:12px;font-weight:600;cursor:pointer;">↺ Retry</button>`;
   }
   div.innerHTML = `
-    <div class="msg-av">🤖</div>
+    <div class="msg-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M12 3v4"/><circle cx="12" cy="3" r="1"/><path d="M7 16h.01"/><path d="M12 16h.01"/><path d="M17 16h.01"/></svg></div>
     <div class="msg-body">
       <div class="msg-bubble">${errorText.replace(/\n/g,'<br>')}</div>
       ${retryBtn}
@@ -4155,7 +4339,7 @@ function pwaInstall() {
 
 <!-- PWA INSTALL BANNER -->
 <div id="pwaInstallBanner" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--bg1);border:1px solid var(--border2);border-radius:14px;padding:14px 18px;z-index:9999;width:calc(100% - 32px);max-width:400px;align-items:center;gap:12px;">
-  <span style="font-size:22px">📱</span>
+  <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(91,155,248,0.15);color:#5b9bf8;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg></span>
   <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">Install Zenvy AI</div><div style="font-size:11px;color:var(--text3)">Add to home screen for quick access</div></div>
   <button onclick="pwaInstall()" style="background:var(--blue);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Install</button>
   <button onclick="document.getElementById('pwaInstallBanner').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:4px;">✕</button>
@@ -4163,7 +4347,7 @@ function pwaInstall() {
 
 <div class="page" id="page-privacy">
   <nav style="position:sticky;top:0;z-index:200;height:56px;display:flex;align-items:center;padding:0 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)">
-    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')">←</div>
+    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></div>
     <div style="font-size:16px;font-weight:700;margin-left:12px">Privacy Policy</div>
   </nav>
   <div style="padding:20px;max-width:700px;margin:0 auto;padding-bottom:60px">
@@ -4183,7 +4367,7 @@ function pwaInstall() {
 
 <div class="page" id="page-terms">
   <nav style="position:sticky;top:0;z-index:200;height:56px;display:flex;align-items:center;padding:0 16px;background:rgba(8,8,16,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)">
-    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')">←</div>
+    <div style="cursor:pointer;font-size:20px;padding:4px;color:var(--text2)" onclick="go('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></div>
     <div style="font-size:16px;font-weight:700;margin-left:12px">Terms of Service</div>
   </nav>
   <div style="padding:20px;max-width:700px;margin:0 auto;padding-bottom:60px">
