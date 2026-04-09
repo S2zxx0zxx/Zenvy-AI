@@ -3,6 +3,7 @@ const router = express.Router();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { sanitizeInput } = require('../utils/sanitize');
 const rateLimiter = require('../middleware/rateLimit');
+const authMiddleware = require('../middleware/auth');
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -15,7 +16,7 @@ const SYSTEM_PROMPTS = {
 
 const VALID_AGENTS = ['finance', 'legal', 'health', 'career'];
 
-router.post('/', rateLimiter, async (req, res) => {
+router.post('/', authMiddleware, rateLimiter, async (req, res) => {
   try {
     let { agent, message, history } = req.body;
 
