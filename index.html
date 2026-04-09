@@ -2888,7 +2888,7 @@ footer {
     <!-- Active Agents -->
     <div class="pf-section">
       <div class="pf-section-title">Active Agents</div>
-      <div class="pf-agent-row ag-finance" onclick="go('dash');setTimeout(function(){zdSelectAgent('finance')},300)">
+      <div class="pf-agent-row ag-finance" onclick="pfGoAgent('finance')">
         <div class="pf-agent-icon" style="background:var(--ag-bg);border:1px solid var(--ag-b)">💰</div>
         <div class="pf-row-info">
           <div class="pf-agent-name">Finance Agent</div>
@@ -2896,7 +2896,7 @@ footer {
         </div>
         <span class="pf-row-right">›</span>
       </div>
-      <div class="pf-agent-row ag-legal" onclick="go('dash');setTimeout(function(){zdSelectAgent('legal')},300)">
+      <div class="pf-agent-row ag-legal" onclick="pfGoAgent('legal')">
         <div class="pf-agent-icon" style="background:var(--ag-bg);border:1px solid var(--ag-b)">⚖️</div>
         <div class="pf-row-info">
           <div class="pf-agent-name">Legal Agent</div>
@@ -2904,7 +2904,7 @@ footer {
         </div>
         <span class="pf-row-right">›</span>
       </div>
-      <div class="pf-agent-row ag-health" onclick="go('dash');setTimeout(function(){zdSelectAgent('health')},300)">
+      <div class="pf-agent-row ag-health" onclick="pfGoAgent('health')">
         <div class="pf-agent-icon" style="background:var(--ag-bg);border:1px solid var(--ag-b)">🏥</div>
         <div class="pf-row-info">
           <div class="pf-agent-name">Health Agent</div>
@@ -2912,7 +2912,7 @@ footer {
         </div>
         <span class="pf-row-right">›</span>
       </div>
-      <div class="pf-agent-row ag-career" onclick="go('dash');setTimeout(function(){zdSelectAgent('career')},300)">
+      <div class="pf-agent-row ag-career" onclick="pfGoAgent('career')">
         <div class="pf-agent-icon" style="background:var(--ag-bg);border:1px solid var(--ag-b)">💼</div>
         <div class="pf-row-info">
           <div class="pf-agent-name">Career Agent</div>
@@ -3297,7 +3297,7 @@ function updateProfilePage(user) {
     const joinedDate = new Date(user.metadata.creationTime);
     // Only display if it's a valid past date
     if (!isNaN(joinedDate.getTime()) && joinedDate <= new Date()) {
-      joinBadge.textContent = '\uD83D\uDCC5 Joined ' + joinedDate.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+      joinBadge.textContent = '📅 Joined ' + joinedDate.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
     }
   }
 
@@ -3312,20 +3312,20 @@ function updateProfilePage(user) {
 
       const planBadge = document.getElementById('pfPlanBadge');
       if (planBadge) {
-        planBadge.textContent = isPro ? '\u2B50 Pro' : '\uD83C\uDD93 Free';
+        planBadge.textContent = isPro ? '⭐ Pro' : '🆓 Free';
         planBadge.className = 'pf-plan-badge' + (isPro ? '' : ' free');
       }
       const planName = document.getElementById('pfPlanName');
       const planDesc = document.getElementById('pfPlanDesc');
       const planIcon = document.getElementById('pfPlanIcon');
       if (planName) planName.textContent = isPro ? 'Pro Plan' : 'Free Plan';
-      if (planDesc) planDesc.textContent = isPro ? 'Unlimited queries \u00B7 All 4 agents active' : count + '/5 queries used today \u00B7 Upgrade for unlimited';
-      if (planIcon) planIcon.textContent = isPro ? '\u2B50' : '\uD83C\uDD93';
+      if (planDesc) planDesc.textContent = isPro ? 'Unlimited queries · All 4 agents active' : count + '/5 queries used today · Upgrade for unlimited';
+      if (planIcon) planIcon.textContent = isPro ? '⭐' : '🆓';
 
       const todayEl = document.getElementById('pfTodayCount');
       const limitEl = document.getElementById('pfLimitNum');
       if (todayEl) todayEl.textContent = count;
-      if (limitEl) limitEl.textContent = isPro ? '\u221E' : '5';
+      if (limitEl) limitEl.textContent = isPro ? '∞' : '5';
     }).catch(function() {});
 
     // Total chats
@@ -3353,6 +3353,12 @@ function updateProfilePage(user) {
 
 // ── PROFILE PAGE FUNCTIONS ────────────────────────────
 let pfNotifEnabled = true;
+
+// Navigate to dashboard and select a specific agent (300ms delay for page transition)
+function pfGoAgent(agentId) {
+  go('dash');
+  setTimeout(function() { zdSelectAgent(agentId); }, 300);
+}
 
 function pfToggleEdit() {
   const nameEl = document.getElementById('pfNameEl');
@@ -3397,7 +3403,7 @@ async function pfSaveName() {
     }
     const sbName = document.getElementById('zdSidebarName');
     if (sbName) sbName.textContent = newName.split(' ')[0];
-    showToast('Name updated \u2713');
+    showToast('Name updated ✓');
   } catch (err) {
     showToast('Failed to update name');
     console.warn('pfSaveName error:', err);
@@ -3455,7 +3461,7 @@ async function pfExportData() {
     a.download = 'zenvy-data-' + new Date().toISOString().slice(0, 10) + '.json';
     a.click();
     URL.revokeObjectURL(url);
-    showToast('Data exported successfully \u2713');
+    showToast('Data exported successfully ✓');
   } catch (err) {
     showToast('Export failed. Try again.');
     console.warn('pfExportData error:', err);
@@ -4308,7 +4314,7 @@ function zdSetGreeting() {
   const user = auth && auth.currentUser;
   const firstName = user ? ((user.displayName || user.email || '').split(' ')[0] || 'there') : 'there';
   const el = document.getElementById('zdGreetingText');
-  if (el) el.textContent = greeting + ', ' + firstName + ' \uD83D\uDC4B';
+  if (el) el.textContent = greeting + ', ' + firstName + ' 👋';
 }
 
 function zdUpdateAvatar() {
@@ -4414,7 +4420,7 @@ async function zdLoadUsage() {
     const plan = data.plan || 'free';
     const count = data.count || 0;
     const isPro = plan === 'pro';
-    const limitDisplay = isPro ? '\u221E' : '5';
+    const limitDisplay = isPro ? '∞' : '5';
     const labelEl = document.getElementById('zdUsageLabel');
     const countEl = document.getElementById('zdUsageCount');
     const fillEl = document.getElementById('zdUsageFill');
@@ -4423,7 +4429,7 @@ async function zdLoadUsage() {
     if (fillEl) fillEl.style.width = isPro ? '100%' : Math.min((count / 5) * 100, 100) + '%';
     barEl.style.display = 'flex';
     const sbPlan = document.getElementById('zdSidebarPlan');
-    if (sbPlan) sbPlan.textContent = isPro ? 'Pro Plan \u2726' : 'Free Plan';
+    if (sbPlan) sbPlan.textContent = isPro ? 'Pro Plan ✦' : 'Free Plan';
   } catch (err) {
     console.warn('zdLoadUsage error:', err);
   }
