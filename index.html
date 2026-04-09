@@ -5120,7 +5120,7 @@ const ZDX_CHIPS = {
 };
 
 const ZDX_CHIPS_HI = {
-  finance: ['💰 SIP Kalculator', '📊 Tax Bachane ke Tips', '🏠 Home Loan EMI', '📈 Mutual Fund Guide'],
+  finance: ['💰 SIP Calculator', '📊 Tax Saving Tips', '🏠 Home Loan EMI', '📈 Mutual Fund Guide'],
   legal:   ['⚖️ Apne Adhikar Jaano', '📄 Rent Agreement Help', '🚔 FIR Darz Guide', '👨‍👩‍👧 Family Law Basics'],
   health:  ['🏥 Lakshan Jaanch', '💊 Dawai ki Jaankari', '🧘 Mental Wellness', '🍎 Diet aur Poshan'],
   career:  ['📝 Resume Review', '💼 Interview Taiyari', '🎯 Career Roadmap', '💡 Skill Gap Analysis']
@@ -5134,10 +5134,10 @@ const ZDX_PLACEHOLDERS = {
 };
 
 const ZDX_PLACEHOLDERS_HI = {
-  finance: 'Zenvy se pucho — Tax, SIP, Legal, Health, Career...',
-  legal:   'Zenvy se pucho — Tax, SIP, Legal, Health, Career...',
-  health:  'Zenvy se pucho — Tax, SIP, Legal, Health, Career...',
-  career:  'Zenvy se pucho — Tax, SIP, Legal, Health, Career...'
+  finance: 'Zenvy se pucho — Tax, SIP, Loan, Budget...',
+  legal:   'Zenvy se pucho — Rights, Contract, FIR...',
+  health:  'Zenvy se pucho — Lakshan, Dawai, Diet...',
+  career:  'Zenvy se pucho — Resume, Interview, Skill...'
 };
 
 function zdxRenderChips(agentKey) {
@@ -5147,7 +5147,7 @@ function zdxRenderChips(agentKey) {
     ? (ZDX_CHIPS_HI[agentKey] || ZDX_CHIPS_HI.finance)
     : (ZDX_CHIPS[agentKey] || ZDX_CHIPS.finance);
   grid.innerHTML = chips.map(function(text) {
-    return '<button class="zdx-chip" onclick="zdxFillChip(' + JSON.stringify(text) + ')">' + text + '</button>';
+    return '<button class="zdx-chip" onclick="zdxFillChip(' + JSON.stringify(text) + ')">' + escapeHtml(text) + '</button>';
   }).join('');
 }
 
@@ -5263,7 +5263,7 @@ function zdxClearInput() {
 function zdxHandleFile(inputEl) {
   if (inputEl && inputEl.files && inputEl.files.length > 0) {
     const file = inputEl.files[0];
-    showToast('File "' + file.name + '" attached — ask your question above');
+    showToast(`File "${file.name}" attached — ask your question above`);
     inputEl.value = '';
   }
 }
