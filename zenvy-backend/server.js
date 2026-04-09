@@ -22,6 +22,8 @@ const allowedOrigins = [
   'https://zenvy-ai-seven.vercel.app',
   'https://zenvyindia.com',
   'https://www.zenvyindia.com',
+  'https://zenvyindia.in',
+  'https://www.zenvyindia.in',
   'https://s2zxx0zxx.github.io'
 ];
 
