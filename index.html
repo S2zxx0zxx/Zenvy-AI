@@ -3295,8 +3295,9 @@ function updateProfilePage(user) {
   const joinBadge = document.getElementById('pfJoinBadge');
   if (joinBadge && user.metadata && user.metadata.creationTime) {
     const joinedDate = new Date(user.metadata.creationTime);
+    const now = new Date();
     // Only display if it's a valid past date
-    if (!isNaN(joinedDate.getTime()) && joinedDate <= new Date()) {
+    if (!isNaN(joinedDate.getTime()) && joinedDate <= now) {
       joinBadge.textContent = '📅 Joined ' + joinedDate.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
     }
   }
@@ -3354,10 +3355,13 @@ function updateProfilePage(user) {
 // ── PROFILE PAGE FUNCTIONS ────────────────────────────
 let pfNotifEnabled = true;
 
-// Navigate to dashboard and select a specific agent (300ms delay for page transition)
+// Delay (ms) to wait for page transition before interacting with the new page
+const PAGE_TRANSITION_DELAY_MS = 400;
+
+// Navigate to dashboard and select a specific agent
 function pfGoAgent(agentId) {
   go('dash');
-  setTimeout(function() { zdSelectAgent(agentId); }, 300);
+  setTimeout(function() { zdSelectAgent(agentId); }, PAGE_TRANSITION_DELAY_MS);
 }
 
 function pfToggleEdit() {
@@ -4453,7 +4457,7 @@ function zdSend() {
   setTimeout(function() {
     const chatInput = document.getElementById('chatInput');
     if (chatInput) { chatInput.value = query; sendMsg(); }
-  }, 400);
+  }, PAGE_TRANSITION_DELAY_MS);
 }
 
 function zdQuickAsk(q) {
