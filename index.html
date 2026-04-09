@@ -3243,7 +3243,7 @@ async function fetchWithRetry(url, options, retries = 2) {
 // ── GLOBAL STATE ─────────────────────────────────────
 let chatHistory = [];
 let isSending = false;
-const ZENVY_SECRET = 'zenvy-frontend-2024';
+const ZENVY_SECRET = 'PENDING_RUN_GENERATE_SECRET';
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? 'http://localhost:3001'
   : 'https://zenvy-ai-satzzxzxx.up.railway.app'; // ← Railway production URL
